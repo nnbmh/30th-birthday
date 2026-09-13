@@ -587,28 +587,18 @@ const computerAppData = {
   },
 
   birthday: {
-    title: "things i like about you.txt",
+    title: "birthday.txt",
     content: `<div class="birthday-pc-file">
-      <p class="eyebrow">THINGS I LIKE ABOUT YOU</p>
-      <h2>okay dont let this get to your head...</h2>
-      <p>your laugh when something actually gets you</p>
-      <p>the way your whole face changes when youre genuinely excited abt something</p>
-      <p>when you randomly start dancing out of nowhere and i cant help but laugh at you</p>
-      <p>when you do something completely ridiculous just because you know its gonna get a reaction out of me</p>
-      <p>all the random faces you make without even realising youre doing it</p>
-      <p>hearing your voice when we get on discord after a long day</p>
-      <p>your sleepy voice when youre barely awake but still talking to me</p>
-      <p>the way you always ask if ive eaten</p>
-      <p>your aggressive commitment to making me drink water</p>
-      <p>how you somehow know almost every random song that plays</p>
-      <p>your cuddles</p>
-      <p>the way you pull me closer when we're lying together</p>
-      <p>how comfortable it feels just lying next to you</p>
-      <p>the way you make me feel when we're having sex... how turned on i get, how good everything feels and how much i just want more of you</p>
-      <p>the way i can spend hours and hours with you and somehow still miss you when youre gone</p>
-      <p>...</p>
-      <p>okay this is getting dangerously nice.</p>
-      <p>im stopping here before your ego gets too big.</p>
+      <p class="eyebrow">BIRTHDAY.TXT</p>
+      <h2>Happy birthday sayang ♡</h2>
+      <p>I wonder where you are rn when you’re reading this... like how much have you already found? What have you clicked on? Have you laughed at anything yet? Have you judged me? Actually don’t answer the last one.</p>
+      <p>I’ve been thinking abt this moment alot while putting everything together uh bb. I kept imagining you finally getting to go through it and wondering what your reaction would be to everything.</p>
+      <p>I think you’re gonna laugh at some parts. I think there’s gonna be at least one “wtf sayang”... and I’m really hoping there’s gonna be lots of that stupid big smile I love seeing on you.</p>
+      <p>I wish I could actually see all of it uh... because your reactions are literally one of the things I’ve been looking forward to the most.</p>
+      <p>I hope you’re enjoying everything so far bb. Take your time and look through everything okay... there’s still more for you to find.</p>
+      <p>And when you’re done, come find me. I wanna hear what you thought abt everything... all the little things you noticed and all the reactions I didn’t get to see.</p>
+      <p>Happy birthday my sayang ♡</p>
+      <p>Enjoy the rest of your little birthday surprise.</p>
     </div>`
   },
 
