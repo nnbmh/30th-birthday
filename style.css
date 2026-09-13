@@ -145,6 +145,10 @@ button,
   }
 }
 
+.intro-content .eyebrow {
+  font-size: 12px;
+}
+
 .intro-content h1 {
   margin: 0;
   font-size: clamp(54px, 11vw, 110px);
@@ -155,15 +159,15 @@ button,
 
 .intro-text {
   margin: 34px 0 6px;
-  font-size: 14px;
+  font-size: 16px;
   opacity: 0.7;
 }
 
 .intro-small {
   margin: 0 0 28px;
   font-family: monospace;
-  font-size: 9px;
-  opacity: 0.34;
+  font-size: 11px;
+  opacity: 0.42;
 }
 
 #enterButton {
@@ -524,8 +528,6 @@ button,
   touch-action: manipulation;
 }
 
-/* MSI MONITOR */
-
 #monitorHotspot {
   left: 24%;
   top: 29%;
@@ -534,16 +536,12 @@ button,
   z-index: 50;
 }
 
-/* TV */
-
 #tvHotspot {
   left: 50.5%;
   top: 2%;
   width: 18%;
   height: 16%;
 }
-
-/* LAPTOP */
 
 #laptopHotspot {
   left: 50%;
@@ -552,16 +550,12 @@ button,
   height: 29%;
 }
 
-/* PANDA */
-
 #pandaHotspot {
   left: 80.5%;
   top: 50.5%;
   width: 8.5%;
   height: 17%;
 }
-
-/* YELLOW STICKY NOTE */
 
 #noteHotspot {
   left: 42.3%;
@@ -571,31 +565,17 @@ button,
   z-index: 90;
 }
 
-/* Keep hotspot layer reliably above room visuals */
 #roomCanvas .hotspot {
   pointer-events: auto;
 }
 
-#monitorHotspot {
-  z-index: 60;
-}
-
-#tvHotspot {
-  z-index: 60;
-}
-
-#laptopHotspot {
-  z-index: 60;
-}
-
+#monitorHotspot,
+#tvHotspot,
+#laptopHotspot,
 #pandaHotspot {
   z-index: 60;
 }
 
-/*
-  Sticky note sits physically on the MSI monitor,
-  so it must remain above the monitor hotspot.
-*/
 #noteHotspot {
   z-index: 90;
 }
@@ -696,12 +676,6 @@ button,
 /* ============================= */
 /* OBJECT FOCUS */
 /* ============================= */
-
-/*
-  Keep the room image stationary.
-  The transition overlay gives us the cinematic focus effect without
-  separating the visual object from its clickable hotspot.
-*/
 
 #room.focus-computer #roomImage {
   filter: brightness(0.65);
@@ -1505,8 +1479,6 @@ button,
   margin-bottom: 20px;
 }
 
-/* OREO */
-
 .panda-character {
   position: relative;
   width: 150px;
@@ -1604,8 +1576,6 @@ button,
   border-radius: 50% 50% 60% 60%;
 }
 
-/* BODY - NO HEART */
-
 .panda-body {
   position: absolute;
   top: 106px;
@@ -1617,8 +1587,6 @@ button,
   border-radius: 45% 45% 35% 35%;
   z-index: 2;
 }
-
-/* ARMS */
 
 .panda-arm {
   position: absolute;
@@ -1641,8 +1609,6 @@ button,
   transform: rotate(-15deg);
 }
 
-/* FEET */
-
 .panda-foot {
   position: absolute;
   top: 168px;
@@ -1663,8 +1629,6 @@ button,
   right: 35px;
   transform: rotate(7deg);
 }
-
-/* OREO LABEL */
 
 .oreo-label {
   margin: 18px 0 20px;
@@ -1687,8 +1651,6 @@ button,
   letter-spacing: 0.17em;
 }
 
-/* DELIVERY INFO */
-
 .delivery-details {
   margin-top: 18px;
 }
@@ -1706,8 +1668,6 @@ button,
   margin-top: 26px;
 }
 
-/* MESSAGE */
-
 .panda-message {
   margin-top: 28px;
   padding-top: 24px;
@@ -1723,8 +1683,6 @@ button,
 .panda-message p:last-child {
   margin-bottom: 0;
 }
-
-/* FLOAT */
 
 @keyframes pandaFloat {
   0%,
@@ -2255,7 +2213,6 @@ button,
 /* DESKTOP READABILITY FIXES */
 /* ============================= */
 
-/* Natural, easier-to-click close buttons */
 .window-bar button,
 .ai-topbar button,
 .card-close,
@@ -2275,14 +2232,12 @@ button,
   cursor: pointer !important;
 }
 
-/* Keep the computer title-bar X proportional */
 .window-bar button {
   width: 34px !important;
   height: 100% !important;
   min-width: 34px !important;
 }
 
-/* Slight hover feedback for mouse users */
 .window-bar button:hover,
 .ai-topbar button:hover,
 .card-close:hover,
@@ -2292,7 +2247,6 @@ button,
   background: rgba(255, 255, 255, 0.09) !important;
 }
 
-/* FARIS-PC boot screen: larger but still restrained */
 .computer-boot .boot-logo {
   font-size: 38px !important;
   margin-bottom: 16px !important;
