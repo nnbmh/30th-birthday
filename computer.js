@@ -255,7 +255,6 @@ const candidPhotos = [
 ];
 
 const usPhotos = [
-  "D7586191-5BF9-43E6-9046-56A1801E9EFC.jpeg",
   "IMG_0332.png",
   "IMG_0337.jpeg",
   "IMG_0354.jpeg",
