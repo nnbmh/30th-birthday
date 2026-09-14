@@ -63,6 +63,45 @@
 
   const slides = [
     {
+      intro: true,
+      html: `
+        <div class="news-slide bbn-opening-slide">
+          <div class="bbn-opening">
+            <div class="bbn-opening-grid"></div>
+            <div class="bbn-opening-sweep sweep-one"></div>
+            <div class="bbn-opening-sweep sweep-two"></div>
+
+            <div class="bbn-globe" aria-hidden="true">
+              <div class="globe-ring globe-ring-one"></div>
+              <div class="globe-ring globe-ring-two"></div>
+              <div class="globe-ring globe-ring-three"></div>
+              <div class="globe-axis"></div>
+            </div>
+
+            <div class="bbn-opening-copy">
+              <div class="bbn-opening-network">
+                <span class="bbn-opening-live-dot"></span>
+                <span>BABOY BROADCASTING NETWORK</span>
+              </div>
+
+              <div class="bbn-opening-logo">BBN</div>
+
+              <div class="bbn-opening-rule"></div>
+
+              <p class="bbn-opening-special">SPECIAL REPORT</p>
+              <h1>BREAKING NEWS</h1>
+            </div>
+
+            <div class="bbn-opening-bottom">
+              <span>18 SEP 2026</span>
+              <span>BBN NEWSROOM</span>
+            </div>
+          </div>
+        </div>
+      `
+    },
+
+    {
       html: anchorScene({
         label: "LIVE • UNITED KINGDOM",
         headline: "FARIS TURNS 30",
@@ -71,17 +110,6 @@
         lowerHeadline: "Faris turns 30",
         lowerSubline: "Sources in Singapore confirm celebrations are underway",
         camera: "camera-wide"
-      })
-    },
-
-    {
-      html: anchorScene({
-        label: "BREAKING NEWS",
-        headline: "Birthday celebrations underway",
-        subline: "The birthday boy is reported to be in good spirits.",
-        lowerLabel: "LIVE",
-        lowerHeadline: "Birthday coverage continues",
-        camera: "camera-medium"
       })
     },
 
@@ -446,9 +474,30 @@
   function renderNewsSlide() {
     const slide = slides[currentNewsSlide];
 
+    tvBroadcast.classList.toggle("intro-active", Boolean(slide.intro));
     newsScreen.innerHTML = slide.html;
-    buildTicker();
-    restartTicker();
+
+    if (!slide.intro) {
+      buildTicker();
+      restartTicker();
+    } else {
+      newsTickerText.innerHTML = "";
+    }
+
+    if (slide.intro) {
+      const introExitTimer = setTimeout(() => {
+        const opening = newsScreen.querySelector(".bbn-opening");
+        if (opening) opening.classList.add("leaving");
+      }, 2450);
+
+      const introAdvanceTimer = setTimeout(() => {
+        currentNewsSlide += 1;
+        renderNewsSlide();
+      }, 3000);
+
+      tvTimers.push(introExitTimer, introAdvanceTimer);
+      return;
+    }
 
     if (slide.video) {
       const stage = document.getElementById("newsVideoStage");
@@ -507,6 +556,7 @@
       birthdayVideo.pause();
     }
 
+    tvBroadcast.classList.remove("intro-active");
     tvModal.classList.remove("open");
     tvModal.setAttribute("aria-hidden", "true");
 
@@ -517,6 +567,8 @@
 
   newsNextButton.addEventListener("click", () => {
     const slide = slides[currentNewsSlide];
+
+    if (slide.intro) return;
 
     if (slide.final) {
       closeBirthdayNews();
@@ -532,6 +584,7 @@
   document.querySelectorAll("#tvModal [data-close]").forEach((button) => {
     button.addEventListener("click", () => {
       clearTVTimers();
+      tvBroadcast.classList.remove("intro-active");
 
       if (birthdayVideo && !birthdayVideo.paused) {
         birthdayVideo.pause();
