@@ -215,11 +215,29 @@ function photoFolderItem(name, folder) {
   </button>`;
 }
 
-function photoFileItem(path, name, collection, index, eager = false) {
+function photoFileItem(path, name, collection, index) {
   return `<button class="win-large-item win-photo-item" data-photo-path="${path}" data-photo-name="${name}" data-photo-collection="${collection}" data-photo-index="${index}">
-    <span class="win-photo-thumb"><img src="${path}" alt="${name}" loading="${eager ? "eager" : "lazy"}" decoding="async"></span>
+    <span class="win-photo-thumb">
+      <img data-thumb-src="${path}" alt="${name}" decoding="async">
+    </span>
     <span>${name}</span>
   </button>`;
+}
+
+function loadVisiblePhotoThumbnails() {
+  const thumbnails = [...appContent.querySelectorAll("img[data-thumb-src]")];
+
+  thumbnails.forEach((image, index) => {
+    setTimeout(() => {
+      const path = image.dataset.thumbSrc;
+      if (!path || !image.isConnected) return;
+
+      image.onload = () => image.classList.add("loaded");
+      image.src = path;
+
+      if (image.complete) image.classList.add("loaded");
+    }, index * 35);
+  });
 }
 
 const standalonePhotos = [
@@ -398,8 +416,12 @@ function navigateExplorer(location, addHistory = true) {
   appTitle.textContent = getExplorerTitle(location);
   appContent.innerHTML = renderExplorerLocation(location);
   appWindow.classList.add("open");
-  computerClick();
-}
+
+  requestAnimationFrame(() => {
+  requestAnimationFrame(loadVisiblePhotoThumbnails);
+});
+
+computerClick();
 
 function explorerBack() {
   if (!explorerBackStack.length) return;
@@ -414,8 +436,12 @@ function explorerBack() {
   currentPhotoFolder = destination === "candid" || destination === "us" ? destination : "photos";
   appTitle.textContent = getExplorerTitle(destination);
   appContent.innerHTML = renderExplorerLocation(destination);
-  computerClick();
-}
+
+  requestAnimationFrame(() => {
+  requestAnimationFrame(loadVisiblePhotoThumbnails);
+});
+
+computerClick();
 
 function explorerForward() {
   if (!explorerForwardStack.length) return;
@@ -430,8 +456,12 @@ function explorerForward() {
   currentPhotoFolder = destination === "candid" || destination === "us" ? destination : "photos";
   appTitle.textContent = getExplorerTitle(destination);
   appContent.innerHTML = renderExplorerLocation(destination);
-  computerClick();
-}
+
+  requestAnimationFrame(() => {
+  requestAnimationFrame(loadVisiblePhotoThumbnails);
+});
+
+computerClick();
 
 function explorerUp() {
   const parent = getExplorerParent(currentExplorerLocation);
