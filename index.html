@@ -642,3 +642,22 @@
     <p class="letter-signature">i love you.</p>
   </div>
 </section>
+
+<script>
+  const mainScript = document.createElement("script");
+  mainScript.src = "script.js?v=" + cacheVersion;
+
+  mainScript.onload = () => {
+    const computerScript = document.createElement("script");
+    computerScript.src = "computer.js?v=" + cacheVersion;
+    document.body.appendChild(computerScript);
+
+    const tvScript = document.createElement("script");
+    tvScript.src = "tv.js?v=" + cacheVersion;
+    document.body.appendChild(tvScript);
+  };
+
+  document.body.appendChild(mainScript);
+</script>
+</body>
+</html>
