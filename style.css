@@ -2084,8 +2084,11 @@ button,
   letter-spacing: -0.045em;
 }
 
+
 .letter-divider {
   margin-bottom: 38px;
+  font-size: 24px;
+  line-height: 1;
   opacity: 0.4;
 }
 
