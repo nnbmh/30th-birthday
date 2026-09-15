@@ -37,6 +37,19 @@
     </div>
   </div>
 
+<script>
+  setTimeout(() => {
+    const loading = document.getElementById("loadingScreen");
+    const intro = document.getElementById("introScreen");
+
+    if (loading) loading.style.display = "none";
+    if (intro) {
+      intro.classList.remove("hidden");
+      intro.style.display = "";
+    }
+  }, 1800);
+</script>
+  
   <!-- INTRO -->
   <div id="introScreen" class="hidden">
     <div class="intro-content">
