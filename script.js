@@ -94,12 +94,18 @@ soundButton.addEventListener("click", () => {
 /* STARTUP */
 /* ============================= */
 
-window.addEventListener("load", () => {
+function finishLoading() {
   setTimeout(() => {
     loadingScreen.classList.add("hidden");
     introScreen.classList.remove("hidden");
   }, 1500);
-});
+}
+
+if (document.readyState === "complete") {
+  finishLoading();
+} else {
+  window.addEventListener("load", finishLoading, { once: true });
+}
 
 enterButton.addEventListener("click", () => {
   initAudio();
