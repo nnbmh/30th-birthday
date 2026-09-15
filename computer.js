@@ -460,18 +460,37 @@ function getPhotoCollection(collection) {
   }));
 }
 
+function preloadImage(path) {
+  const image = new Image();
+  image.decoding = "async";
+  image.src = path;
+}
+
 function preloadPictureThumbnails() {
+  // Main Pictures folder: preload all 6
   standalonePhotos.forEach((name) => {
-    const image = new Image();
-    image.src = `assets/photos/${name}`;
+    preloadImage(`assets/photos/${name}`);
+  });
+
+  // Preload the first 6 photos Faris will see inside each folder
+  candidPhotos.slice(0, 6).forEach((name) => {
+    preloadImage(`assets/photos/candid/${name}`);
+  });
+
+  usPhotos.slice(0, 6).forEach((name) => {
+    preloadImage(`assets/photos/us/${name}`);
   });
 }
 
-if ("requestIdleCallback" in window) {
-  requestIdleCallback(preloadPictureThumbnails, { timeout: 1500 });
-} else {
-  setTimeout(preloadPictureThumbnails, 500);
+function startPicturePreload() {
+  if ("requestIdleCallback" in window) {
+    requestIdleCallback(preloadPictureThumbnails, { timeout: 800 });
+  } else {
+    setTimeout(preloadPictureThumbnails, 250);
+  }
 }
+
+startPicturePreload();
 
 function renderPhotoViewer() {
   const photo = currentPhotoCollection[currentPhotoIndex];
