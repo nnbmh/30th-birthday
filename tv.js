@@ -15,7 +15,7 @@
   const tickerHeadlines = [
     "FARIS TURNS 30",
     "BREAKING NEWS FROM THE UNITED KINGDOM",
-    "SAYANG MONITORING SITUATION FROM 10,827 KM AWAY",
+    "SAYANG MONITORING SITUATION FROM MILES AWAY",
     "BIRTHDAY BOY REPORTED TO BE IN GOOD SPIRITS",
     "RANDOM OBJECTS ADVISED TO REMAIN VIGILANT",
     "SAYANG HYDRATION PROGRAMME REMAINS ACTIVE",
@@ -49,11 +49,9 @@
 
           <div class="lower-third">
             <div class="lower-breaking">${lowerLabel}</div>
-
             <div class="lower-main">
               <h1>${lowerHeadline}</h1>
             </div>
-
             ${lowerSubline ? `<div class="lower-sub">${lowerSubline}</div>` : ""}
           </div>
         </div>
@@ -85,7 +83,6 @@
               </div>
 
               <div class="bbn-opening-logo">BBN</div>
-
               <div class="bbn-opening-rule"></div>
 
               <p class="bbn-opening-special">SPECIAL REPORT</p>
@@ -118,9 +115,7 @@
         <div class="news-slide">
           <div class="news-package">
             <span class="package-kicker">BBN SPECIAL REPORT</span>
-
             <h1 class="package-title">THE FARIS FILES</h1>
-
             <p class="package-copy">
               Our investigation into the birthday boy has uncovered several behaviours that experts have described as... uniquely Faris.
             </p>
@@ -218,7 +213,6 @@
         <div class="news-slide">
           <div class="info-board">
             <p class="board-kicker">BBN DATA</p>
-
             <h2>SAYANG WELFARE PROGRAMME</h2>
 
             <div class="info-row">
@@ -257,7 +251,6 @@
         <div class="news-slide">
           <div class="music-card">
             <span class="package-kicker">BBN ARCHIVE</span>
-
             <h2>ARCHIVED AUDIO TRANSCRIPT</h2>
 
             <div class="music-transcript">
@@ -280,7 +273,6 @@
         <div class="news-slide">
           <div class="info-board numbers-board">
             <p class="board-kicker">BBN DATA DESK</p>
-
             <h2>FARIS BY THE NUMBERS</h2>
 
             <div class="info-row">
@@ -290,7 +282,7 @@
 
             <div class="info-row">
               <span>distance between Faris & Sayang</span>
-              <strong>10,827 km</strong>
+              <strong>miles away</strong>
             </div>
 
             <div class="info-row">
@@ -324,7 +316,7 @@
             </div>
 
             <div class="info-row">
-              <span>times shes wished he was 10,827 km closer</span>
+              <span>times shes wished he was closer</span>
               <strong>countless</strong>
             </div>
 
@@ -340,7 +332,7 @@
     {
       html: anchorScene({
         label: "DISTANCE REPORT",
-        headline: "10,827 km apart",
+        headline: "Miles apart",
         subline: "Late-night Discord activity continues despite the distance.",
         lowerLabel: "LATE NIGHT",
         lowerHeadline: "Calls reportedly continue until 3–4am",
@@ -384,12 +376,13 @@
         subline: "Faris is very, very loved.",
         lowerLabel: "CONFIRMED",
         lowerHeadline: "Faris is very, very loved",
-        lowerSubline: "Particularly by one woman approximately 10,827 kilometres away",
+        lowerSubline: "Particularly by one woman many miles away",
         camera: "camera-medium"
       })
     },
 
     {
+      hidden: true,
       html: `
         <div class="news-slide">
           <div class="news-package footage-package">
@@ -413,6 +406,7 @@
     },
 
     {
+      hidden: true,
       video: true,
       html: `
         <div class="news-slide">
@@ -456,6 +450,16 @@
     tvTimers = [];
   }
 
+  function getNextVisibleSlideIndex(fromIndex) {
+    let index = fromIndex;
+
+    while (index < slides.length && slides[index].hidden) {
+      index += 1;
+    }
+
+    return index;
+  }
+
   function buildTicker() {
     const text = tickerHeadlines.join(" • ") + " • ";
 
@@ -472,6 +476,13 @@
   }
 
   function renderNewsSlide() {
+    currentNewsSlide = getNextVisibleSlideIndex(currentNewsSlide);
+
+    if (currentNewsSlide >= slides.length) {
+      closeBirthdayNews();
+      return;
+    }
+
     const slide = slides[currentNewsSlide];
 
     tvBroadcast.classList.toggle("intro-active", Boolean(slide.intro));
@@ -491,7 +502,7 @@
       }, 2450);
 
       const introAdvanceTimer = setTimeout(() => {
-        currentNewsSlide += 1;
+        currentNewsSlide = getNextVisibleSlideIndex(currentNewsSlide + 1);
         renderNewsSlide();
       }, 3000);
 
@@ -521,7 +532,7 @@
 
   function startBirthdayNews() {
     clearTVTimers();
-    currentNewsSlide = 0;
+    currentNewsSlide = getNextVisibleSlideIndex(0);
 
     tvPower.className = "tv-power";
     tvStatic.className = "tv-static";
@@ -575,7 +586,7 @@
       return;
     }
 
-    currentNewsSlide += 1;
+    currentNewsSlide = getNextVisibleSlideIndex(currentNewsSlide + 1);
     renderNewsSlide();
   });
 
