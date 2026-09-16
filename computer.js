@@ -758,9 +758,13 @@ appContent.addEventListener("click", (event) => {
     currentExplorerLocation = destination;
     appTitle.textContent = getExplorerTitle(destination);
     appContent.innerHTML = renderExplorerLocation(destination);
-    computerClick();
-    return;
-  }
+    
+    requestAnimationFrame(() => {
+    requestAnimationFrame(loadVisiblePhotoThumbnails);
+});
+
+computerClick();
+return;
 
   if (event.target.closest("[data-photo-prev]")) {
     showPreviousPhoto();
