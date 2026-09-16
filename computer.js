@@ -3,6 +3,7 @@ const startButton = document.getElementById("startButton");
 const startMenu = document.getElementById("startMenu");
 const taskbarDate = document.getElementById("taskbarDate");
 const picturesDesktopLabel = document.querySelector('[data-app="photos"] p');
+
 if (picturesDesktopLabel) picturesDesktopLabel.textContent = "Pictures";
 
 let computerToastTimer = null;
@@ -20,15 +21,31 @@ function computerClick() {
 
 function showComputerToast(message) {
   if (!computerToast) return;
+
   clearTimeout(computerToastTimer);
   computerToast.textContent = message;
   computerToast.classList.add("show");
-  computerToastTimer = setTimeout(() => computerToast.classList.remove("show"), 2200);
+
+  computerToastTimer = setTimeout(() => {
+    computerToast.classList.remove("show");
+  }, 2200);
 }
 
 function setComputerWindowMode(appName) {
-  const explorerApps = ["thispc", "documents", "downloads", "photos", "recycle", "candid", "us"];
-  appWindow.classList.toggle("explorer-mode", explorerApps.includes(appName));
+  const explorerApps = [
+    "thispc",
+    "documents",
+    "downloads",
+    "photos",
+    "recycle",
+    "candid",
+    "us"
+  ];
+
+  appWindow.classList.toggle(
+    "explorer-mode",
+    explorerApps.includes(appName)
+  );
 }
 
 function folderIcon() {
@@ -36,15 +53,34 @@ function folderIcon() {
 }
 
 function fileIcon(type = "file") {
-  if (type === "pdf") return `<span class="win-file-glyph win-pdf">PDF</span>`;
-  if (type === "image") return `<span class="win-file-glyph win-image-glyph">▧</span>`;
-  if (type === "doc") return `<span class="win-file-glyph win-doc">W</span>`;
+  if (type === "pdf") {
+    return `<span class="win-file-glyph win-pdf">PDF</span>`;
+  }
+
+  if (type === "image") {
+    return `<span class="win-file-glyph win-image-glyph">▧</span>`;
+  }
+
+  if (type === "doc") {
+    return `<span class="win-file-glyph win-doc">W</span>`;
+  }
+
   return `<span class="win-file-glyph">▤</span>`;
 }
 
 function getExplorerParent(location) {
-  if (location === "candid" || location === "us") return "photos";
-  if (location === "documents" || location === "downloads" || location === "photos") return "thispc";
+  if (location === "candid" || location === "us") {
+    return "photos";
+  }
+
+  if (
+    location === "documents" ||
+    location === "downloads" ||
+    location === "photos"
+  ) {
+    return "thispc";
+  }
+
   return null;
 }
 
@@ -58,49 +94,79 @@ function getExplorerTitle(location) {
     us: "us",
     recycle: "Recycle Bin"
   };
+
   return titles[location] || "File Explorer";
 }
 
 function getExplorerPath(location) {
-  if (location === "thispc") return `This PC`;
-  if (location === "documents") return `This PC <span>›</span> Documents`;
-  if (location === "downloads") return `This PC <span>›</span> Downloads`;
-  if (location === "photos") return `This PC <span>›</span> Pictures`;
-  if (location === "candid") return `This PC <span>›</span> Pictures <span>›</span> candid pics i like`;
-  if (location === "us") return `This PC <span>›</span> Pictures <span>›</span> us`;
-  if (location === "recycle") return `Recycle Bin`;
+  if (location === "thispc") {
+    return `This PC`;
+  }
+
+  if (location === "documents") {
+    return `This PC <span>›</span> Documents`;
+  }
+
+  if (location === "downloads") {
+    return `This PC <span>›</span> Downloads`;
+  }
+
+  if (location === "photos") {
+    return `This PC <span>›</span> Pictures`;
+  }
+
+  if (location === "candid") {
+    return `This PC <span>›</span> Pictures <span>›</span> candid pics i like`;
+  }
+
+  if (location === "us") {
+    return `This PC <span>›</span> Pictures <span>›</span> us`;
+  }
+
+  if (location === "recycle") {
+    return `Recycle Bin`;
+  }
+
   return "";
 }
 
 function sidebar(activeLocation) {
-  const active = (location) => activeLocation === location ? " active" : "";
+  const active = (location) =>
+    activeLocation === location ? " active" : "";
 
   return `<aside class="win-sidebar">
     <div class="win-sidebar-section">
       <div class="win-sidebar-heading">Quick access</div>
+
       <button class="win-nav-item${active("thispc")}" data-explorer-location="thispc">
         <span class="win-nav-icon pc-nav-icon">▣</span>
         <span>This PC</span>
       </button>
+
       <button class="win-nav-item${active("documents")}" data-explorer-location="documents">
         <span class="win-nav-icon folder-nav-icon">▤</span>
         <span>Documents</span>
       </button>
+
       <button class="win-nav-item${active("downloads")}" data-explorer-location="downloads">
         <span class="win-nav-icon download-nav-icon">↓</span>
         <span>Downloads</span>
       </button>
+
       <button class="win-nav-item${active("photos")}" data-explorer-location="photos">
         <span class="win-nav-icon picture-nav-icon">▧</span>
         <span>Pictures</span>
       </button>
     </div>
+
     <div class="win-sidebar-section">
       <div class="win-sidebar-heading">This PC</div>
+
       <div class="win-nav-static">
         <span class="win-nav-icon">♫</span>
         <span>Music</span>
       </div>
+
       <div class="win-nav-static">
         <span class="win-nav-icon">▰</span>
         <span>Local Disk (C:)</span>
@@ -117,37 +183,47 @@ function ribbon() {
       <span class="win-tab">Share</span>
       <span class="win-tab">View</span>
     </div>
+
     <div class="win-command-bar">
       <div class="win-command-group">
         <span class="win-command-icon">★</span>
         <small>Pin to Quick access</small>
       </div>
+
       <div class="win-command-group">
         <span class="win-command-icon">⧉</span>
         <small>Copy</small>
       </div>
+
       <div class="win-command-group">
         <span class="win-command-icon">▣</span>
         <small>Paste</small>
       </div>
+
       <div class="win-command-divider"></div>
+
       <div class="win-command-group">
         <span class="win-command-icon">✂</span>
         <small>Cut</small>
       </div>
+
       <div class="win-command-group">
         <span class="win-command-icon">✎</span>
         <small>Rename</small>
       </div>
+
       <div class="win-command-group">
         <span class="win-command-icon">✕</span>
         <small>Delete</small>
       </div>
+
       <div class="win-command-divider"></div>
+
       <div class="win-command-group">
         <span class="win-command-icon">□</span>
         <small>New folder</small>
       </div>
+
       <div class="win-command-group">
         <span class="win-command-icon">✓</span>
         <small>Properties</small>
@@ -164,37 +240,52 @@ function explorerChrome(location, content, itemCount = "") {
 
   return `<div class="windows-explorer">
     ${ribbon()}
+
     <div class="win-address-row">
       <div class="win-history">
         <button class="win-nav-button" data-explorer-back ${canBack ? "" : "disabled"} aria-label="Back">
           <span class="nav-arrow-left"></span>
         </button>
+
         <button class="win-nav-button" data-explorer-forward ${canForward ? "" : "disabled"} aria-label="Forward">
           <span class="nav-arrow-right"></span>
         </button>
+
         <button class="win-nav-button" data-explorer-up ${canUp ? "" : "disabled"} aria-label="Up">
           <span class="nav-arrow-up"></span>
         </button>
       </div>
-      <div class="win-address-bar">${getExplorerPath(location)}</div>
+
+      <div class="win-address-bar">
+        ${getExplorerPath(location)}
+      </div>
+
       <div class="win-search-box">
         <span class="win-search-icon"></span>
         <span>Search ${getExplorerTitle(location)}</span>
       </div>
     </div>
+
     <div class="win-explorer-body">
       ${sidebar(location)}
       <main class="win-file-pane">${content}</main>
     </div>
+
     <div class="win-status-bar">
       <span>${itemCount}</span>
-      <div class="win-view-buttons"><span>▤</span><span>▦</span></div>
+      <div class="win-view-buttons">
+        <span>▤</span>
+        <span>▦</span>
+      </div>
     </div>
   </div>`;
 }
 
 function explorerFolderItem(name, location = "") {
-  const attribute = location ? `data-explorer-location="${location}"` : "";
+  const attribute = location
+    ? `data-explorer-location="${location}"`
+    : "";
+
   return `<button class="win-large-item win-folder-item" ${attribute}>
     ${folderIcon()}
     <span>${name}</span>
@@ -216,26 +307,44 @@ function photoFolderItem(name, folder) {
 }
 
 function photoFileItem(path, name, collection, index) {
-  return `<button class="win-large-item win-photo-item" data-photo-path="${path}" data-photo-name="${name}" data-photo-collection="${collection}" data-photo-index="${index}">
+  return `<button
+    class="win-large-item win-photo-item"
+    data-photo-path="${path}"
+    data-photo-name="${name}"
+    data-photo-collection="${collection}"
+    data-photo-index="${index}"
+  >
     <span class="win-photo-thumb">
-      <img data-thumb-src="${path}" alt="${name}" decoding="async">
+      <img
+        data-thumb-src="${path}"
+        alt="${name}"
+        decoding="async"
+      >
     </span>
     <span>${name}</span>
   </button>`;
 }
 
 function loadVisiblePhotoThumbnails() {
-  const thumbnails = [...appContent.querySelectorAll("img[data-thumb-src]")];
+  const thumbnails = [
+    ...appContent.querySelectorAll("img[data-thumb-src]")
+  ];
 
   thumbnails.forEach((image, index) => {
     setTimeout(() => {
       const path = image.dataset.thumbSrc;
+
       if (!path || !image.isConnected) return;
 
-      image.onload = () => image.classList.add("loaded");
+      image.onload = () => {
+        image.classList.add("loaded");
+      };
+
       image.src = path;
 
-      if (image.complete) image.classList.add("loaded");
+      if (image.complete) {
+        image.classList.add("loaded");
+      }
     }, index * 35);
   });
 }
@@ -296,24 +405,30 @@ function renderThisPC() {
       <span>Folders</span>
       <i></i>
     </div>
+
     <div class="win-large-grid win-pc-folder-grid">
       ${explorerFolderItem("Documents", "documents")}
       ${explorerFolderItem("Downloads", "downloads")}
       ${explorerFolderItem("Pictures", "photos")}
       ${explorerFolderItem("Music")}
     </div>
+
     <div class="win-section-heading win-drive-heading">
       <span class="win-section-caret">⌄</span>
       <span>Devices and drives</span>
       <i></i>
     </div>
+
     <div class="win-drive-row">
       <div class="win-drive-glyph">
         <span></span>
       </div>
+
       <div class="win-drive-details">
         <div class="win-drive-name">Local Disk (C:)</div>
-        <div class="win-drive-meter"><span></span></div>
+        <div class="win-drive-meter">
+          <span></span>
+        </div>
         <small>214 GB free of 476 GB</small>
       </div>
     </div>`,
@@ -355,7 +470,12 @@ function renderPhotosHome() {
     photoFolderItem("candid pics i like", "candid"),
     photoFolderItem("us", "us"),
     ...standalonePhotos.map((name, index) =>
-      photoFileItem(`assets/photos/${name}`, name, "standalone", index, true)
+      photoFileItem(
+        `assets/photos/${name}`,
+        name,
+        "standalone",
+        index
+      )
     )
   ].join("");
 
@@ -369,12 +489,24 @@ function renderPhotosHome() {
 function renderPhotoFolder(folder) {
   const isCandid = folder === "candid";
   const names = isCandid ? candidPhotos : usPhotos;
-  const base = isCandid ? "assets/photos/candid/" : "assets/photos/us/";
+
+  const base = isCandid
+    ? "assets/photos/candid/"
+    : "assets/photos/us/";
 
   return explorerChrome(
     folder,
     `<div class="win-large-grid win-photo-folder-grid">
-      ${names.map((name, index) => photoFileItem(`${base}${name}`, name, folder, index)).join("")}
+      ${names
+        .map((name, index) =>
+          photoFileItem(
+            `${base}${name}`,
+            name,
+            folder,
+            index
+          )
+        )
+        .join("")}
     </div>`,
     `${names.length} items`
   );
@@ -396,32 +528,50 @@ function renderExplorerLocation(location) {
   if (location === "documents") return renderDocuments();
   if (location === "downloads") return renderDownloads();
   if (location === "photos") return renderPhotosHome();
-  if (location === "candid" || location === "us") return renderPhotoFolder(location);
+
+  if (location === "candid" || location === "us") {
+    return renderPhotoFolder(location);
+  }
+
   if (location === "recycle") return renderRecycleBin();
+
   return renderThisPC();
 }
 
 function navigateExplorer(location, addHistory = true) {
   if (!location) return;
 
-  if (addHistory && currentExplorerLocation && currentExplorerLocation !== location) {
+  if (
+    addHistory &&
+    currentExplorerLocation &&
+    currentExplorerLocation !== location
+  ) {
     explorerBackStack.push(currentExplorerLocation);
     explorerForwardStack = [];
   }
 
   currentExplorerLocation = location;
-  currentPhotoFolder = location === "candid" || location === "us" ? location : "photos";
+
+  currentPhotoFolder =
+    location === "candid" || location === "us"
+      ? location
+      : "photos";
 
   setComputerWindowMode(location);
+
   appTitle.textContent = getExplorerTitle(location);
   appContent.innerHTML = renderExplorerLocation(location);
+
   appWindow.classList.add("open");
 
   requestAnimationFrame(() => {
-  requestAnimationFrame(loadVisiblePhotoThumbnails);
-});
+    requestAnimationFrame(() => {
+      loadVisiblePhotoThumbnails();
+    });
+  });
 
-computerClick();
+  computerClick();
+}
 
 function explorerBack() {
   if (!explorerBackStack.length) return;
@@ -433,15 +583,25 @@ function explorerBack() {
   }
 
   currentExplorerLocation = destination;
-  currentPhotoFolder = destination === "candid" || destination === "us" ? destination : "photos";
+
+  currentPhotoFolder =
+    destination === "candid" || destination === "us"
+      ? destination
+      : "photos";
+
+  setComputerWindowMode(destination);
+
   appTitle.textContent = getExplorerTitle(destination);
   appContent.innerHTML = renderExplorerLocation(destination);
 
   requestAnimationFrame(() => {
-  requestAnimationFrame(loadVisiblePhotoThumbnails);
-});
+    requestAnimationFrame(() => {
+      loadVisiblePhotoThumbnails();
+    });
+  });
 
-computerClick();
+  computerClick();
+}
 
 function explorerForward() {
   if (!explorerForwardStack.length) return;
@@ -453,19 +613,31 @@ function explorerForward() {
   }
 
   currentExplorerLocation = destination;
-  currentPhotoFolder = destination === "candid" || destination === "us" ? destination : "photos";
+
+  currentPhotoFolder =
+    destination === "candid" || destination === "us"
+      ? destination
+      : "photos";
+
+  setComputerWindowMode(destination);
+
   appTitle.textContent = getExplorerTitle(destination);
   appContent.innerHTML = renderExplorerLocation(destination);
 
   requestAnimationFrame(() => {
-  requestAnimationFrame(loadVisiblePhotoThumbnails);
-});
+    requestAnimationFrame(() => {
+      loadVisiblePhotoThumbnails();
+    });
+  });
 
-computerClick();
+  computerClick();
+}
 
 function explorerUp() {
   const parent = getExplorerParent(currentExplorerLocation);
+
   if (!parent) return;
+
   navigateExplorer(parent, true);
 }
 
@@ -497,12 +669,10 @@ function preloadImage(path) {
 }
 
 function preloadPictureThumbnails() {
-  // Main Pictures folder: preload all 6
   standalonePhotos.forEach((name) => {
     preloadImage(`assets/photos/${name}`);
   });
 
-  // Preload the first 6 photos Faris will see inside each folder
   candidPhotos.slice(0, 6).forEach((name) => {
     preloadImage(`assets/photos/candid/${name}`);
   });
@@ -514,7 +684,10 @@ function preloadPictureThumbnails() {
 
 function startPicturePreload() {
   if ("requestIdleCallback" in window) {
-    requestIdleCallback(preloadPictureThumbnails, { timeout: 800 });
+    requestIdleCallback(
+      preloadPictureThumbnails,
+      { timeout: 800 }
+    );
   } else {
     setTimeout(preloadPictureThumbnails, 250);
   }
@@ -524,19 +697,42 @@ startPicturePreload();
 
 function renderPhotoViewer() {
   const photo = currentPhotoCollection[currentPhotoIndex];
+
   if (!photo) return;
 
   appContent.innerHTML = `<div class="windows-photo-viewer">
     <div class="win-photo-viewer-top">
-      <button type="button" data-photo-viewer-back aria-label="Back">←</button>
+      <button
+        type="button"
+        data-photo-viewer-back
+        aria-label="Back"
+      >←</button>
+
       <span>${photo.name}</span>
-      <small>${currentPhotoIndex + 1} of ${currentPhotoCollection.length}</small>
+
+      <small>
+        ${currentPhotoIndex + 1} of ${currentPhotoCollection.length}
+      </small>
     </div>
+
     <div class="win-photo-viewer-stage">
-      <button type="button" class="win-viewer-arrow win-viewer-left" data-photo-prev aria-label="Previous">‹</button>
+      <button
+        type="button"
+        class="win-viewer-arrow win-viewer-left"
+        data-photo-prev
+        aria-label="Previous"
+      >‹</button>
+
       <img src="${photo.path}" alt="${photo.name}">
-      <button type="button" class="win-viewer-arrow win-viewer-right" data-photo-next aria-label="Next">›</button>
+
+      <button
+        type="button"
+        class="win-viewer-arrow win-viewer-right"
+        data-photo-next
+        aria-label="Next"
+      >›</button>
     </div>
+
     <div class="win-photo-viewer-bottom">
       <span>－</span>
       <span>＋</span>
@@ -551,23 +747,41 @@ function openPhoto(collection, index) {
   currentPhotoCollection = getPhotoCollection(collection);
   currentPhotoIndex = Number(index);
   currentPhotoFolder = collection;
-  appTitle.textContent = currentPhotoCollection[currentPhotoIndex].name;
+
+  const photo = currentPhotoCollection[currentPhotoIndex];
+
+  if (!photo) return;
+
+  appTitle.textContent = photo.name;
+
   renderPhotoViewer();
   computerClick();
 }
 
 function showPreviousPhoto() {
   if (!currentPhotoCollection.length) return;
-  currentPhotoIndex = (currentPhotoIndex - 1 + currentPhotoCollection.length) % currentPhotoCollection.length;
-  appTitle.textContent = currentPhotoCollection[currentPhotoIndex].name;
+
+  currentPhotoIndex =
+    (currentPhotoIndex - 1 + currentPhotoCollection.length) %
+    currentPhotoCollection.length;
+
+  appTitle.textContent =
+    currentPhotoCollection[currentPhotoIndex].name;
+
   renderPhotoViewer();
   computerClick();
 }
 
 function showNextPhoto() {
   if (!currentPhotoCollection.length) return;
-  currentPhotoIndex = (currentPhotoIndex + 1) % currentPhotoCollection.length;
-  appTitle.textContent = currentPhotoCollection[currentPhotoIndex].name;
+
+  currentPhotoIndex =
+    (currentPhotoIndex + 1) %
+    currentPhotoCollection.length;
+
+  appTitle.textContent =
+    currentPhotoCollection[currentPhotoIndex].name;
+
   renderPhotoViewer();
   computerClick();
 }
@@ -585,6 +799,7 @@ const computerAppData = {
           <circle cx="32" cy="32" r="11" fill="#4285f4"/>
         </svg>
       </div>
+
       <h2>Google Chrome</h2>
       <p>Internet access unavailable during birthday maintenance.</p>
     </div>`
@@ -599,6 +814,7 @@ const computerAppData = {
           <path d="M22 22c7-5 13-5 20 0 4 6 6 12 7 19-5 4-9 6-13 7l-2-4c3-1 5-2 7-4-7 4-12 4-19 0 2 2 4 3 7 4l-2 4c-4-1-8-3-13-7 1-7 3-13 8-19z" fill="white"/>
         </svg>
       </div>
+
       <h2>Discord</h2>
       <p>already enough hours logged here.</p>
     </div>`
@@ -613,6 +829,7 @@ const computerAppData = {
           <path d="M18 25c11-3 24-2 34 3M20 34c9-2 20-1 29 3M22 42c8-1 16 0 23 3" fill="none" stroke="#111" stroke-width="4" stroke-linecap="round"/>
         </svg>
       </div>
+
       <h2>Spotify</h2>
       <p>Playback unavailable.</p>
     </div>`
@@ -629,6 +846,7 @@ const computerAppData = {
           <path d="M26 39l10-11 8 3" fill="none" stroke="white" stroke-width="5" stroke-linecap="round"/>
         </svg>
       </div>
+
       <h2>Steam</h2>
       <p>connection unavailable.</p>
     </div>`
@@ -638,15 +856,22 @@ const computerAppData = {
     title: "birthday.txt",
     content: `<div class="birthday-pc-file">
       <p class="eyebrow">BIRTHDAY.TXT</p>
-      <h2>Happy birthday sayang ♡</h2>
-      <p>I wonder where you are rn when you’re reading this... like how much have you already found? What have you clicked on? Have you laughed at anything yet? Have you judged me? Actually don’t answer the last one.</p>
-      <p>I’ve been thinking abt this moment alot while putting everything together uh bb. I kept imagining you finally getting to go through it and wondering what your reaction would be to everything.</p>
-      <p>I think you’re gonna laugh at some parts. I think there’s gonna be at least one “wtf sayang”... and I’m really hoping there’s gonna be lots of that stupid big smile I love seeing on you.</p>
-      <p>I wish I could actually see all of it uh... because your reactions are literally one of the things I’ve been looking forward to the most.</p>
-      <p>I hope you’re enjoying everything so far bb. Take your time and look through everything okay... there’s still more for you to find.</p>
-      <p>And when you’re done, come find me. I wanna hear what you thought abt everything... all the little things you noticed and all the reactions I didn’t get to see.</p>
-      <p>Happy birthday my sayang ♡</p>
-      <p>Enjoy the rest of your little birthday surprise.</p>
+      <h2>happy birthday sayang ♡</h2>
+
+      <p>i wonder where you are right now when you’re reading this... like how much have you already found? what have you clicked on? have you laughed at anything yet? have you judged me? actually don’t answer the last one.</p>
+
+      <p>i've been thinking about this moment alot while putting everything together uh bb. i kept imagining you finally getting to go through it and wondering what your reaction would be to everything.</p>
+
+      <p>i think there’s gonna be at least one “wtf sayang”... and i'm really hoping there’s gonna be lots of that big smile i love seeing on you.</p>
+
+      <p>i wish i could actually see all of it uh... because your reactions are literally one of the things i've been looking forward to the most.</p>
+
+      <p>i hope you’re enjoying everything so far bb. take your time and look through everything okay... there’s still more for you to find.</p>
+
+      <p>and when you’re done, come find me. i wanna hear what you thought about everything... all the little things you noticed and all the reactions i didn’t get to see.</p>
+
+      <p>happy birthday my sayang ♡</p>
+      <p>enjoy the rest of your little birthday surprise.</p>
     </div>`
   },
 
@@ -654,12 +879,17 @@ const computerAppData = {
     title: "DO NOT OPEN.txt",
     content: `<div class="birthday-pc-file">
       <p class="eyebrow">DO NOT OPEN</p>
-      <h2>faris...</h2>
+      <h2>sayang...</h2>
+
       <p>the file literally said do not open.</p>
-      <p>but since youre here now...</p>
+
+      <p>but since you're here now...</p>
+
       <p>i miss you alot uh bb.</p>
+
       <p>i miss being able to just reach over and touch you whenever i want... your cuddles, having you next to me and not having a stupid screen between us.</p>
-      <p>okay enough. close this now.</p>
+
+      <p>okay dah dah. close this now.</p>
     </div>`
   },
 
@@ -668,64 +898,91 @@ const computerAppData = {
     content: `<div class="birthday-pc-file">
       <p class="eyebrow">RESTRICTED FILE</p>
       <h2>ACCESS DENIED</h2>
+
       <p>clearance level insufficient.</p>
-      <p>nice try, Faris.</p>
-      <p>maybe theres something else in the room you havent found yet.</p>
+      <p>nice try, sayang.</p>
+      <p>maybe there's something else in the room you haven't found yet.</p>
     </div>`
   }
 };
 
 function openComputerApp(appName) {
-  const explorerLocations = ["thispc", "documents", "downloads", "photos", "recycle"];
+  const explorerLocations = [
+    "thispc",
+    "documents",
+    "downloads",
+    "photos",
+    "recycle"
+  ];
 
   if (explorerLocations.includes(appName)) {
     explorerBackStack = [];
     explorerForwardStack = [];
     currentExplorerLocation = null;
+
     navigateExplorer(appName, false);
     return;
   }
 
   const data = computerAppData[appName];
+
   if (!data) return;
 
   computerClick();
-  if (startMenu) startMenu.classList.remove("open");
+
+  if (startMenu) {
+    startMenu.classList.remove("open");
+  }
 
   setComputerWindowMode(appName);
+
   appTitle.textContent = data.title;
   appContent.innerHTML = data.content;
   appWindow.classList.add("open");
 }
 
-document.querySelectorAll("[data-computer-app]").forEach((button) => {
-  button.addEventListener("click", (event) => {
-    event.stopPropagation();
-    openComputerApp(button.dataset.computerApp);
+document
+  .querySelectorAll("[data-computer-app]")
+  .forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.stopPropagation();
+
+      openComputerApp(
+        button.dataset.computerApp
+      );
+    });
   });
-});
 
-document.querySelectorAll("[data-app]").forEach((button) => {
-  button.addEventListener("click", (event) => {
-    const appName = button.dataset.app;
-    event.stopPropagation();
+document
+  .querySelectorAll("[data-app]")
+  .forEach((button) => {
+    button.addEventListener("click", (event) => {
+      const appName = button.dataset.app;
 
-    if (appName === "photos") {
-      explorerBackStack = [];
-      explorerForwardStack = [];
-      currentExplorerLocation = null;
-      navigateExplorer("photos", false);
-      return;
-    }
+      event.stopPropagation();
 
-    openComputerApp(appName);
+      if (appName === "photos") {
+        explorerBackStack = [];
+        explorerForwardStack = [];
+        currentExplorerLocation = null;
+
+        navigateExplorer("photos", false);
+        return;
+      }
+
+      openComputerApp(appName);
+    });
   });
-});
 
 appContent.addEventListener("click", (event) => {
-  const locationButton = event.target.closest("[data-explorer-location]");
+  const locationButton =
+    event.target.closest("[data-explorer-location]");
+
   if (locationButton) {
-    navigateExplorer(locationButton.dataset.explorerLocation, true);
+    navigateExplorer(
+      locationButton.dataset.explorerLocation,
+      true
+    );
     return;
   }
 
@@ -744,27 +1001,43 @@ appContent.addEventListener("click", (event) => {
     return;
   }
 
-  const photoButton = event.target.closest("[data-photo-path]");
+  const photoButton =
+    event.target.closest("[data-photo-path]");
+
   if (photoButton) {
-    openPhoto(photoButton.dataset.photoCollection, photoButton.dataset.photoIndex);
+    openPhoto(
+      photoButton.dataset.photoCollection,
+      photoButton.dataset.photoIndex
+    );
     return;
   }
 
   if (event.target.closest("[data-photo-viewer-back]")) {
-    const destination = currentPhotoFolder === "candid" || currentPhotoFolder === "us"
-      ? currentPhotoFolder
-      : "photos";
+    const destination =
+      currentPhotoFolder === "candid" ||
+      currentPhotoFolder === "us"
+        ? currentPhotoFolder
+        : "photos";
 
     currentExplorerLocation = destination;
-    appTitle.textContent = getExplorerTitle(destination);
-    appContent.innerHTML = renderExplorerLocation(destination);
-    
-    requestAnimationFrame(() => {
-    requestAnimationFrame(loadVisiblePhotoThumbnails);
-});
 
-computerClick();
-return;
+    setComputerWindowMode(destination);
+
+    appTitle.textContent =
+      getExplorerTitle(destination);
+
+    appContent.innerHTML =
+      renderExplorerLocation(destination);
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        loadVisiblePhotoThumbnails();
+      });
+    });
+
+    computerClick();
+    return;
+  }
 
   if (event.target.closest("[data-photo-prev]")) {
     showPreviousPhoto();
@@ -779,23 +1052,32 @@ return;
 if (startButton && startMenu) {
   startButton.addEventListener("click", (event) => {
     event.stopPropagation();
+
     computerClick();
+
     startMenu.classList.toggle("open");
   });
 
   document.addEventListener("click", (event) => {
-    if (!startMenu.contains(event.target) && event.target !== startButton) {
+    if (
+      !startMenu.contains(event.target) &&
+      event.target !== startButton
+    ) {
       startMenu.classList.remove("open");
     }
   });
 }
 
-const searchButton = document.querySelector(".taskbar-search");
+const searchButton =
+  document.querySelector(".taskbar-search");
 
 if (searchButton) {
   searchButton.addEventListener("click", () => {
     computerClick();
-    showComputerToast("Search indexing is taking longer than expected.");
+
+    showComputerToast(
+      "Search indexing is taking longer than expected."
+    );
   });
 }
 
@@ -803,11 +1085,13 @@ function updateComputerDate() {
   if (!taskbarDate) return;
 
   const now = new Date();
-  taskbarDate.textContent = now.toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric"
-  });
+
+  taskbarDate.textContent =
+    now.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric"
+    });
 }
 
 updateComputerDate();
