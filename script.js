@@ -607,90 +607,14 @@ const appTitle = document.getElementById("appTitle");
 const appContent = document.getElementById("appContent");
 const closeApp = document.getElementById("closeApp");
 
-const appData = {
-  birthday: {
-    title: "birthday.txt",
-    content: `
-      <p class="eyebrow">SYSTEM RECORD</p>
-      <h2>30 years detected.</h2>
-      <p>
-        congratulations.
-        you have successfully completed
-        thirty years of being Faris.
-      </p>
-      <p>
-        current condition:
-        <strong>old but still cute.</strong>
-      </p>
-      <p>estimated warranty: questionable.</p>
-      <p>girlfriend recommendation: keep.</p>
-    `
-  },
+/*
+  All desktop apps are controlled by computer.js.
 
-  photos: {
-    title: "photos",
-    content: `
-      <p class="eyebrow">PHOTO ARCHIVE</p>
-      <h2>evidence.</h2>
-      <p>photos are going here later.</p>
-      <p>
-        before you say anything...
-        no, this is not secretly
-        an anniversary scrapbook.
-      </p>
-      <p>this one is about you.</p>
-    `
-  },
-
-  message: {
-    title: "message.txt",
-    content: `
-      <p class="eyebrow">MESSAGE FROM SAYANG</p>
-      <h2>hi bb.</h2>
-      <p>
-        i know i bully you a lot.
-        unfortunately this is one of my love languages.
-      </p>
-      <p>
-        but underneath all the nonsense...
-        i hope you know how loved you are.
-      </p>
-      <p>
-        happy birthday sayang.
-      </p>
-      <p>♡</p>
-    `
-  },
-
-  classified: {
-    title: "CLASSIFIED",
-    content: `
-      <p class="eyebrow">RESTRICTED FILE</p>
-      <h2>ACCESS DENIED</h2>
-      <p>clearance level insufficient.</p>
-      <p>nice try, Faris.</p>
-      <p>
-        maybe theres something else
-        in the room you havent found yet.
-      </p>
-    `
-  }
-};
-
-document.querySelectorAll(".desktop-icon").forEach((icon) => {
-  icon.addEventListener("click", () => {
-    const app = icon.dataset.app;
-    const data = appData[app];
-
-    if (!data) return;
-
-    playClick();
-
-    appTitle.textContent = data.title;
-    appContent.innerHTML = data.content;
-    appWindow.classList.add("open");
-  });
-});
+  The old appData and .desktop-icon click handler used to live here.
+  They have intentionally been removed because they were opening the
+  obsolete birthday/photos/message windows on top of the newer
+  Windows-style computer experience.
+*/
 
 closeApp.addEventListener("click", () => {
   playClick();
