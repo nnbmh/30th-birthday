@@ -157,7 +157,7 @@
 
               <div class="profile-row">
                 <strong>known weaknesses</strong>
-                <span>steak, cheese, coke, McSpicy</span>
+                <span>steak, cheese, Coke, McSpicy</span>
               </div>
 
               <div class="profile-row">
