@@ -338,7 +338,7 @@
                   font-size:clamp(14px,1.4vw,18px);
                   line-height:1.5;
                 ">
-                  every now and then he'll randomly start singing while hes cooking... which ive gotten very used to by now.
+                  every now and then he'll randomly start singing while he's cooking... which i've gotten very used to by now.
                 </p>
               </div>
 
@@ -537,13 +537,13 @@
               font-weight:650;
               line-height:1.3;
             ">
-              “i really like how much he makes me laugh uh... even when hes not actually trying to be funny. sometimes hes genuinely funny and sometimes hes just being a complete idiot and somehow thats funny too. and when im trying to be annoyed at him but he manages to make me laugh... i cant even stay annoyed properly.<br><br>
+              “i really like how much he makes me laugh uh... even when he's not actually trying to be funny. sometimes he's genuinely funny and sometimes he's just being a complete idiot and somehow that's funny too. and when i'm trying to be annoyed at him but he manages to make me laugh... i can't even stay annoyed properly.<br><br>
 
-              but i think some of my favourite moments with him are actually when he isnt paying attention to me uh... like when hes concentrating on something, randomly singing or just doing his own thing. i like watching him when hes completely being himself and doesnt even realise im looking at him.<br><br>
+              but i think some of my favourite moments with him are actually when he isn't paying attention to me uh... like when hes concentrating on something, randomly singing or just doing his own thing. i like watching him when he's completely being himself and doesn't even realise i'm looking at him.<br><br>
 
-              sometimes ill just sit there watching him and get this really fond feeling like... aw thats my person. hes literally not even doing anything uh... hes just being faris and idk, i really like those moments.<br><br>
+              sometimes i'll just sit there watching him and get this really fond feeling like... aw that's my person. he's literally not even doing anything uh... he's just being faris and idk i really like those moments.<br><br>
 
-              he probably doesnt realise i look at him like that sometimes uh...<br><br>
+              he probably doesn't realise i look at him like that sometimes uh...<br><br>
 
               well... i guess he knows now.”
             </blockquote>
