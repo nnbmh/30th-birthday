@@ -114,7 +114,9 @@
           <div class="news-package">
             <span class="package-kicker">BBN SPECIAL REPORT</span>
             <h1 class="package-title">THE FARIS FILES</h1>
-            <p class="package-copy">Our investigation into the birthday boy has uncovered several behaviours that experts have described as... uniquely Faris.</p>
+            <p class="package-copy">
+              Our investigation into the birthday boy has uncovered several behaviours that experts have described as... uniquely Faris.
+            </p>
           </div>
         </div>
       `
@@ -144,11 +146,6 @@
               <div class="profile-row">
                 <strong>location</strong>
                 <span>United Kingdom</span>
-              </div>
-
-              <div class="profile-row">
-                <strong>hobbies</strong>
-                <span>rock climbing, occasional Dota</span>
               </div>
 
               <div class="profile-row">
@@ -195,10 +192,43 @@
     {
       html: `
         <div class="news-slide">
-          <div class="news-package">
-            <span class="package-kicker">BBN EXCLUSIVE • SINGAPORE</span>
-            <h1 class="package-title">THINGS SAYANG HAS<br>LEARNED ABOUT FARIS</h1>
-            <p class="package-copy">Following extensive observation, several findings about the birthday boy have now been documented.</p>
+          <div class="news-package"
+               style="padding-top:48px;">
+
+            <span class="package-kicker"
+                  style="margin-bottom:30px;">
+              BBN EXCLUSIVE • SINGAPORE
+            </span>
+
+            <h1 class="package-title"
+                style="
+                  max-width:900px;
+                  margin-bottom:24px;
+                  font-size:clamp(42px,5vw,66px);
+                  line-height:.98;
+                ">
+              THINGS SAYANG HAS<br>
+              LEARNED ABOUT FARIS
+            </h1>
+
+            <div style="
+              position:relative;
+              z-index:2;
+              width:min(780px,75%);
+              height:4px;
+              margin:0 0 28px;
+              background:#e3c454;
+            "></div>
+
+            <p class="package-copy"
+               style="
+                 max-width:850px;
+                 margin:0;
+                 font-size:clamp(17px,1.8vw,23px);
+                 line-height:1.45;
+               ">
+              Following extensive observation, several findings about the birthday boy have now been documented.
+            </p>
           </div>
         </div>
       `
@@ -258,38 +288,125 @@
     {
       html: `
         <div class="news-slide">
-          <div class="info-board">
-            <p class="board-kicker">SAYANG'S FINDINGS • PART TWO</p>
-            <h2>THE THINGS SHE NOTICES</h2>
+          <div class="info-board"
+               style="
+                 padding:30px 42px 34px;
+                 overflow:hidden;
+               ">
 
-            <div class="info-row">
-              <span>cooking</span>
-              <strong>occasionally comes with spontaneous singing</strong>
+            <p class="board-kicker"
+               style="margin-bottom:24px;">
+              SAYANG'S FINDINGS • PART TWO
+            </p>
+
+            <h2 style="
+              margin:0 0 24px;
+              padding-bottom:16px;
+              font-size:clamp(30px,3.7vw,46px);
+            ">
+              THE THINGS SHE NOTICES
+            </h2>
+
+            <div style="
+              display:grid;
+              grid-template-columns:repeat(3,1fr);
+              gap:16px;
+              margin-top:4px;
+            ">
+
+              <div style="
+                min-height:180px;
+                padding:20px;
+                border:1px solid rgba(255,255,255,.13);
+                background:rgba(255,255,255,.045);
+              ">
+                <span style="
+                  display:block;
+                  margin-bottom:14px;
+                  color:#e3c454;
+                  font-size:10px;
+                  font-weight:900;
+                  letter-spacing:.11em;
+                  text-transform:uppercase;
+                ">
+                  WHEN HES COOKING
+                </span>
+
+                <p style="
+                  margin:0;
+                  color:rgba(255,255,255,.9);
+                  font-size:clamp(14px,1.4vw,18px);
+                  line-height:1.5;
+                ">
+                  every now and then he'll randomly start singing while hes cooking... which ive gotten very used to by now.
+                </p>
+              </div>
+
+              <div style="
+                min-height:180px;
+                padding:20px;
+                border:1px solid rgba(255,255,255,.13);
+                background:rgba(255,255,255,.045);
+              ">
+                <span style="
+                  display:block;
+                  margin-bottom:14px;
+                  color:#e3c454;
+                  font-size:10px;
+                  font-weight:900;
+                  letter-spacing:.11em;
+                  text-transform:uppercase;
+                ">
+                  THAT LITTLE HEART
+                </span>
+
+                <p style="
+                  margin:0;
+                  color:rgba(255,255,255,.9);
+                  font-size:clamp(14px,1.4vw,18px);
+                  line-height:1.5;
+                ">
+                  sometimes he'll just smile at me and make that little heart with his thumb and finger. i already know exactly what he means when he does it.
+                </p>
+              </div>
+
+              <div style="
+                min-height:180px;
+                padding:20px;
+                border:1px solid rgba(255,255,255,.13);
+                background:rgba(255,255,255,.045);
+              ">
+                <span style="
+                  display:block;
+                  margin-bottom:14px;
+                  color:#e3c454;
+                  font-size:10px;
+                  font-weight:900;
+                  letter-spacing:.11em;
+                  text-transform:uppercase;
+                ">
+                  WHEN WE'RE WATCHING SHOWS
+                </span>
+
+                <p style="
+                  margin:0;
+                  color:rgba(255,255,255,.9);
+                  font-size:clamp(14px,1.4vw,18px);
+                  line-height:1.5;
+                ">
+                  he'll get completely focused on whats happening and start making all these little expressions without realising it. whenever i catch one i find cute, i take a screenshot.
+                </p>
+              </div>
             </div>
 
-            <div class="info-row">
-              <span>little finger heart</span>
-              <strong>message understood immediately</strong>
-            </div>
-
-            <div class="info-row">
-              <span>Discord watch parties</span>
-              <strong>Faris gets completely absorbed</strong>
-            </div>
-
-            <div class="info-row">
-              <span>cute expressions caught on camera</span>
-              <strong>more than Faris realises</strong>
-            </div>
-
-            <div class="info-row">
-              <span>Faris' official position</span>
-              <strong>"I look ugly."</strong>
-            </div>
-
-            <div class="info-row">
-              <span>Sayang's response</span>
-              <strong>screenshots continue to be taken</strong>
+            <div style="
+              margin-top:18px;
+              padding-top:14px;
+              border-top:1px solid rgba(255,255,255,.13);
+              color:rgba(255,255,255,.72);
+              font-size:clamp(13px,1.3vw,17px);
+            ">
+              he says they look ugly. i keep taking them anyway.
             </div>
           </div>
         </div>
@@ -320,7 +437,11 @@
               ♪ Di mana dia, buah hati saya? ♪
             </div>
 
-            <p>The performance is believed to be an unauthorised adaptation of <em>Chan Mali Chan</em>.</p>
+            <p>
+              The performance is believed to be an unauthorised adaptation of
+              <em>Chan Mali Chan</em>.
+            </p>
+
             <p>No legal action has been taken.</p>
           </div>
         </div>
@@ -402,10 +523,20 @@
     {
       html: `
         <div class="news-slide">
-          <div class="statement-layout">
-            <span class="statement-tag">BBN EXCLUSIVE • SINGAPORE</span>
+          <div class="statement-layout"
+               style="padding-top:30px;">
 
-            <blockquote style="font-size:clamp(20px,2.2vw,28px);line-height:1.18;margin-top:20px;">
+            <span class="statement-tag">
+              BBN EXCLUSIVE • SINGAPORE
+            </span>
+
+            <blockquote style="
+              max-width:1050px;
+              margin:18px 0 10px;
+              font-size:clamp(15px,1.65vw,20px);
+              font-weight:650;
+              line-height:1.3;
+            ">
               “i really like how much he makes me laugh uh... even when hes not actually trying to be funny. sometimes hes genuinely funny and sometimes hes just being a complete idiot and somehow thats funny too. and when im trying to be annoyed at him but he manages to make me laugh... i cant even stay annoyed properly.<br><br>
 
               but i think some of my favourite moments with him are actually when he isnt paying attention to me uh... like when hes concentrating on something, randomly singing or just doing his own thing. i like watching him when hes completely being himself and doesnt even realise im looking at him.<br><br>
@@ -417,7 +548,9 @@
               well... i guess he knows now.”
             </blockquote>
 
-            <cite>— Sayang</cite>
+            <cite style="font-size:14px;">
+              — Sayang
+            </cite>
 
             <div class="lower-third">
               <div class="lower-breaking">EXCLUSIVE</div>
@@ -426,7 +559,9 @@
                 <h1>THE RECORD SPEAKS FOR ITSELF</h1>
               </div>
 
-              <div class="lower-sub">No further comment required</div>
+              <div class="lower-sub">
+                No further comment required
+              </div>
             </div>
           </div>
         </div>
@@ -445,8 +580,13 @@
               30 YEARS IN THE MAKING
             </h1>
 
-            <p class="package-copy">We are now receiving exclusive footage supplied by our Singapore correspondent.</p>
-            <p class="package-copy">The following material concerns the birthday boy directly.</p>
+            <p class="package-copy">
+              We are now receiving exclusive footage supplied by our Singapore correspondent.
+            </p>
+
+            <p class="package-copy">
+              The following material concerns the birthday boy directly.
+            </p>
           </div>
         </div>
       `
@@ -545,7 +685,10 @@
     if (slide.intro) {
       const introExitTimer = setTimeout(() => {
         const opening = newsScreen.querySelector(".bbn-opening");
-        if (opening) opening.classList.add("leaving");
+
+        if (opening) {
+          opening.classList.add("leaving");
+        }
       }, 2450);
 
       const introAdvanceTimer = setTimeout(() => {
@@ -626,7 +769,9 @@
   newsNextButton.addEventListener("click", () => {
     const slide = slides[currentNewsSlide];
 
-    if (slide.intro) return;
+    if (slide.intro) {
+      return;
+    }
 
     if (slide.final) {
       closeBirthdayNews();
