@@ -347,21 +347,28 @@
             <span class="statement-tag">BBN EXCLUSIVE • SINGAPORE</span>
 
             <blockquote>
-              “hes annoying uh... but i really love seeing him happy. especially that face he makes when hes genuinely excited abt something and his stupid big smile.<br><br>
-              dont tell him i said that.”
+              “i really like how much he makes me laugh uh... even when hes not actually trying to be funny. sometimes hes genuinely funny and sometimes hes just being a complete idiot and somehow thats funny too. and when im trying to be annoyed at him but he manages to make me laugh... i cant even stay annoyed properly.<br><br>
+
+              but i think some of my favourite moments with him are actually when he isnt paying attention to me uh... like when hes concentrating on something, randomly singing or just doing his own thing. i like watching him when hes completely being himself and doesnt even realise im looking at him.<br><br>
+
+              sometimes ill just sit there watching him and get this really fond feeling like... aw thats my person. hes literally not even doing anything uh... hes just being faris and idk, i really like those moments.<br><br>
+
+              he probably doesnt realise i look at him like that sometimes uh...<br><br>
+
+              well... i guess he knows now.”
             </blockquote>
 
             <cite>— Sayang</cite>
 
             <div class="lower-third">
-              <div class="lower-breaking">BREAKING</div>
+              <div class="lower-breaking">EXCLUSIVE</div>
 
               <div class="lower-main">
-                <h1>Sayang caught being nice</h1>
+                <h1>THE RECORD SPEAKS FOR ITSELF</h1>
               </div>
 
               <div class="lower-sub">
-                Unfortunately for the source, the statement has now been broadcast internationally
+                No further comment required
               </div>
             </div>
           </div>
