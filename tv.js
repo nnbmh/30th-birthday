@@ -47,12 +47,37 @@
 
           <div class="lower-third">
             <div class="lower-breaking">${lowerLabel}</div>
-            <div class="lower-main">
-              <h1>${lowerHeadline}</h1>
-            </div>
+            <div class="lower-main"><h1>${lowerHeadline}</h1></div>
             ${lowerSubline ? `<div class="lower-sub">${lowerSubline}</div>` : ""}
           </div>
         </div>
+      </div>
+    `;
+  }
+
+  function observationCard(title, text) {
+    return `
+      <div style="
+        padding:22px 24px;
+        border:1px solid rgba(255,255,255,.13);
+        background:rgba(255,255,255,.045);
+      ">
+        <span style="
+          display:block;
+          margin-bottom:13px;
+          color:#e3c454;
+          font-size:10px;
+          font-weight:900;
+          letter-spacing:.12em;
+          text-transform:uppercase;
+        ">${title}</span>
+
+        <p style="
+          margin:0;
+          color:rgba(255,255,255,.9);
+          font-size:clamp(14px,1.4vw,18px);
+          line-height:1.48;
+        ">${text}</p>
       </div>
     `;
   }
@@ -82,7 +107,6 @@
 
               <div class="bbn-opening-logo">BBN</div>
               <div class="bbn-opening-rule"></div>
-
               <p class="bbn-opening-special">SPECIAL REPORT</p>
               <h1>BREAKING NEWS</h1>
             </div>
@@ -101,9 +125,9 @@
         label: "LIVE • UNITED KINGDOM",
         headline: "FARIS TURNS 30",
         subline: "Birthday celebrations are officially underway.",
-        lowerLabel: "BREAKING NEWS",
-        lowerHeadline: "Faris turns 30",
-        lowerSubline: "Sources in Singapore confirm celebrations are underway",
+        lowerLabel: "BIRTHDAY WATCH",
+        lowerHeadline: "Special coverage now live",
+        lowerSubline: "Singapore correspondent closely monitoring developments",
         camera: "camera-wide"
       })
     },
@@ -111,10 +135,35 @@
     {
       html: `
         <div class="news-slide">
-          <div class="news-package">
-            <span class="package-kicker">BBN SPECIAL REPORT</span>
-            <h1 class="package-title">THE FARIS FILES</h1>
-            <p class="package-copy">
+          <div class="news-package" style="padding-top:48px;">
+            <span class="package-kicker" style="margin-bottom:30px;">
+              BBN SPECIAL REPORT
+            </span>
+
+            <h1 class="package-title" style="
+              max-width:900px;
+              margin-bottom:24px;
+              font-size:clamp(42px,5vw,66px);
+              line-height:.98;
+            ">
+              THE FARIS FILES
+            </h1>
+
+            <div style="
+              position:relative;
+              z-index:2;
+              width:min(780px,75%);
+              height:4px;
+              margin:0 0 28px;
+              background:#e3c454;
+            "></div>
+
+            <p class="package-copy" style="
+              max-width:850px;
+              margin:0;
+              font-size:clamp(17px,1.8vw,23px);
+              line-height:1.45;
+            ">
               Our investigation into the birthday boy has uncovered several behaviours that experts have described as... uniquely Faris.
             </p>
           </div>
@@ -192,21 +241,17 @@
     {
       html: `
         <div class="news-slide">
-          <div class="news-package"
-               style="padding-top:48px;">
-
-            <span class="package-kicker"
-                  style="margin-bottom:30px;">
+          <div class="news-package" style="padding-top:48px;">
+            <span class="package-kicker" style="margin-bottom:30px;">
               BBN EXCLUSIVE • SINGAPORE
             </span>
 
-            <h1 class="package-title"
-                style="
-                  max-width:900px;
-                  margin-bottom:24px;
-                  font-size:clamp(42px,5vw,66px);
-                  line-height:.98;
-                ">
+            <h1 class="package-title" style="
+              max-width:900px;
+              margin-bottom:24px;
+              font-size:clamp(42px,5vw,66px);
+              line-height:.98;
+            ">
               THINGS SAYANG HAS<br>
               LEARNED ABOUT FARIS
             </h1>
@@ -220,13 +265,12 @@
               background:#e3c454;
             "></div>
 
-            <p class="package-copy"
-               style="
-                 max-width:850px;
-                 margin:0;
-                 font-size:clamp(17px,1.8vw,23px);
-                 line-height:1.45;
-               ">
+            <p class="package-copy" style="
+              max-width:850px;
+              margin:0;
+              font-size:clamp(17px,1.8vw,23px);
+              line-height:1.45;
+            ">
               Following extensive observation, several findings about the birthday boy have now been documented.
             </p>
           </div>
@@ -237,48 +281,47 @@
     {
       html: `
         <div class="news-slide">
-          <div class="info-board numbers-board">
-            <p class="board-kicker">SAYANG'S FINDINGS • PART ONE</p>
-            <h2>EVERYDAY FARIS</h2>
+          <div class="info-board" style="
+            padding:30px 42px 34px;
+            overflow:hidden;
+          ">
+            <p class="board-kicker" style="margin-bottom:24px;">
+              SAYANG'S FINDINGS • PART ONE
+            </p>
 
-            <div class="info-row">
-              <span>will eat almost anything</span>
-              <strong>except tomatoes</strong>
-            </div>
+            <h2 style="
+              margin:0 0 24px;
+              padding-bottom:16px;
+              font-size:clamp(30px,3.7vw,46px);
+            ">
+              EVERYDAY FARIS
+            </h2>
 
-            <div class="info-row">
-              <span>sardines</span>
-              <strong>absolutely not</strong>
-            </div>
+            <div style="
+              display:grid;
+              grid-template-columns:repeat(2,1fr);
+              gap:16px;
+              margin-top:4px;
+            ">
+              ${observationCard(
+                "FOOD RULES",
+                "he'll eat pretty much anything... except tomatoes. sardines and tuna are also a definite no, although other fish might be acceptable depending on how its cooked. and do not offer him Coke Zero as a replacement for Coke."
+              )}
 
-            <div class="info-row">
-              <span>other types of fish</span>
-              <strong>depends how its cooked</strong>
-            </div>
+              ${observationCard(
+                "THE MISSING VAPE",
+                "somehow his vape is always missing. where did he leave it this time? nobody knows."
+              )}
 
-            <div class="info-row">
-              <span>Coke Zero as a substitute</span>
-              <strong>unacceptable</strong>
-            </div>
+              ${observationCard(
+                "TOMORROW'S PROBLEM",
+                "the dishes can apparently wait until tomorrow. according to Faris, anyway."
+              )}
 
-            <div class="info-row">
-              <span>location of vape</span>
-              <strong>frequently unknown</strong>
-            </div>
-
-            <div class="info-row">
-              <span>tonight's dishes</span>
-              <strong>tomorrow's problem</strong>
-            </div>
-
-            <div class="info-row">
-              <span>snoring volume</span>
-              <strong>unfortunately loud</strong>
-            </div>
-
-            <div class="info-row">
-              <span>bed allocation</span>
-              <strong>Faris 75% • Sayang 25%</strong>
+              ${observationCard(
+                "SLEEPING NEXT TO FARIS",
+                "he snores loudly and somehow manages to occupy about 3/4 of the bed. Sayang survives on the remaining 1/4."
+              )}
             </div>
           </div>
         </div>
@@ -288,14 +331,11 @@
     {
       html: `
         <div class="news-slide">
-          <div class="info-board"
-               style="
-                 padding:30px 42px 34px;
-                 overflow:hidden;
-               ">
-
-            <p class="board-kicker"
-               style="margin-bottom:24px;">
+          <div class="info-board" style="
+            padding:30px 42px 34px;
+            overflow:hidden;
+          ">
+            <p class="board-kicker" style="margin-bottom:24px;">
               SAYANG'S FINDINGS • PART TWO
             </p>
 
@@ -313,100 +353,20 @@
               gap:16px;
               margin-top:4px;
             ">
+              ${observationCard(
+                "WHEN HES COOKING",
+                "every now and then he'll randomly start singing while hes cooking... which ive gotten very used to by now."
+              )}
 
-              <div style="
-                min-height:180px;
-                padding:20px;
-                border:1px solid rgba(255,255,255,.13);
-                background:rgba(255,255,255,.045);
-              ">
-                <span style="
-                  display:block;
-                  margin-bottom:14px;
-                  color:#e3c454;
-                  font-size:10px;
-                  font-weight:900;
-                  letter-spacing:.11em;
-                  text-transform:uppercase;
-                ">
-                  WHEN HES COOKING
-                </span>
+              ${observationCard(
+                "THAT LITTLE HEART",
+                "sometimes he'll just smile at me and make that little heart with his thumb and finger. i already know exactly what he means when he does it."
+              )}
 
-                <p style="
-                  margin:0;
-                  color:rgba(255,255,255,.9);
-                  font-size:clamp(14px,1.4vw,18px);
-                  line-height:1.5;
-                ">
-                  every now and then he'll randomly start singing while he's cooking... which i've gotten very used to by now.
-                </p>
-              </div>
-
-              <div style="
-                min-height:180px;
-                padding:20px;
-                border:1px solid rgba(255,255,255,.13);
-                background:rgba(255,255,255,.045);
-              ">
-                <span style="
-                  display:block;
-                  margin-bottom:14px;
-                  color:#e3c454;
-                  font-size:10px;
-                  font-weight:900;
-                  letter-spacing:.11em;
-                  text-transform:uppercase;
-                ">
-                  THAT LITTLE HEART
-                </span>
-
-                <p style="
-                  margin:0;
-                  color:rgba(255,255,255,.9);
-                  font-size:clamp(14px,1.4vw,18px);
-                  line-height:1.5;
-                ">
-                  sometimes he'll just smile at me and make that little heart with his thumb and finger. i already know exactly what he means when he does it.
-                </p>
-              </div>
-
-              <div style="
-                min-height:180px;
-                padding:20px;
-                border:1px solid rgba(255,255,255,.13);
-                background:rgba(255,255,255,.045);
-              ">
-                <span style="
-                  display:block;
-                  margin-bottom:14px;
-                  color:#e3c454;
-                  font-size:10px;
-                  font-weight:900;
-                  letter-spacing:.11em;
-                  text-transform:uppercase;
-                ">
-                  WHEN WE'RE WATCHING SHOWS
-                </span>
-
-                <p style="
-                  margin:0;
-                  color:rgba(255,255,255,.9);
-                  font-size:clamp(14px,1.4vw,18px);
-                  line-height:1.5;
-                ">
-                  he'll get completely focused on whats happening and start making all these little expressions without realising it. whenever i catch one i find cute, i take a screenshot.
-                </p>
-              </div>
-            </div>
-
-            <div style="
-              margin-top:18px;
-              padding-top:14px;
-              border-top:1px solid rgba(255,255,255,.13);
-              color:rgba(255,255,255,.72);
-              font-size:clamp(13px,1.3vw,17px);
-            ">
-              he says they look ugly. i keep taking them anyway.
+              ${observationCard(
+                "WHEN WE'RE WATCHING SHOWS",
+                "he'll get completely focused on whats happening and start making all these little expressions without realising it. whenever i catch one i find cute, i take a screenshot.<br><br><span style='color:rgba(255,255,255,.65);'>he says they look ugly... i keep taking them anyway.</span>"
+              )}
             </div>
           </div>
         </div>
@@ -476,11 +436,6 @@
             </div>
 
             <div class="info-row">
-              <span>calls that became 3–4am</span>
-              <strong>more than sensible</strong>
-            </div>
-
-            <div class="info-row">
               <span>songs Faris mysteriously knows</span>
               <strong>apparently all of them</strong>
             </div>
@@ -496,12 +451,12 @@
             </div>
 
             <div class="info-row">
-              <span>times shes wished he was closer</span>
+              <span>times she's wished he was closer</span>
               <strong>countless</strong>
             </div>
 
             <div class="info-row">
-              <span>likelihood shed fly all that way again</span>
+              <span>likelihood she'd fly all that way again</span>
               <strong>100%</strong>
             </div>
           </div>
@@ -523,12 +478,8 @@
     {
       html: `
         <div class="news-slide">
-          <div class="statement-layout"
-               style="padding-top:30px;">
-
-            <span class="statement-tag">
-              BBN EXCLUSIVE • SINGAPORE
-            </span>
+          <div class="statement-layout" style="padding-top:30px;">
+            <span class="statement-tag">BBN EXCLUSIVE • SINGAPORE</span>
 
             <blockquote style="
               max-width:1050px;
@@ -539,29 +490,23 @@
             ">
               “i really like how much he makes me laugh uh... even when he's not actually trying to be funny. sometimes he's genuinely funny and sometimes he's just being a complete idiot and somehow that's funny too. and when i'm trying to be annoyed at him but he manages to make me laugh... i can't even stay annoyed properly.<br><br>
 
-              but i think some of my favourite moments with him are actually when he isn't paying attention to me uh... like when hes concentrating on something, randomly singing or just doing his own thing. i like watching him when he's completely being himself and doesn't even realise i'm looking at him.<br><br>
+              but i think some of my favourite moments with him are actually when he isn't paying attention to me uh... like when he's concentrating on something, randomly singing or just doing his own thing. i like watching him when he's completely being himself and doesn't even realise i'm looking at him.<br><br>
 
-              sometimes i'll just sit there watching him and get this really fond feeling like... aw that's my person. he's literally not even doing anything uh... he's just being faris and idk i really like those moments.<br><br>
+              sometimes i'll just sit there watching him and get this really fond feeling like... awww that's my person. he's literally not even doing anything uh... he's just being Faris and idk... i really like those moments.<br><br>
 
               he probably doesn't realise i look at him like that sometimes uh...<br><br>
 
               well... i guess he knows now.”
             </blockquote>
 
-            <cite style="font-size:14px;">
-              — Sayang
-            </cite>
+            <cite style="font-size:14px;">— Sayang</cite>
 
             <div class="lower-third">
               <div class="lower-breaking">EXCLUSIVE</div>
-
               <div class="lower-main">
                 <h1>THE RECORD SPEAKS FOR ITSELF</h1>
               </div>
-
-              <div class="lower-sub">
-                No further comment required
-              </div>
+              <div class="lower-sub">No further comment required</div>
             </div>
           </div>
         </div>
@@ -601,7 +546,6 @@
 
           <div class="lower-third">
             <div class="lower-breaking">EXCLUSIVE FOOTAGE</div>
-
             <div class="lower-main">
               <h1>Faris: 30 Years in the Making</h1>
             </div>
@@ -685,10 +629,7 @@
     if (slide.intro) {
       const introExitTimer = setTimeout(() => {
         const opening = newsScreen.querySelector(".bbn-opening");
-
-        if (opening) {
-          opening.classList.add("leaving");
-        }
+        if (opening) opening.classList.add("leaving");
       }, 2450);
 
       const introAdvanceTimer = setTimeout(() => {
@@ -769,9 +710,7 @@
   newsNextButton.addEventListener("click", () => {
     const slide = slides[currentNewsSlide];
 
-    if (slide.intro) {
-      return;
-    }
+    if (slide.intro) return;
 
     if (slide.final) {
       closeBirthdayNews();
