@@ -18,10 +18,8 @@
     "SAYANG MONITORING SITUATION FROM MILES AWAY",
     "BIRTHDAY BOY REPORTED TO BE IN GOOD SPIRITS",
     "RANDOM OBJECTS ADVISED TO REMAIN VIGILANT",
-    "SAYANG HYDRATION PROGRAMME REMAINS ACTIVE",
     "MUSICAL IDENTIFICATION RATE REMAINS ANNOYINGLY HIGH",
     "LATE-NIGHT DISCORD ACTIVITY CONTINUES",
-    "SOURCES CONFIRM FARIS IS VERY VERY LOVED",
     "MORE BIRTHDAY COVERAGE TO FOLLOW"
   ];
 
@@ -116,9 +114,7 @@
           <div class="news-package">
             <span class="package-kicker">BBN SPECIAL REPORT</span>
             <h1 class="package-title">THE FARIS FILES</h1>
-            <p class="package-copy">
-              Our investigation into the birthday boy has uncovered several behaviours that experts have described as... uniquely Faris.
-            </p>
+            <p class="package-copy">Our investigation into the birthday boy has uncovered several behaviours that experts have described as... uniquely Faris.</p>
           </div>
         </div>
       `
@@ -197,37 +193,103 @@
     },
 
     {
-      html: anchorScene({
-        label: "SINGAPORE",
-        headline: "Welfare checks continue",
-        subline: "Food intake and hydration remain under active supervision.",
-        lowerLabel: "SAYANG WATCH",
-        lowerHeadline: "“you eat already or not?”",
-        lowerSubline: "Follow-up instruction: “drink more water.”",
-        camera: "camera-wide"
-      })
+      html: `
+        <div class="news-slide">
+          <div class="news-package">
+            <span class="package-kicker">BBN EXCLUSIVE • SINGAPORE</span>
+            <h1 class="package-title">THINGS SAYANG HAS<br>LEARNED ABOUT FARIS</h1>
+            <p class="package-copy">Following extensive observation, several findings about the birthday boy have now been documented.</p>
+          </div>
+        </div>
+      `
+    },
+
+    {
+      html: `
+        <div class="news-slide">
+          <div class="info-board numbers-board">
+            <p class="board-kicker">SAYANG'S FINDINGS • PART ONE</p>
+            <h2>EVERYDAY FARIS</h2>
+
+            <div class="info-row">
+              <span>will eat almost anything</span>
+              <strong>except tomatoes</strong>
+            </div>
+
+            <div class="info-row">
+              <span>sardines</span>
+              <strong>absolutely not</strong>
+            </div>
+
+            <div class="info-row">
+              <span>other types of fish</span>
+              <strong>depends how its cooked</strong>
+            </div>
+
+            <div class="info-row">
+              <span>Coke Zero as a substitute</span>
+              <strong>unacceptable</strong>
+            </div>
+
+            <div class="info-row">
+              <span>location of vape</span>
+              <strong>frequently unknown</strong>
+            </div>
+
+            <div class="info-row">
+              <span>tonight's dishes</span>
+              <strong>tomorrow's problem</strong>
+            </div>
+
+            <div class="info-row">
+              <span>snoring volume</span>
+              <strong>unfortunately loud</strong>
+            </div>
+
+            <div class="info-row">
+              <span>bed allocation</span>
+              <strong>Faris 75% • Sayang 25%</strong>
+            </div>
+          </div>
+        </div>
+      `
     },
 
     {
       html: `
         <div class="news-slide">
           <div class="info-board">
-            <p class="board-kicker">BBN DATA</p>
-            <h2>SAYANG WELFARE PROGRAMME</h2>
+            <p class="board-kicker">SAYANG'S FINDINGS • PART TWO</p>
+            <h2>THE THINGS SHE NOTICES</h2>
 
             <div class="info-row">
-              <span>food intake</span>
-              <strong>monitored</strong>
+              <span>cooking</span>
+              <strong>occasionally comes with spontaneous singing</strong>
             </div>
 
             <div class="info-row">
-              <span>hydration</span>
-              <strong>aggressively monitored</strong>
+              <span>little finger heart</span>
+              <strong>message understood immediately</strong>
             </div>
 
             <div class="info-row">
-              <span>responsible officer</span>
-              <strong>Faris</strong>
+              <span>Discord watch parties</span>
+              <strong>Faris gets completely absorbed</strong>
+            </div>
+
+            <div class="info-row">
+              <span>cute expressions caught on camera</span>
+              <strong>more than Faris realises</strong>
+            </div>
+
+            <div class="info-row">
+              <span>Faris' official position</span>
+              <strong>"I look ugly."</strong>
+            </div>
+
+            <div class="info-row">
+              <span>Sayang's response</span>
+              <strong>screenshots continue to be taken</strong>
             </div>
           </div>
         </div>
@@ -258,10 +320,7 @@
               ♪ Di mana dia, buah hati saya? ♪
             </div>
 
-            <p>
-              The performance is believed to be an unauthorised adaptation of <em>Chan Mali Chan</em>.
-            </p>
-
+            <p>The performance is believed to be an unauthorised adaptation of <em>Chan Mali Chan</em>.</p>
             <p>No legal action has been taken.</p>
           </div>
         </div>
@@ -335,7 +394,7 @@
         headline: "Miles apart",
         subline: "Late-night Discord activity continues despite the distance.",
         lowerLabel: "LATE NIGHT",
-        lowerHeadline: "Calls reportedly continue until 3–4am",
+        lowerHeadline: "Both parties occasionally forget what time it is",
         camera: "camera-wide"
       })
     },
@@ -346,7 +405,7 @@
           <div class="statement-layout">
             <span class="statement-tag">BBN EXCLUSIVE • SINGAPORE</span>
 
-            <blockquote>
+            <blockquote style="font-size:clamp(20px,2.2vw,28px);line-height:1.18;margin-top:20px;">
               “i really like how much he makes me laugh uh... even when hes not actually trying to be funny. sometimes hes genuinely funny and sometimes hes just being a complete idiot and somehow thats funny too. and when im trying to be annoyed at him but he manages to make me laugh... i cant even stay annoyed properly.<br><br>
 
               but i think some of my favourite moments with him are actually when he isnt paying attention to me uh... like when hes concentrating on something, randomly singing or just doing his own thing. i like watching him when hes completely being himself and doesnt even realise im looking at him.<br><br>
@@ -367,25 +426,11 @@
                 <h1>THE RECORD SPEAKS FOR ITSELF</h1>
               </div>
 
-              <div class="lower-sub">
-                No further comment required
-              </div>
+              <div class="lower-sub">No further comment required</div>
             </div>
           </div>
         </div>
       `
-    },
-
-    {
-      html: anchorScene({
-        label: "VERIFIED",
-        headline: "One fact independently confirmed",
-        subline: "Faris is very, very loved.",
-        lowerLabel: "CONFIRMED",
-        lowerHeadline: "Faris is very, very loved",
-        lowerSubline: "Particularly by one woman many miles away",
-        camera: "camera-medium"
-      })
     },
 
     {
@@ -400,13 +445,8 @@
               30 YEARS IN THE MAKING
             </h1>
 
-            <p class="package-copy">
-              We are now receiving exclusive footage supplied by our Singapore correspondent.
-            </p>
-
-            <p class="package-copy">
-              The following material concerns the birthday boy directly.
-            </p>
+            <p class="package-copy">We are now receiving exclusive footage supplied by our Singapore correspondent.</p>
+            <p class="package-copy">The following material concerns the birthday boy directly.</p>
           </div>
         </div>
       `
