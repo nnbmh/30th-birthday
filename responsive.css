@@ -20,7 +20,7 @@ body {
 }
 
 /* =========================================================
-   INTRO NOTE
+   INTRO
    ========================================================= */
 
 .landscape-note {
@@ -38,32 +38,58 @@ body {
 }
 
 /* =========================================================
-   LAPTOP / DESKTOP LANDSCAPE ROOM FRAMING
+   LAPTOP / DESKTOP
 
-   Keep the room full-screen, but favour the TOP of the
-   photograph so the wall TV is not cropped off.
+   IMPORTANT:
+   The room photograph is 4:3.
+
+   The canvas, image AND hotspots now share that same 4:3
+   coordinate system. The browser simply crops the canvas.
+
+   This prevents hotspots drifting when the laptop window
+   has a different aspect ratio.
    ========================================================= */
 
 @media (orientation: landscape) and (min-width: 1367px) {
-  #room,
-  #roomCanvas {
+  #room {
+    position: fixed;
+    inset: 0;
     width: 100vw;
     height: 100dvh;
     overflow: hidden;
   }
 
+  #roomCanvas {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: max(100vw, calc(100dvh * 4 / 3));
+    height: max(100dvh, calc(100vw * 3 / 4));
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+  }
+
   #roomImage {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: center top;
+    object-fit: fill;
+    object-position: center;
   }
+
+  /* -----------------------------------------
+     LAPTOP HOTSPOTS
+     Coordinates are relative to the PHOTO,
+     not the browser window.
+     ----------------------------------------- */
 
   #monitorHotspot {
     left: 24%;
     top: 29%;
     width: 24%;
     height: 27%;
+    z-index: 60;
   }
 
   #tvHotspot {
@@ -71,6 +97,7 @@ body {
     top: 2%;
     width: 18%;
     height: 16%;
+    z-index: 60;
   }
 
   #laptopHotspot {
@@ -78,6 +105,7 @@ body {
     top: 36%;
     width: 23.5%;
     height: 29%;
+    z-index: 60;
   }
 
   #pandaHotspot {
@@ -85,18 +113,22 @@ body {
     top: 50.5%;
     width: 8.5%;
     height: 17%;
+    z-index: 60;
   }
 
   #noteHotspot {
-    left: 45.5%;
-    top: 27%;
-    width: 5.5%;
-    height: 9%;
+    left: 42.3%;
+    top: 29.5%;
+    width: 6%;
+    height: 8%;
+    z-index: 90;
   }
 }
 
 /* =========================================================
    IPAD / TABLET LANDSCAPE
+
+   Kept separate from laptop layout.
    ========================================================= */
 
 @media (orientation: landscape) and (min-width: 768px) and (max-width: 1366px) {
@@ -118,8 +150,11 @@ body {
   }
 
   #roomCanvas {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
+    transform: none;
   }
 
   #roomImage {
@@ -258,7 +293,6 @@ body {
 
 @media (max-width: 767px),
        (orientation: landscape) and (max-height: 500px) and (max-width: 1000px) {
-
   html,
   body {
     width: 100%;
