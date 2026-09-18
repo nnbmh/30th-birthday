@@ -899,7 +899,6 @@ function openComputerApp(appName) {
   }
 
   const data = computerAppData[appName];
-
   if (!data) return;
 
   computerClick();
@@ -908,10 +907,24 @@ function openComputerApp(appName) {
     startMenu.classList.remove("open");
   }
 
-  setComputerWindowMode(appName);
+  /* RESET ANY EXPLORER / PHOTO VIEWER STATE FIRST */
+  currentExplorerLocation = null;
+  explorerBackStack = [];
+  explorerForwardStack = [];
 
+  appWindow.classList.remove("explorer-mode");
+  appWindow.classList.remove("photo-viewer-mode");
+
+  /* CLEAR OLD CONTENT BEFORE OPENING FILE */
+  appContent.innerHTML = "";
+
+  /* OPEN NORMAL WINDOW */
   appTitle.textContent = data.title;
   appContent.innerHTML = data.content;
+
+  /* RESET SCROLL POSITION */
+  appContent.scrollTop = 0;
+
   appWindow.classList.add("open");
 }
 
