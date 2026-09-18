@@ -528,36 +528,27 @@ function renderExplorerLocation(location) {
    Only prepare the thumbnails for the folder being opened.
    ========================================================= */
 
-const thumbnailReadyPromises = new Map();
+const thumbnailCache = new Map();
 
-function waitForThumbnail(path) {
-  if (thumbnailReadyPromises.has(path)) {
-    return thumbnailReadyPromises.get(path);
+function cacheThumbnail(path) {
+  if (thumbnailCache.has(path)) {
+    return thumbnailCache.get(path);
   }
 
+  const image = new Image();
+  image.src = path;
+
   const promise = new Promise((resolve) => {
-    const image = new Image();
-    let finished = false;
+    if (image.complete) {
+      resolve();
+      return;
+    }
 
-    const finish = () => {
-      if (finished) return;
-      finished = true;
-
-      if (typeof image.decode === "function") {
-        image.decode().catch(() => {}).finally(resolve);
-      } else {
-        resolve();
-      }
-    };
-
-    image.onload = finish;
-    image.onerror = finish;
-    image.src = path;
-
-    if (image.complete) finish();
+    image.onload = resolve;
+    image.onerror = resolve;
   });
 
-  thumbnailReadyPromises.set(path, promise);
+  thumbnailCache.set(path, promise);
   return promise;
 }
 
@@ -582,27 +573,25 @@ function preparePictureLocation(location) {
     );
   }
 
-  return Promise.all(paths.map(waitForThumbnail));
+  paths.forEach(cacheThumbnail);
 }
 
-/*
-  Warm ONLY the six thumbnails on the Pictures home page.
+function prepareAllPictures() {
+  preparePictureLocation("photos");
+  preparePictureLocation("candid");
+  preparePictureLocation("us");
 
-  We deliberately do not preload candid/us here because loading all
-  39 images at startup was competing with the rest of the computer UI.
-*/
-preparePictureLocation("photos");
+  /*
+    Build the Explorer HTML during boot as well.
+    This makes the browser parse all of it before Faris clicks Pictures.
+  */
+  renderPhotosHome();
+  renderPhotoFolder("candid");
+  renderPhotoFolder("us");
+}
 
-async function navigateExplorer(location, addHistory = true) {
+function navigateExplorer(location, addHistory = true) {
   if (!location) return;
-
-  if (
-    location === "photos" ||
-    location === "candid" ||
-    location === "us"
-  ) {
-    await preparePictureLocation(location);
-  }
 
   if (
     addHistory &&
@@ -629,18 +618,10 @@ async function navigateExplorer(location, addHistory = true) {
   computerClick();
 }
 
-async function explorerBack() {
+  function explorerBack() {
   if (!explorerBackStack.length) return;
 
   const destination = explorerBackStack.pop();
-
-  if (
-    destination === "photos" ||
-    destination === "candid" ||
-    destination === "us"
-  ) {
-    await preparePictureLocation(destination);
-  }
 
   if (currentExplorerLocation) {
     explorerForwardStack.push(currentExplorerLocation);
@@ -661,18 +642,10 @@ async function explorerBack() {
   computerClick();
 }
 
-async function explorerForward() {
+  function explorerForward() {
   if (!explorerForwardStack.length) return;
 
   const destination = explorerForwardStack.pop();
-
-  if (
-    destination === "photos" ||
-    destination === "candid" ||
-    destination === "us"
-  ) {
-    await preparePictureLocation(destination);
-  }
 
   if (currentExplorerLocation) {
     explorerBackStack.push(currentExplorerLocation);
