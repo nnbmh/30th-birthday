@@ -17,12 +17,6 @@
   let isPaused = false;
   let tvSequenceToken = 0;
 
-  /* =========================================================
-     PRELOAD BBN NEWSROOM
-     Prevents the anchor background flashing/glitching the
-     first time an anchor slide appears.
-     ========================================================= */
-
   const anchorImage = new Image();
   let anchorImageReady = false;
 
@@ -38,7 +32,6 @@
           await anchorImage.decode();
         } catch (error) {}
       }
-
       finish();
     };
 
@@ -54,8 +47,7 @@
     }
   });
 
-  /* Also ask the browser to begin fetching it immediately. */
-  if (!document.querySelector('link[data-bbn-anchor-preload]')) {
+  if (!document.querySelector("link[data-bbn-anchor-preload]")) {
     const preload = document.createElement("link");
     preload.rel = "preload";
     preload.as = "image";
@@ -369,8 +361,8 @@
 
               ${observationCard(
                 "THE MISSING VAPE",
-                "somehow his vape is always missing...
-                where did he leave it this time? nobody knows."
+                `somehow his vape is always missing...
+                where did he leave it this time? nobody knows.`
               )}
 
               ${observationCard(
@@ -380,8 +372,8 @@
 
               ${observationCard(
                 "SLEEPING NEXT TO FARIS",
-                "he snores loudly and somehow manages to occupy about 3/4 of the bed. 
-                Sayang survives on the remaining 1/4."
+                `he snores loudly and somehow manages to occupy about 3/4 of the bed.
+                Sayang survives on the remaining 1/4.`
               )}
             </div>
           </div>
@@ -770,9 +762,7 @@
     const slide = slides[currentNewsSlide];
 
     isPaused = false;
-
     tvBroadcast.classList.remove("broadcast-paused");
-
     tvBroadcast.classList.toggle("intro-active", Boolean(slide.intro));
 
     newsScreen.innerHTML = slide.html;
@@ -831,168 +821,55 @@
     scheduleSlideAdvance(slide.duration || 8000);
   }
 
-function beginTVAnimation(sequenceToken) {
-  if (sequenceToken !== tvSequenceToken) return;
-
-  let staticAudioContext = null;
-  let staticNoiseSource = null;
-  let staticNoiseGain = null;
-
-  function startStaticNoise() {
-    try {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      if (!AudioContext) return;
-
-      staticAudioContext = new AudioContext();
-
-      const bufferLength = Math.floor(staticAudioContext.sampleRate * 1);
-      const noiseBuffer = staticAudioContext.createBuffer(
-        1,
-        bufferLength,
-        staticAudioContext.sampleRate
-      );
-
-      const output = noiseBuffer.getChannelData(0);
-
-      for (let i = 0; i < bufferLength; i++) {
-        output[i] = Math.random() * 2 - 1;
-      }
-
-      staticNoiseSource = staticAudioContext.createBufferSource();
-      staticNoiseGain = staticAudioContext.createGain();
-
-      staticNoiseSource.buffer = noiseBuffer;
-
-      staticNoiseGain.gain.setValueAtTime(
-        0.055,
-        staticAudioContext.currentTime
-      );
-
-      staticNoiseGain.gain.exponentialRampToValueAtTime(
-        0.001,
-        staticAudioContext.currentTime + 0.8
-      );
-
-      staticNoiseSource.connect(staticNoiseGain);
-      staticNoiseGain.connect(staticAudioContext.destination);
-
-      staticNoiseSource.start();
-      staticNoiseSource.stop(staticAudioContext.currentTime + 0.8);
-    } catch (error) {}
-  }
-
-  function stopStaticNoise() {
-    try {
-      if (staticNoiseSource) staticNoiseSource.stop();
-    } catch (error) {}
-
-    try {
-      if (staticAudioContext && staticAudioContext.state !== "closed") {
-        staticAudioContext.close();
-      }
-    } catch (error) {}
-
-    staticNoiseSource = null;
-    staticNoiseGain = null;
-    staticAudioContext = null;
-  }
-
-  const staticTimer = setTimeout(() => {
+  function beginTVAnimation(sequenceToken) {
     if (sequenceToken !== tvSequenceToken) return;
 
-    tvPower.classList.add("hidden-phase");
-    tvStatic.classList.remove("hidden-phase");
-    tvStatic.classList.add("active");
-
-    startStaticNoise();
-  }, 250);
-
-  const prepareBroadcastTimer = setTimeout(() => {
-    if (sequenceToken !== tvSequenceToken) {
-      stopStaticNoise();
-      return;
-    }
-
-    /*
-      IMPORTANT:
-      Render the BBN opening BEFORE revealing the broadcast.
-
-      This fixes the blank navy screen seen on iPad/Safari because
-      Safari now has time to construct and paint the first slide
-      while it is still hidden behind the static.
-    */
-    renderNewsSlide();
-
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        if (sequenceToken !== tvSequenceToken) {
-          stopStaticNoise();
-          return;
-        }
-
-        stopStaticNoise();
-
-        tvStatic.classList.remove("active");
-        tvStatic.classList.add("hidden-phase");
-
-        tvBroadcast.classList.add("active");
-      });
-    });
-  }, 1050);
-
-  tvTimers.push(staticTimer, prepareBroadcastTimer);
-}
-
-async function startBirthdayNews() {
-  clearTVTimers();
-
-  const sequenceToken = ++tvSequenceToken;
-
-  currentNewsSlide = 0;
-  isPaused = false;
-  slideRemaining = 0;
-
-  tvPower.className = "tv-power";
-  tvStatic.className = "tv-static";
-  tvBroadcast.className = "tv-broadcast";
-
-  newsScreen.innerHTML = "";
-  newsTickerText.innerHTML = "";
-
-  /*
-    Make sure the BBN newsroom image has completely downloaded
-    and decoded before starting the television sequence.
-
-    This prevents the first anchor image from flashing/glitching
-    on Safari, Chrome and slower connections.
-  */
-  if (!anchorImageReady) {
-    await anchorImagePromise;
-  }
-
-  if (sequenceToken !== tvSequenceToken) return;
-
-  /*
-    Safari/iPad can report an image as decoded before its compositor
-    has actually prepared it for painting.
-
-    Two animation frames give the browser time to place the decoded
-    newsroom image into the rendering pipeline.
-  */
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
+    const staticTimer = setTimeout(() => {
       if (sequenceToken !== tvSequenceToken) return;
 
-      beginTVAnimation(sequenceToken);
-    });
-  });
-}
-  
-    /*
-      Give the browser one paint after decoding so the decoded
-      image is available to the CSS background compositor before
-      the first anchor slide can appear.
-    */
+      tvPower.classList.add("hidden-phase");
+      tvStatic.classList.add("active");
+    }, 650);
+
+    const broadcastTimer = setTimeout(() => {
+      if (sequenceToken !== tvSequenceToken) return;
+
+      tvStatic.classList.add("hidden-phase");
+      tvBroadcast.classList.add("active");
+
+      const revealTimer = setTimeout(() => {
+        if (sequenceToken !== tvSequenceToken) return;
+        renderNewsSlide();
+      }, 180);
+
+      tvTimers.push(revealTimer);
+    }, 1400);
+
+    tvTimers.push(staticTimer, broadcastTimer);
+  }
+
+  async function startBirthdayNews() {
+    clearTVTimers();
+
+    const sequenceToken = ++tvSequenceToken;
+
+    currentNewsSlide = 0;
+    isPaused = false;
+    slideRemaining = 0;
+
+    tvPower.className = "tv-power";
+    tvStatic.className = "tv-static";
+    tvBroadcast.className = "tv-broadcast";
+
+    newsScreen.innerHTML = "";
+    newsTickerText.innerHTML = "";
+
+    if (!anchorImageReady) {
+      await anchorImagePromise;
+    }
+
+    if (sequenceToken !== tvSequenceToken) return;
+
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         if (sequenceToken !== tvSequenceToken) return;
