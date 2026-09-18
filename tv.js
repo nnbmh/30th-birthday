@@ -126,7 +126,7 @@
     },
 
     {
-      duration: 6500,
+      duration: 4500,
       html: anchorScene({
         label: "LIVE • UNITED KINGDOM",
         headline: "FARIS TURNS 30",
@@ -139,7 +139,7 @@
     },
 
     {
-      duration: 8000,
+      duration: 4500,
       html: `
         <div class="news-slide">
           <div class="news-package" style="padding-top:48px;">
@@ -179,7 +179,7 @@
     },
 
     {
-      duration: 12000,
+      duration: 5000,
       html: `
         <div class="news-slide">
           <div class="profile-package">
@@ -236,7 +236,7 @@
     },
 
     {
-      duration: 6500,
+      duration: 4500,
       html: anchorScene({
         label: "DEVELOPING",
         headline: "Random objects remain at risk",
@@ -248,7 +248,7 @@
     },
 
     {
-      duration: 8000,
+      duration: 5000,
       html: `
         <div class="news-slide">
           <div class="news-package" style="padding-top:48px;">
@@ -386,7 +386,7 @@
     },
 
     {
-      duration: 6500,
+      duration: 4500,
       html: anchorScene({
         label: "CULTURE DESK",
         headline: "Unusual musical ability identified",
@@ -399,7 +399,7 @@
     },
 
     {
-      duration: 11000,
+      duration: 4500,
       html: `
         <div class="news-slide">
           <div class="music-card">
@@ -423,7 +423,7 @@
     },
 
     {
-      duration: 17000,
+      duration: 4500,
       html: `
         <div class="news-slide">
           <div class="info-board numbers-board">
@@ -480,7 +480,7 @@
     },
 
     {
-      duration: 6500,
+      duration: 4500,
       html: anchorScene({
         label: "DISTANCE REPORT",
         headline: "Miles apart",
@@ -634,21 +634,22 @@
     tvBroadcast.classList.toggle("broadcast-paused", paused);
 
     const animatedElements = tvBroadcast.querySelectorAll("*");
+
     animatedElements.forEach((element) => {
       element.style.animationPlayState = paused ? "paused" : "";
     });
 
-    if (birthdayVideo) {
-      if (paused && !birthdayVideo.paused) {
-        birthdayVideo.pause();
-      }
+    if (birthdayVideo && paused && !birthdayVideo.paused) {
+      birthdayVideo.pause();
     }
 
     const slide = slides[currentNewsSlide];
 
     if (!slide || slide.final) return;
 
-    newsNextButton.textContent = paused ? "▶ RESUME" : "❚❚ PAUSE";
+    newsNextButton.textContent = paused
+      ? "▶ RESUME"
+      : "❚❚ PAUSE";
   }
 
   function scheduleSlideAdvance(duration) {
@@ -678,7 +679,11 @@
 
     if (slideTimer) {
       const elapsed = performance.now() - slideStartedAt;
-      slideRemaining = Math.max(0, slideRemaining - elapsed);
+
+      slideRemaining = Math.max(
+        0,
+        slideRemaining - elapsed
+      );
 
       clearTimeout(slideTimer);
       slideTimer = null;
@@ -696,7 +701,10 @@
 
     if (!slide || slide.final) return;
 
-    const remaining = Math.max(250, slideRemaining);
+    const remaining = Math.max(
+      250,
+      slideRemaining
+    );
 
     slideStartedAt = performance.now();
 
@@ -717,7 +725,8 @@
       slideTimer = null;
     }
 
-    currentNewsSlide = getNextVisibleSlideIndex(currentNewsSlide);
+    currentNewsSlide =
+      getNextVisibleSlideIndex(currentNewsSlide);
 
     if (currentNewsSlide >= slides.length) {
       closeBirthdayNews();
@@ -727,8 +736,15 @@
     const slide = slides[currentNewsSlide];
 
     isPaused = false;
-    tvBroadcast.classList.remove("broadcast-paused");
-    tvBroadcast.classList.toggle("intro-active", Boolean(slide.intro));
+
+    tvBroadcast.classList.remove(
+      "broadcast-paused"
+    );
+
+    tvBroadcast.classList.toggle(
+      "intro-active",
+      Boolean(slide.intro)
+    );
 
     newsScreen.innerHTML = slide.html;
 
@@ -740,7 +756,8 @@
     }
 
     if (slide.video) {
-      const stage = document.getElementById("newsVideoStage");
+      const stage =
+        document.getElementById("newsVideoStage");
 
       if (stage) {
         stage.appendChild(birthdayVideo);
@@ -752,9 +769,13 @@
       if (birthdayVideo) {
         birthdayVideo.currentTime = 0;
 
-        const playPromise = birthdayVideo.play();
+        const playPromise =
+          birthdayVideo.play();
 
-        if (playPromise && typeof playPromise.catch === "function") {
+        if (
+          playPromise &&
+          typeof playPromise.catch === "function"
+        ) {
           playPromise.catch(() => {});
         }
       }
@@ -763,7 +784,8 @@
     }
 
     if (slide.final) {
-      newsNextButton.textContent = "RETURN TO ROOM";
+      newsNextButton.textContent =
+        "RETURN TO ROOM";
       return;
     }
 
@@ -773,7 +795,8 @@
       const introExitTimer = setTimeout(() => {
         if (isPaused) return;
 
-        const opening = newsScreen.querySelector(".bbn-opening");
+        const opening =
+          newsScreen.querySelector(".bbn-opening");
 
         if (opening) {
           opening.classList.add("leaving");
@@ -783,13 +806,17 @@
       tvTimers.push(introExitTimer);
     }
 
-    scheduleSlideAdvance(slide.duration || 8000);
+    scheduleSlideAdvance(
+      slide.duration || 8000
+    );
   }
 
   function startBirthdayNews() {
     clearTVTimers();
 
-    currentNewsSlide = getNextVisibleSlideIndex(0);
+    currentNewsSlide =
+      getNextVisibleSlideIndex(0);
+
     currentNewsSlide = 0;
     isPaused = false;
     slideRemaining = 0;
@@ -817,7 +844,10 @@
       tvTimers.push(revealTimer);
     }, 1400);
 
-    tvTimers.push(staticTimer, broadcastTimer);
+    tvTimers.push(
+      staticTimer,
+      broadcastTimer
+    );
   }
 
   function closeBirthdayNews() {
@@ -826,7 +856,10 @@
     isPaused = false;
     slideRemaining = 0;
 
-    if (birthdayVideo && !birthdayVideo.paused) {
+    if (
+      birthdayVideo &&
+      !birthdayVideo.paused
+    ) {
       birthdayVideo.pause();
     }
 
@@ -836,61 +869,84 @@
     );
 
     tvModal.classList.remove("open");
-    tvModal.setAttribute("aria-hidden", "true");
 
-    if (typeof clearRoomFocus === "function") {
+    tvModal.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+
+    if (
+      typeof clearRoomFocus === "function"
+    ) {
       clearRoomFocus();
     }
   }
 
-  newsNextButton.addEventListener("click", () => {
-    const slide = slides[currentNewsSlide];
+  newsNextButton.addEventListener(
+    "click",
+    () => {
+      const slide =
+        slides[currentNewsSlide];
 
-    if (!slide) return;
+      if (!slide) return;
 
-    if (slide.final) {
-      closeBirthdayNews();
-      return;
+      if (slide.final) {
+        closeBirthdayNews();
+        return;
+      }
+
+      if (isPaused) {
+        resumeBroadcast();
+      } else {
+        pauseBroadcast();
+      }
     }
+  );
 
-    if (isPaused) {
-      resumeBroadcast();
-    } else {
-      pauseBroadcast();
-    }
-  });
-
-  window.runTVSequence = startBirthdayNews;
+  window.runTVSequence =
+    startBirthdayNews;
 
   document
     .querySelectorAll("#tvModal [data-close]")
     .forEach((button) => {
-      button.addEventListener("click", () => {
-        clearTVTimers();
+      button.addEventListener(
+        "click",
+        () => {
+          clearTVTimers();
 
-        isPaused = false;
-        slideRemaining = 0;
+          isPaused = false;
+          slideRemaining = 0;
 
-        tvBroadcast.classList.remove(
-          "intro-active",
-          "broadcast-paused"
-        );
+          tvBroadcast.classList.remove(
+            "intro-active",
+            "broadcast-paused"
+          );
 
-        if (birthdayVideo && !birthdayVideo.paused) {
-          birthdayVideo.pause();
+          if (
+            birthdayVideo &&
+            !birthdayVideo.paused
+          ) {
+            birthdayVideo.pause();
+          }
         }
-      });
+      );
     });
 
   if (birthdayVideo) {
-    birthdayVideo.addEventListener("ended", () => {
-      if (slides[currentNewsSlide]?.video) {
-        currentNewsSlide = getNextVisibleSlideIndex(
-          currentNewsSlide + 1
-        );
+    birthdayVideo.addEventListener(
+      "ended",
+      () => {
+        if (
+          slides[currentNewsSlide]?.video
+        ) {
+          currentNewsSlide =
+            getNextVisibleSlideIndex(
+              currentNewsSlide + 1
+            );
 
-        renderNewsSlide();
+          renderNewsSlide();
+        }
       }
-    });
+    );
   }
 })();
