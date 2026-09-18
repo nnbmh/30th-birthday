@@ -99,9 +99,7 @@ function getExplorerTitle(location) {
 }
 
 function getExplorerPath(location) {
-  if (location === "thispc") {
-    return `This PC`;
-  }
+  if (location === "thispc") return `This PC`;
 
   if (location === "documents") {
     return `This PC <span>›</span> Documents`;
@@ -123,9 +121,7 @@ function getExplorerPath(location) {
     return `This PC <span>›</span> Pictures <span>›</span> us`;
   }
 
-  if (location === "recycle") {
-    return `Recycle Bin`;
-  }
+  if (location === "recycle") return `Recycle Bin`;
 
   return "";
 }
@@ -256,9 +252,7 @@ function explorerChrome(location, content, itemCount = "") {
         </button>
       </div>
 
-      <div class="win-address-bar">
-        ${getExplorerPath(location)}
-      </div>
+      <div class="win-address-bar">${getExplorerPath(location)}</div>
 
       <div class="win-search-box">
         <span class="win-search-icon"></span>
@@ -273,6 +267,7 @@ function explorerChrome(location, content, itemCount = "") {
 
     <div class="win-status-bar">
       <span>${itemCount}</span>
+
       <div class="win-view-buttons">
         <span>▤</span>
         <span>▦</span>
@@ -409,15 +404,15 @@ function renderThisPC() {
     </div>
 
     <div class="win-drive-row">
-      <div class="win-drive-glyph">
-        <span></span>
-      </div>
+      <div class="win-drive-glyph"><span></span></div>
 
       <div class="win-drive-details">
         <div class="win-drive-name">Local Disk (C:)</div>
+
         <div class="win-drive-meter">
           <span></span>
         </div>
+
         <small>214 GB free of 476 GB</small>
       </div>
     </div>`,
@@ -527,8 +522,87 @@ function renderExplorerLocation(location) {
   return renderThisPC();
 }
 
-function navigateExplorer(location, addHistory = true) {
+/* =========================================================
+   PICTURES
+   Do NOT load all 39 thumbnails at once.
+   Only prepare the thumbnails for the folder being opened.
+   ========================================================= */
+
+const thumbnailReadyPromises = new Map();
+
+function waitForThumbnail(path) {
+  if (thumbnailReadyPromises.has(path)) {
+    return thumbnailReadyPromises.get(path);
+  }
+
+  const promise = new Promise((resolve) => {
+    const image = new Image();
+    let finished = false;
+
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+
+      if (typeof image.decode === "function") {
+        image.decode().catch(() => {}).finally(resolve);
+      } else {
+        resolve();
+      }
+    };
+
+    image.onload = finish;
+    image.onerror = finish;
+    image.src = path;
+
+    if (image.complete) finish();
+  });
+
+  thumbnailReadyPromises.set(path, promise);
+  return promise;
+}
+
+function preparePictureLocation(location) {
+  let paths = [];
+
+  if (location === "photos") {
+    paths = standalonePhotos.map((name) =>
+      `assets/photos/thumbnails/${name.replace(/\.(jpeg|jpg|png)$/i, ".webp")}`
+    );
+  }
+
+  if (location === "candid") {
+    paths = candidPhotos.map((name) =>
+      `assets/photos/thumbnails/candid/${name.replace(/\.(jpeg|jpg|png)$/i, ".webp")}`
+    );
+  }
+
+  if (location === "us") {
+    paths = usPhotos.map((name) =>
+      `assets/photos/thumbnails/us/${name.replace(/\.(jpeg|jpg|png)$/i, ".webp")}`
+    );
+  }
+
+  return Promise.all(paths.map(waitForThumbnail));
+}
+
+/*
+  Warm ONLY the six thumbnails on the Pictures home page.
+
+  We deliberately do not preload candid/us here because loading all
+  39 images at startup was competing with the rest of the computer UI.
+*/
+preparePictureLocation("photos");
+
+async function navigateExplorer(location, addHistory = true) {
   if (!location) return;
+
+  if (
+    location === "photos" ||
+    location === "candid" ||
+    location === "us"
+  ) {
+    await preparePictureLocation(location);
+  }
 
   if (
     addHistory &&
@@ -555,10 +629,18 @@ function navigateExplorer(location, addHistory = true) {
   computerClick();
 }
 
-function explorerBack() {
+async function explorerBack() {
   if (!explorerBackStack.length) return;
 
   const destination = explorerBackStack.pop();
+
+  if (
+    destination === "photos" ||
+    destination === "candid" ||
+    destination === "us"
+  ) {
+    await preparePictureLocation(destination);
+  }
 
   if (currentExplorerLocation) {
     explorerForwardStack.push(currentExplorerLocation);
@@ -579,10 +661,18 @@ function explorerBack() {
   computerClick();
 }
 
-function explorerForward() {
+async function explorerForward() {
   if (!explorerForwardStack.length) return;
 
   const destination = explorerForwardStack.pop();
+
+  if (
+    destination === "photos" ||
+    destination === "candid" ||
+    destination === "us"
+  ) {
+    await preparePictureLocation(destination);
+  }
 
   if (currentExplorerLocation) {
     explorerBackStack.push(currentExplorerLocation);
@@ -605,7 +695,6 @@ function explorerForward() {
 
 function explorerUp() {
   const parent = getExplorerParent(currentExplorerLocation);
-
   if (!parent) return;
 
   navigateExplorer(parent, true);
@@ -632,55 +721,15 @@ function getPhotoCollection(collection) {
   }));
 }
 
-/* =========================================================
-   IMMEDIATE THUMBNAIL PRELOAD
-   ========================================================= */
-
-function preloadImage(path) {
-  const image = new Image();
-  image.src = path;
-}
-
-function preloadPictureThumbnails() {
-  standalonePhotos.forEach((name) => {
-    preloadImage(
-      `assets/photos/thumbnails/${name.replace(/\.(jpeg|jpg|png)$/i, ".webp")}`
-    );
-  });
-
-  candidPhotos.forEach((name) => {
-    preloadImage(
-      `assets/photos/thumbnails/candid/${name.replace(/\.(jpeg|jpg|png)$/i, ".webp")}`
-    );
-  });
-
-  usPhotos.forEach((name) => {
-    preloadImage(
-      `assets/photos/thumbnails/us/${name.replace(/\.(jpeg|jpg|png)$/i, ".webp")}`
-    );
-  });
-}
-
-/* Start caching all tiny Explorer thumbnails immediately. */
-preloadPictureThumbnails();
 function renderPhotoViewer() {
   const photo = currentPhotoCollection[currentPhotoIndex];
-
   if (!photo) return;
 
   appContent.innerHTML = `<div class="windows-photo-viewer">
     <div class="win-photo-viewer-top">
-      <button
-        type="button"
-        data-photo-viewer-back
-        aria-label="Back"
-      >←</button>
-
+      <button type="button" data-photo-viewer-back aria-label="Back">←</button>
       <span>${photo.name}</span>
-
-      <small>
-        ${currentPhotoIndex + 1} of ${currentPhotoCollection.length}
-      </small>
+      <small>${currentPhotoIndex + 1} of ${currentPhotoCollection.length}</small>
     </div>
 
     <div class="win-photo-viewer-stage">
@@ -717,11 +766,9 @@ function openPhoto(collection, index) {
   currentPhotoFolder = collection;
 
   const photo = currentPhotoCollection[currentPhotoIndex];
-
   if (!photo) return;
 
   appTitle.textContent = photo.name;
-
   renderPhotoViewer();
   computerClick();
 }
@@ -850,9 +897,7 @@ const computerAppData = {
       <h2>sayang...</h2>
 
       <p>the file literally said do not open.</p>
-
       <p>but since you're here now...</p>
-
       <p>i miss you alot uh bb.</p>
 
       <p>i miss being able to just reach over and touch you whenever i want... your cuddles, having you next to me and not having a stupid screen between us.</p>
@@ -901,7 +946,6 @@ function openComputerApp(appName) {
     startMenu.classList.remove("open");
   }
 
-  /* RESET ANY EXPLORER / PHOTO VIEWER STATE FIRST */
   currentExplorerLocation = null;
   explorerBackStack = [];
   explorerForwardStack = [];
@@ -909,14 +953,8 @@ function openComputerApp(appName) {
   appWindow.classList.remove("explorer-mode");
   appWindow.classList.remove("photo-viewer-mode");
 
-  /* CLEAR OLD CONTENT BEFORE OPENING FILE */
-  appContent.innerHTML = "";
-
-  /* OPEN NORMAL WINDOW */
   appTitle.textContent = data.title;
   appContent.innerHTML = data.content;
-
-  /* RESET SCROLL POSITION */
   appContent.scrollTop = 0;
 
   appWindow.classList.add("open");
@@ -927,10 +965,7 @@ document
   .forEach((button) => {
     button.addEventListener("click", (event) => {
       event.stopPropagation();
-
-      openComputerApp(
-        button.dataset.computerApp
-      );
+      openComputerApp(button.dataset.computerApp);
     });
   });
 
@@ -955,25 +990,26 @@ document
     });
   });
 
-appContent.addEventListener("click", (event) => {
+appContent.addEventListener("click", async (event) => {
   const locationButton =
     event.target.closest("[data-explorer-location]");
 
   if (locationButton) {
-    navigateExplorer(
+    await navigateExplorer(
       locationButton.dataset.explorerLocation,
       true
     );
+
     return;
   }
 
   if (event.target.closest("[data-explorer-back]")) {
-    explorerBack();
+    await explorerBack();
     return;
   }
 
   if (event.target.closest("[data-explorer-forward]")) {
-    explorerForward();
+    await explorerForward();
     return;
   }
 
@@ -990,6 +1026,7 @@ appContent.addEventListener("click", (event) => {
       photoButton.dataset.photoCollection,
       photoButton.dataset.photoIndex
     );
+
     return;
   }
 
@@ -999,6 +1036,8 @@ appContent.addEventListener("click", (event) => {
       currentPhotoFolder === "us"
         ? currentPhotoFolder
         : "photos";
+
+    await preparePictureLocation(destination);
 
     currentExplorerLocation = destination;
 
@@ -1029,7 +1068,6 @@ if (startButton && startMenu) {
     event.stopPropagation();
 
     computerClick();
-
     startMenu.classList.toggle("open");
   });
 
@@ -1071,4 +1109,3 @@ function updateComputerDate() {
 
 updateComputerDate();
 setInterval(updateComputerDate, 60000);
-
