@@ -56,7 +56,42 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center top;
+    object-position: center center;
+  }
+
+  #monitorHotspot {
+    left: 24%;
+    top: 29%;
+    width: 24%;
+    height: 27%;
+  }
+
+  #tvHotspot {
+    left: 50.5%;
+    top: 2%;
+    width: 18%;
+    height: 16%;
+  }
+
+  #laptopHotspot {
+    left: 50%;
+    top: 36%;
+    width: 23.5%;
+    height: 29%;
+  }
+
+  #pandaHotspot {
+    left: 80.5%;
+    top: 50.5%;
+    width: 8.5%;
+    height: 17%;
+  }
+
+  #noteHotspot {
+    left: 42.3%;
+    top: 29.5%;
+    width: 6%;
+    height: 8%;
   }
 }
 
