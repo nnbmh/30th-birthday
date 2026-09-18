@@ -1056,19 +1056,18 @@ button,
   overflow-y: auto;
   visibility: hidden;
   opacity: 0;
-  transform: translate(-50%, -46%) scale(0.96);
+  transform: translate(-50%, -50%);
   border: 1px solid rgba(255, 255, 255, 0.2);
   background: #121416;
   color: white;
   box-shadow: 0 40px 120px rgba(0, 0, 0, 0.75);
-  transition: 0.25s ease;
   pointer-events: none;
 }
 
 .app-window.open {
   visibility: visible;
   opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
+  transform: translate(-50%, -50%);
   pointer-events: auto;
 }
 
