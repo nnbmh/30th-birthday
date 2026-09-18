@@ -25,22 +25,43 @@ body {
 
 .landscape-note {
   margin: 18px 0 20px;
-  color: rgba(255,255,255,.58);
+  color: rgba(255, 255, 255, 0.58);
   font-family: monospace;
   font-size: 10px;
   line-height: 1.55;
-  letter-spacing: .08em;
+  letter-spacing: 0.08em;
 }
 
 .landscape-note span {
-  color: rgba(255,255,255,.36);
+  color: rgba(255, 255, 255, 0.36);
   font-size: 9px;
 }
 
 /* =========================================================
+   LAPTOP / DESKTOP LANDSCAPE ROOM FRAMING
+
+   Keep the room full-screen, but favour the TOP of the
+   photograph so the wall TV is not cropped off.
+   ========================================================= */
+
+@media (orientation: landscape) and (min-width: 1367px) {
+  #room,
+  #roomCanvas {
+    width: 100vw;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  #roomImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+}
+
+/* =========================================================
    IPAD / TABLET LANDSCAPE
-   Keep the original design, only constrain large windows
-   to the available viewport.
    ========================================================= */
 
 @media (orientation: landscape) and (min-width: 768px) and (max-width: 1366px) {
@@ -70,7 +91,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
+    object-position: center top;
   }
 
   #roomHeader {
@@ -198,9 +219,6 @@ body {
 
 /* =========================================================
    PHONE BLOCKER
-
-   Phones no longer receive a squeezed-down version of the
-   birthday site. Instead, show a deliberate laptop message.
    ========================================================= */
 
 @media (max-width: 767px),
@@ -234,16 +252,16 @@ body {
     background:
       radial-gradient(
         circle at center,
-        rgba(255,255,255,.035),
+        rgba(255, 255, 255, 0.035),
         transparent 48%
       ),
       #050505;
-    color: rgba(255,255,255,.9);
+    color: rgba(255, 255, 255, 0.9);
     font-family: "Courier New", monospace;
     font-size: clamp(14px, 4vw, 20px);
     font-weight: 400;
     line-height: 1.65;
-    letter-spacing: .03em;
+    letter-spacing: 0.03em;
     text-align: center;
   }
 
@@ -254,10 +272,10 @@ body {
     left: 50%;
     bottom: max(24px, calc(var(--safe-bottom) + 18px));
     transform: translateX(-50%);
-    color: rgba(255,255,255,.28);
+    color: rgba(255, 255, 255, 0.28);
     font-family: "Courier New", monospace;
     font-size: 9px;
-    letter-spacing: .16em;
+    letter-spacing: 0.16em;
     white-space: nowrap;
   }
 
@@ -296,8 +314,8 @@ body {
   *,
   *::before,
   *::after {
-    animation-duration: .01ms !important;
+    animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: .01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
