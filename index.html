@@ -6,29 +6,26 @@
   <meta name="theme-color" content="#080808">
   <title>Faris' Space</title>
 
-  <script>
-    const cacheVersion = Date.now();
+  <style>
+    html,
+    body {
+      margin: 0;
+      background: #080808;
+    }
 
-    const stylesheet = document.createElement("link");
-    stylesheet.rel = "stylesheet";
-    stylesheet.href = "style.css?v=" + cacheVersion;
-    document.head.appendChild(stylesheet);
+    #introScreen,
+    #room {
+      background: #080808;
+    }
+  </style>
 
-    const computerStylesheet = document.createElement("link");
-    computerStylesheet.rel = "stylesheet";
-    computerStylesheet.href = "computer.css?v=" + cacheVersion;
-    document.head.appendChild(computerStylesheet);
+  <link rel="stylesheet" href="style.css?v=20260918">
+  <link rel="stylesheet" href="computer.css?v=20260918">
+  <link rel="stylesheet" href="tv.css?v=20260918">
+  <link rel="stylesheet" href="responsive.css?v=20260918">
 
-    const tvStylesheet = document.createElement("link");
-    tvStylesheet.rel = "stylesheet";
-    tvStylesheet.href = "tv.css?v=" + cacheVersion;
-    document.head.appendChild(tvStylesheet);
-
-    const responsiveStylesheet = document.createElement("link");
-    responsiveStylesheet.rel = "stylesheet";
-    responsiveStylesheet.href = "responsive.css?v=" + cacheVersion;
-    document.head.appendChild(responsiveStylesheet);
-  </script>
+  <link rel="preload" href="assets/A62930B9-52EF-45AE-A929-4735389FEED3.png" as="image">
+  <link rel="preload" href="assets/bbn-anchor.png" as="image">
 </head>
 
 <body>
@@ -42,19 +39,20 @@
     </div>
   </div>
 
-<script>
-  setTimeout(() => {
-    const loading = document.getElementById("loadingScreen");
-    const intro = document.getElementById("introScreen");
+  <script>
+    setTimeout(() => {
+      const loading = document.getElementById("loadingScreen");
+      const intro = document.getElementById("introScreen");
 
-    if (loading) loading.style.display = "none";
-    if (intro) {
-      intro.classList.remove("hidden");
-      intro.style.display = "";
-    }
-  }, 1800);
-</script>
-  
+      if (loading) loading.style.display = "none";
+
+      if (intro) {
+        intro.classList.remove("hidden");
+        intro.style.display = "";
+      }
+    }, 1800);
+  </script>
+
   <!-- INTRO -->
   <div id="introScreen" class="hidden">
     <div class="intro-content">
@@ -62,7 +60,12 @@
       <h1>Happy 30th,<br>Faris.</h1>
       <p class="intro-text">i left a few things in here for you.</p>
       <p class="intro-small">headphones recommended.</p>
-      <p class="landscape-note">best experienced in landscape ♡<br><span>rotate your phone or tablet before entering</span></p>
+
+      <p class="landscape-note">
+        best experienced in landscape ♡<br>
+        <span>rotate your phone or tablet before entering</span>
+      </p>
+
       <button id="enterButton">enter space</button>
     </div>
   </div>
@@ -70,7 +73,12 @@
   <!-- ROOM -->
   <main id="room">
     <div id="roomCanvas">
-      <img id="roomImage" src="assets/A62930B9-52EF-45AE-A929-4735389FEED3.png" alt="Faris' space" draggable="false">
+      <img
+        id="roomImage"
+        src="assets/A62930B9-52EF-45AE-A929-4735389FEED3.png"
+        alt="Faris' space"
+        draggable="false"
+      >
 
       <div class="ambient-glow monitor-ambient" aria-hidden="true"></div>
       <div class="ambient-glow tv-ambient" aria-hidden="true"></div>
@@ -107,6 +115,7 @@
 
     <div id="progress">
       <span id="progressText">0 / 5 found</span>
+
       <div class="progress-dots">
         <span></span>
         <span></span>
@@ -138,7 +147,11 @@
       <div id="computerBoot" class="computer-boot">
         <div class="boot-logo">◈</div>
         <p>FARIS-PC</p>
-        <div class="boot-line"><span></span></div>
+
+        <div class="boot-line">
+          <span></span>
+        </div>
+
         <small>loading 30 years of questionable decisions...</small>
       </div>
 
@@ -317,6 +330,7 @@
           <div id="startMenu" class="start-menu">
             <div class="start-profile">
               <div class="start-avatar">F</div>
+
               <div>
                 <strong>Faris</strong>
                 <span>FARIS-PC</span>
@@ -381,6 +395,7 @@
               <span class="tray-chevron">⌃</span>
               <span class="tray-network">⌁</span>
               <span class="tray-volume">)))</span>
+
               <div class="taskbar-clock">
                 <span id="taskbarTime">00:00</span>
                 <small id="taskbarDate">18/09/2026</small>
@@ -439,6 +454,7 @@
             <strong>BBN</strong>
             <span>BABOY BROADCASTING NETWORK</span>
           </div>
+
           <span class="news-date">18 SEP 2026</span>
         </div>
 
@@ -450,6 +466,7 @@
 
         <div class="news-ticker">
           <span class="ticker-label">LIVE</span>
+
           <div class="ticker-window">
             <div id="newsTickerText" class="ticker-text"></div>
           </div>
@@ -478,6 +495,7 @@
           <span class="ai-dot"></span>
           <span>definitely-not-chatgpt</span>
         </div>
+
         <button data-close>×</button>
       </div>
 
@@ -577,9 +595,11 @@
   <!-- NOTE -->
   <section class="modal note-modal" id="noteModal" aria-hidden="true">
     <div class="modal-background" data-close></div>
+
     <div class="paper-note">
       <button class="paper-close" data-close>×</button>
       <span class="tape"></span>
+
       <p class="note-opening">you always say i'm mean to you…</p>
       <p>so consider this documented evidence that i can actually be nice to you sometimes.</p>
       <p>i hope you know that underneath all the bullying and me annoying you… i really really adore you uh bb.</p>
@@ -595,6 +615,7 @@
 
     <div class="content-card">
       <button class="card-close" data-close>×</button>
+
       <p class="eyebrow">HOW TO PLAY</p>
       <h2>look around.</h2>
       <p>there are five things hidden around the space.</p>
@@ -617,66 +638,53 @@
   </section>
 
   <!-- FINAL MESSAGE -->
-<section id="birthdayMessage" class="hidden">
-  <button id="closeBirthdayMessage">×</button>
+  <section id="birthdayMessage" class="hidden">
+    <button id="closeBirthdayMessage">×</button>
 
-  <div class="birthday-letter">
-    <p class="eyebrow">FOR FARIS</p>
-    <p class="letter-date">18 September 2026</p>
+    <div class="birthday-letter">
+      <p class="eyebrow">FOR FARIS</p>
+      <p class="letter-date">18 September 2026</p>
 
-    <h1>Happy 30th Birthday,<br>sayang.</h1>
+      <h1>Happy 30th Birthday,<br>sayang.</h1>
 
-    <div class="letter-divider">♡</div>
+      <div class="letter-divider">♡</div>
 
-    <p>you made it to the end.</p>
+      <p>you made it to the end.</p>
 
-    <p>i've been thinking about what i actually wanted to say to you here because after everything you've just gone through, i didn't want the last thing you found to just be another joke.</p>
+      <p>i've been thinking about what i actually wanted to say to you here because after everything you've just gone through, i didn't want the last thing you found to just be another joke.</p>
 
-    <p>you're 30 now bb… and as much as i've been making fun of you for it, i really hope this next year of your life is one that you're genuinely happy to look back on. not just because i want good things to happen to you but because i want you to actually feel good about where your life is going too.</p>
+      <p>you're 30 now bb… and as much as i've been making fun of you for it, i really hope this next year of your life is one that you're genuinely happy to look back on. not just because i want good things to happen to you but because i want you to actually feel good about where your life is going too.</p>
 
-    <p>i hope things start falling into place for you. i hope you get opportunities that make you excited about what's ahead and that you find yourself doing things that make you feel happy and fulfilled. i hope you get to see more of the world, eat alot of good food, discover new things you end up loving and have alot more days where life just feels good.</p>
+      <p>i hope things start falling into place for you. i hope you get opportunities that make you excited about what's ahead and that you find yourself doing things that make you feel happy and fulfilled. i hope you get to see more of the world, eat alot of good food, discover new things you end up loving and have alot more days where life just feels good.</p>
 
-    <p>i hope there are little things too… unexpected good news, random days that turn out better than you thought they would, things working out when you were convinced they wouldn't and moments where you stop and realise that you're actually doing okay.</p>
+      <p>i hope there are little things too… unexpected good news, random days that turn out better than you thought they would, things working out when you were convinced they wouldn't and moments where you stop and realise that you're actually doing okay.</p>
 
-    <p>and when things don't go according to plan, because obviously life likes doing that… i hope you're a little kinder to yourself uh bb. one bad day, one setback or one thing not working out doesn't get to decide what comes next for you. you still have so much ahead of you.</p>
+      <p>and when things don't go according to plan, because obviously life likes doing that… i hope you're a little kinder to yourself uh bb. one bad day, one setback or one thing not working out doesn't get to decide what comes next for you. you still have so much ahead of you.</p>
 
-    <p>i don't know what 30 is going to look like for you yet. i don't know where you'll be, what you'll be doing or how much is going to change between now and your next birthday.</p>
+      <p>i don't know what 30 is going to look like for you yet. i don't know where you'll be, what you'll be doing or how much is going to change between now and your next birthday.</p>
 
-    <p>i just hope that by the end of it, you feel like you're in a happier place than you were when it started.</p>
+      <p>i just hope that by the end of it, you feel like you're in a happier place than you were when it started.</p>
 
-    <p>and i really like that i get to be here for it with you.</p>
+      <p>and i really like that i get to be here for it with you.</p>
 
-    <p>there's still so much i want us to experience together uh bb. more places i want to see with you, more food i want us to try, more stupid things for us to laugh about, more time together where somehow the hours just disappear and more of those completely normal days together that probably don't feel important at the time… until we’re apart again and i realise how much i miss them.</p>
+      <p>there's still so much i want us to experience together uh bb. more places i want to see with you, more food i want us to try, more stupid things for us to laugh about, more time together where somehow the hours just disappear and more of those completely normal days together that probably don't feel important at the time… until we’re apart again and i realise how much i miss them.</p>
 
-    <p>i hope when you're 31 and you look back at this year, there are alot of things that make you think… yeah, that was actually a really good year.</p>
+      <p>i hope when you're 31 and you look back at this year, there are alot of things that make you think… yeah, that was actually a really good year.</p>
 
-    <p>and i hope i'm in alot of those memories too.</p>
+      <p>and i hope i'm in alot of those memories too.</p>
 
-    <p>i really wish i could be there with you today. i'd much rather be celebrating beside you than doing it from miles away… but until i can be there again, this is my little piece of your birthday from Singapore.</p>
+      <p>i really wish i could be there with you today. i'd much rather be celebrating beside you than doing it from miles away… but until i can be there again, this is my little piece of your birthday from Singapore.</p>
 
-    <p>i hope today makes you feel celebrated uh bb. i hope you feel loved. and i hope you're excited, even just a little bit, for everything you haven't experienced yet.</p>
+      <p>i hope today makes you feel celebrated uh bb. i hope you feel loved. and i hope you're excited, even just a little bit, for everything you haven't experienced yet.</p>
 
-    <p class="letter-big-line">happy 30th birthday sayang ♡</p>
+      <p class="letter-big-line">happy 30th birthday sayang ♡</p>
 
-    <p class="letter-signature">i love you.</p>
-  </div>
-</section>
+      <p class="letter-signature">i love you.</p>
+    </div>
+  </section>
 
-<script>
-  const mainScript = document.createElement("script");
-  mainScript.src = "script.js?v=" + cacheVersion;
-
-  mainScript.onload = () => {
-    const computerScript = document.createElement("script");
-    computerScript.src = "computer.js?v=" + cacheVersion;
-    document.body.appendChild(computerScript);
-
-    const tvScript = document.createElement("script");
-    tvScript.src = "tv.js?v=" + cacheVersion;
-    document.body.appendChild(tvScript);
-  };
-
-  document.body.appendChild(mainScript);
-</script>
+  <script src="script.js?v=20260918"></script>
+  <script src="computer.js?v=20260918"></script>
+  <script src="tv.js?v=20260918"></script>
 </body>
 </html>
