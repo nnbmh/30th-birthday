@@ -3,7 +3,134 @@ const introScreen = document.getElementById("introScreen");
 const enterButton = document.getElementById("enterButton");
 const room = document.getElementById("room");
 const roomImage = document.getElementById("roomImage");
+const roomCanvas = document.getElementById("roomCanvas");
 const focusTransition = document.getElementById("focusTransition");
+
+/* ============================= */
+/* COKE EASTER EGG */
+/* ============================= */
+
+const cokeHotspot = document.createElement("button");
+cokeHotspot.id = "cokeHotspot";
+cokeHotspot.type = "button";
+cokeHotspot.setAttribute("aria-label", "Coke");
+cokeHotspot.setAttribute("aria-describedby", "cokeComment");
+
+const cokeComment = document.createElement("span");
+cokeComment.id = "cokeComment";
+cokeComment.textContent = "ahhh minum lagi";
+cokeComment.setAttribute("aria-hidden", "true");
+
+Object.assign(cokeHotspot.style, {
+  position: "absolute",
+  left: "18.5%",
+  top: "47.5%",
+  width: "5.5%",
+  height: "10%",
+  zIndex: "75",
+  padding: "0",
+  margin: "0",
+  border: "0",
+  outline: "none",
+  background: "transparent",
+  cursor: "pointer",
+  WebkitTapHighlightColor: "transparent",
+  touchAction: "manipulation"
+});
+
+Object.assign(cokeComment.style, {
+  position: "absolute",
+  left: "23.2%",
+  top: "46.5%",
+  zIndex: "76",
+  display: "block",
+  width: "max-content",
+  maxWidth: "180px",
+  margin: "0",
+  padding: "0",
+  color: "#fff7e7",
+  fontFamily: "'Comic Sans MS', 'Bradley Hand', cursive",
+  fontSize: "clamp(12px, 1.35vw, 19px)",
+  fontWeight: "600",
+  lineHeight: "1.1",
+  letterSpacing: "0.01em",
+  whiteSpace: "nowrap",
+  textShadow: "0 2px 4px rgba(0,0,0,.95), 0 0 8px rgba(0,0,0,.7)",
+  opacity: "0",
+  visibility: "hidden",
+  transform: "translateY(5px) rotate(-3deg)",
+  transition: "opacity .18s ease, transform .18s ease, visibility .18s ease",
+  pointerEvents: "none"
+});
+
+roomCanvas.appendChild(cokeHotspot);
+roomCanvas.appendChild(cokeComment);
+
+let cokeCommentTimer = null;
+
+function showCokeComment(autoHide = false) {
+  clearTimeout(cokeCommentTimer);
+
+  cokeComment.style.visibility = "visible";
+  cokeComment.style.opacity = "1";
+  cokeComment.style.transform = "translateY(0) rotate(-3deg)";
+  cokeComment.setAttribute("aria-hidden", "false");
+
+  if (autoHide) {
+    cokeCommentTimer = setTimeout(() => {
+      hideCokeComment();
+    }, 2200);
+  }
+}
+
+function hideCokeComment() {
+  clearTimeout(cokeCommentTimer);
+
+  cokeComment.style.opacity = "0";
+  cokeComment.style.transform = "translateY(5px) rotate(-3deg)";
+  cokeComment.setAttribute("aria-hidden", "true");
+
+  cokeCommentTimer = setTimeout(() => {
+    if (cokeComment.style.opacity === "0") {
+      cokeComment.style.visibility = "hidden";
+    }
+  }, 180);
+}
+
+const cokeCanHover = window.matchMedia(
+  "(hover: hover) and (pointer: fine)"
+).matches;
+
+if (cokeCanHover) {
+  cokeHotspot.addEventListener("pointerenter", () => {
+    showCokeComment(false);
+  });
+
+  cokeHotspot.addEventListener("pointerleave", () => {
+    hideCokeComment();
+  });
+
+  cokeHotspot.addEventListener("focus", () => {
+    showCokeComment(false);
+  });
+
+  cokeHotspot.addEventListener("blur", () => {
+    hideCokeComment();
+  });
+} else {
+  cokeHotspot.addEventListener("pointerup", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    showCokeComment(true);
+  });
+
+  document.addEventListener("pointerdown", (event) => {
+    if (!cokeHotspot.contains(event.target)) {
+      hideCokeComment();
+    }
+  });
+}
 
 /* ============================= */
 /* SOUND */
@@ -25,7 +152,13 @@ function initAudio() {
   }
 }
 
-function playTone(frequency = 440, duration = 0.08, volume = 0.025, type = "sine", delay = 0) {
+function playTone(
+  frequency = 440,
+  duration = 0.08,
+  volume = 0.025,
+  type = "sine",
+  delay = 0
+) {
   if (!soundEnabled || !audioContext) return;
 
   const oscillator = audioContext.createOscillator();
@@ -121,13 +254,6 @@ enterButton.addEventListener("click", () => {
 /* DESKTOP ROOM MOVEMENT */
 /* ============================= */
 
-/*
-  IMPORTANT:
-  Do not move the room image independently from the hotspots.
-  The previous mouse parallax made the visible objects move while
-  their clickable areas stayed behind.
-*/
-
 if (window.matchMedia("(pointer: fine)").matches) {
   document.addEventListener("mousemove", () => {
     if (room.classList.contains("final-reveal-active")) return;
@@ -152,7 +278,9 @@ const modalMap = {
 };
 
 const hotspots = document.querySelectorAll(".hotspot");
-const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+const canHover = window.matchMedia(
+  "(hover: hover) and (pointer: fine)"
+).matches;
 
 let openingHotspot = false;
 
@@ -205,12 +333,10 @@ function openHotspot(hotspot) {
 
     markFound(item);
 
-    /* release the room lock BEFORE running the experience */
     clearRoomFocus();
     focusTransition.classList.remove("active");
     openingHotspot = false;
 
-    /* now run the individual hotspot content */
     try {
       runModalExperience(item);
     } catch (error) {
@@ -328,7 +454,9 @@ birthdayVideo.addEventListener("loadedmetadata", () => {
 
 const laptopModal = document.getElementById("laptopModal");
 const aiConversation = document.getElementById("aiConversation");
-const aiRevealMessages = document.querySelectorAll("#aiConversation .reveal-message");
+const aiRevealMessages = document.querySelectorAll(
+  "#aiConversation .reveal-message"
+);
 
 let aiTimers = [];
 let aiCloseTimer = null;
@@ -459,7 +587,9 @@ const pandaDelivery = document.querySelector(".panda-delivery");
 const pandaCharacter = document.querySelector(".panda-character");
 const oreoLabel = document.querySelector(".oreo-label");
 const deliveryDetails = document.querySelector(".delivery-details");
-const pandaEyebrow = document.querySelector(".panda-delivery .eyebrow");
+const pandaEyebrow = document.querySelector(
+  ".panda-delivery .eyebrow"
+);
 
 function resetPanda() {
   pandaMessage.classList.add("hidden");
@@ -517,7 +647,6 @@ document.querySelectorAll("[data-close]").forEach((button) => {
       birthdayVideo.pause();
     }
 
-    /* always fully unlock the room */
     clearRoomFocus();
     focusTransition.classList.remove("active");
     openingHotspot = false;
@@ -578,7 +707,9 @@ setInterval(updateClock, 30000);
 
 const foundItems = new Set();
 const progressText = document.getElementById("progressText");
-const progressDots = document.querySelectorAll(".progress-dots span");
+const progressDots = document.querySelectorAll(
+  ".progress-dots span"
+);
 
 function markFound(item) {
   if (foundItems.has(item)) return;
@@ -631,11 +762,12 @@ const finalHeading = document.getElementById("finalHeading");
 const finalSubtext = document.getElementById("finalSubtext");
 const openFinalButton = document.getElementById("openFinalButton");
 const birthdayMessage = document.getElementById("birthdayMessage");
-const closeBirthdayMessage = document.getElementById("closeBirthdayMessage");
+const closeBirthdayMessage = document.getElementById(
+  "closeBirthdayMessage"
+);
 
 let finalShown = false;
 
-/* Create the button Faris can use to read the final message again */
 const replayBirthdayButton = document.createElement("button");
 replayBirthdayButton.id = "replayBirthdayButton";
 replayBirthdayButton.textContent = "♡ birthday message";
@@ -671,7 +803,6 @@ function showBirthdayReplayButton() {
 }
 
 function restoreRoomAfterFinal() {
-  /* Remove every final-state room class */
   room.classList.remove(
     "final-reveal-active",
     "final-lights",
@@ -682,33 +813,23 @@ function restoreRoomAfterFinal() {
     "focus-note"
   );
 
-  /* Make sure no invisible modal is left covering the room */
   document.querySelectorAll(".modal").forEach((modal) => {
     modal.classList.remove("open");
     modal.setAttribute("aria-hidden", "true");
     modal.style.pointerEvents = "";
   });
 
-  /* Close any computer file window */
   appWindow.classList.remove("open");
-
-  /* Reset transition */
   focusTransition.classList.remove("active");
-
-  /* Release hotspot lock */
   openingHotspot = false;
 
-  /* Restore every hotspot */
   hotspots.forEach((hotspot) => {
     hotspot.disabled = false;
     hotspot.style.pointerEvents = "auto";
     hotspot.classList.remove("active");
   });
 
-  /* Reset the room image */
   roomImage.style.transform = "";
-
-  /* Make room interactive again */
   room.style.pointerEvents = "auto";
 
   showBirthdayReplayButton();
@@ -783,14 +904,10 @@ closeBirthdayMessage.addEventListener("click", () => {
   playClick();
 
   birthdayMessage.classList.add("hidden");
-
-  /* THIS is the important part:
-     completely return the room to normal */
   restoreRoomAfterFinal();
 });
 
 replayBirthdayButton.addEventListener("click", () => {
   playClick();
-
   birthdayMessage.classList.remove("hidden");
 });
