@@ -832,17 +832,11 @@
     }, 650);
 
     const broadcastTimer = setTimeout(() => {
-      if (sequenceToken !== tvSequenceToken) return;
+  if (sequenceToken !== tvSequenceToken) return;
 
-      tvStatic.classList.add("hidden-phase");
-      tvBroadcast.classList.add("active");
-
-      const revealTimer = setTimeout(() => {
-        if (sequenceToken !== tvSequenceToken) return;
-        renderNewsSlide();
-      }, 180);
-
-      tvTimers.push(revealTimer);
+  tvStatic.classList.add("hidden-phase");
+  renderNewsSlide();
+  tvBroadcast.classList.add("active");
     }, 1400);
 
     tvTimers.push(staticTimer, broadcastTimer);
