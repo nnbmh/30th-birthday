@@ -1,6 +1,7 @@
 /* =========================================================
-   FARIS' SPACE — FINAL LANDSCAPE RESPONSIVE CSS
-   Desktop • Laptop • iPad • Phone landscape
+   FARIS' SPACE — RESPONSIVE
+   Full experience: laptop / desktop / iPad landscape
+   Phone: laptop notice only
    ========================================================= */
 
 :root {
@@ -13,32 +14,18 @@
 html,
 body {
   width: 100%;
-  height: 100%;
   min-height: 100%;
   margin: 0;
-  overflow: hidden;
-  overscroll-behavior: none;
   -webkit-text-size-adjust: 100%;
 }
 
-body {
-  min-height: 100dvh;
-}
-
-button,
-.hotspot,
-.desktop-icon,
-.taskbar-icon {
-  touch-action: manipulation;
-}
-
 /* =========================================================
-   INTRO
+   INTRO NOTE
    ========================================================= */
 
 .landscape-note {
   margin: 18px 0 20px;
-  color: rgba(255,255,255,.62);
+  color: rgba(255,255,255,.58);
   font-family: monospace;
   font-size: 10px;
   line-height: 1.55;
@@ -46,914 +33,252 @@ button,
 }
 
 .landscape-note span {
-  color: rgba(255,255,255,.38);
+  color: rgba(255,255,255,.36);
   font-size: 9px;
 }
 
 /* =========================================================
-   ROOM
-   Fill the landscape screen again.
+   IPAD / TABLET LANDSCAPE
+   Keep the original design, only constrain large windows
+   to the available viewport.
    ========================================================= */
 
-#room {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100dvh;
-  overflow: hidden;
-  background: #000;
-}
-
-#roomCanvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  transform: none;
-  overflow: hidden;
-}
-
-#roomImage {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-}
-
-/* Room UI */
-
-#roomHeader {
-  left: max(20px, calc(var(--safe-left) + 12px));
-  top: max(18px, calc(var(--safe-top) + 10px));
-}
-
-#progress {
-  right: max(20px, calc(var(--safe-right) + 12px));
-  top: max(18px, calc(var(--safe-top) + 10px));
-}
-
-#helpButton {
-  left: max(20px, calc(var(--safe-left) + 12px));
-}
-
-#soundButton {
-  right: max(20px, calc(var(--safe-right) + 12px));
-}
-
-#helpButton,
-#soundButton {
-  bottom: max(20px, calc(var(--safe-bottom) + 12px));
-}
-
-#roomInstructions {
-  bottom: max(30px, calc(var(--safe-bottom) + 20px));
-}
-
-/* =========================================================
-   MODALS
-   ========================================================= */
-
-.modal {
-  width: 100vw;
-  height: 100dvh;
-  padding:
-    max(8px, var(--safe-top))
-    max(8px, var(--safe-right))
-    max(8px, var(--safe-bottom))
-    max(8px, var(--safe-left));
-  overflow: hidden;
-}
-
-/* =========================================================
-   COMPUTER
-   ========================================================= */
-
-.computer {
-  width: min(1180px, calc(100vw - var(--safe-left) - var(--safe-right) - 20px));
-  height: min(750px, calc(100dvh - var(--safe-top) - var(--safe-bottom) - 20px));
-  max-width: none;
-  max-height: none;
-  min-width: 0;
-  min-height: 0;
-}
-
-.computer-interface,
-.computer-boot {
-  width: 100%;
-  height: 100%;
-  min-width: 0;
-  min-height: 0;
-}
-
-.faris-desktop {
-  min-width: 0;
-  min-height: 0;
-}
-
-/* Computer app windows */
-
-.app-window,
-.app-window.explorer-mode {
-  max-width: calc(100vw - var(--safe-left) - var(--safe-right) - 20px);
-  max-height: calc(100dvh - var(--safe-top) - var(--safe-bottom) - 20px);
-}
-
-.win-explorer,
-.win-explorer-body,
-.win-file-pane {
-  min-width: 0;
-  min-height: 0;
-}
-
-.win-file-pane {
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* =========================================================
-   BBN
-   ========================================================= */
-
-.birthday-news {
-  width: min(1180px, calc(100vw - var(--safe-left) - var(--safe-right) - 20px));
-  height: min(720px, calc(100dvh - var(--safe-top) - var(--safe-bottom) - 20px));
-  max-width: none;
-  max-height: none;
-  min-width: 0;
-  min-height: 0;
-  aspect-ratio: auto;
-}
-
-.tv-broadcast {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  min-width: 0;
-  min-height: 0;
-  overflow: hidden;
-}
-
-.news-topbar {
-  flex-shrink: 0;
-}
-
-.news-screen {
-  flex: 1 1 auto;
-  width: 100%;
-  min-width: 0;
-  min-height: 0;
-  overflow: hidden;
-}
-
-.news-slide {
-  width: 100%;
-  height: 100%;
-  min-width: 0;
-  min-height: 0;
-  overflow: hidden;
-}
-
-.news-controls,
-.news-ticker {
-  flex-shrink: 0;
-}
-
-/* =========================================================
-   CHATGPT
-   ========================================================= */
-
-.ai-window {
-  width: min(760px, calc(100vw - var(--safe-left) - var(--safe-right) - 20px));
-  height: min(700px, calc(100dvh - var(--safe-top) - var(--safe-bottom) - 20px));
-  max-width: none;
-  max-height: none;
-}
-
-.ai-conversation {
-  min-height: 0;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* =========================================================
-   NOTE
-   ========================================================= */
-
-.paper-note {
-  max-width: calc(100vw - var(--safe-left) - var(--safe-right) - 24px);
-  max-height: calc(100dvh - var(--safe-top) - var(--safe-bottom) - 24px);
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* =========================================================
-   OREO
-   ========================================================= */
-
-.panda-delivery {
-  max-width: calc(100vw - var(--safe-left) - var(--safe-right) - 24px);
-  max-height: calc(100dvh - var(--safe-top) - var(--safe-bottom) - 24px);
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.panda-character::after {
-  content: none !important;
-  display: none !important;
-}
-
-.oreo-label {
-  position: relative;
-  margin: 14px 0 24px;
-  text-align: center;
-  transform: none;
-  animation: none;
-}
-
-/* =========================================================
-   TABLET LANDSCAPE
-   ========================================================= */
-
-@media (orientation: landscape) and (max-width: 1366px) {
-  .computer,
-  .birthday-news {
-    width: calc(100vw - var(--safe-left) - var(--safe-right) - 20px);
-  }
-}
-
-/* =========================================================
-   PHONE LANDSCAPE
-   ========================================================= */
-
-@media (orientation: landscape) and (max-height: 600px) {
-  /* ---------------- INTRO ---------------- */
-
-  .intro-content {
-    width: min(78vw, 620px);
+@media (orientation: landscape) and (min-width: 768px) and (max-width: 1366px) {
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
   }
 
-  .intro-content .eyebrow {
-    margin-bottom: 7px;
-    font-size: 8px;
+  body {
+    min-height: 100dvh;
   }
 
-  .intro-content h1 {
-    font-size: clamp(44px, 9.5vw, 74px);
-    line-height: .88;
+  #room {
+    width: 100vw;
+    height: 100dvh;
+    overflow: hidden;
   }
 
-  .intro-text {
-    margin: 16px 0 4px;
-    font-size: 12px;
+  #roomCanvas {
+    width: 100%;
+    height: 100%;
   }
 
-  .intro-small {
-    margin-bottom: 0;
-    font-size: 8px;
+  #roomImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
   }
-
-  .landscape-note {
-    margin: 11px 0 10px;
-    font-size: 8px;
-    line-height: 1.35;
-  }
-
-  .landscape-note span {
-    font-size: 7px;
-  }
-
-  #enterButton {
-    padding: 8px 18px;
-    font-size: 9px;
-  }
-
-  /* ---------------- ROOM ---------------- */
 
   #roomHeader {
-    left: max(12px, calc(var(--safe-left) + 8px));
-    top: max(9px, calc(var(--safe-top) + 5px));
-  }
-
-  #roomHeader h2 {
-    font-size: 12px;
-  }
-
-  #roomHeader p {
-    margin-top: 3px;
-    font-size: 7px;
+    left: max(18px, calc(var(--safe-left) + 12px));
+    top: max(16px, calc(var(--safe-top) + 10px));
   }
 
   #progress {
-    right: max(12px, calc(var(--safe-right) + 8px));
-    top: max(9px, calc(var(--safe-top) + 5px));
-    font-size: 7px;
-  }
-
-  .progress-dots {
-    gap: 5px;
-    margin-top: 5px;
-  }
-
-  .progress-dots span {
-    width: 5px;
-    height: 5px;
+    right: max(18px, calc(var(--safe-right) + 12px));
+    top: max(16px, calc(var(--safe-top) + 10px));
   }
 
   #helpButton {
-    left: max(12px, calc(var(--safe-left) + 8px));
+    left: max(18px, calc(var(--safe-left) + 12px));
   }
 
   #soundButton {
-    right: max(12px, calc(var(--safe-right) + 8px));
+    right: max(18px, calc(var(--safe-right) + 12px));
   }
 
   #helpButton,
   #soundButton {
-    bottom: max(8px, calc(var(--safe-bottom) + 5px));
-    font-size: 7px;
+    bottom: max(18px, calc(var(--safe-bottom) + 10px));
   }
 
   #roomInstructions {
-    bottom: max(16px, calc(var(--safe-bottom) + 11px));
-    padding: 5px 9px;
-    font-size: 7px;
+    bottom: max(28px, calc(var(--safe-bottom) + 18px));
   }
 
-  /* ---------------- COMPUTER ---------------- */
-
-  #computerModal {
+  .modal {
+    box-sizing: border-box;
+    width: 100vw;
+    height: 100dvh;
     padding:
-      max(4px, var(--safe-top))
-      max(5px, var(--safe-right))
-      max(4px, var(--safe-bottom))
-      max(5px, var(--safe-left));
+      max(10px, var(--safe-top))
+      max(10px, var(--safe-right))
+      max(10px, var(--safe-bottom))
+      max(10px, var(--safe-left));
+    overflow: hidden;
   }
 
   .computer {
-    width: calc(100vw - var(--safe-left) - var(--safe-right) - 10px);
-    height: calc(100dvh - var(--safe-top) - var(--safe-bottom) - 8px);
-    border-radius: 3px;
+    width: min(1180px, calc(100vw - 24px));
+    height: min(750px, calc(100dvh - 24px));
+    max-width: calc(100vw - 24px);
+    max-height: calc(100dvh - 24px);
+    min-width: 0;
+    min-height: 0;
   }
 
-  .window-bar {
-    height: 28px;
-    min-height: 28px;
-    padding-left: 9px;
-    font-size: 8px;
+  .computer-interface,
+  .computer-boot,
+  .faris-desktop {
+    min-width: 0;
+    min-height: 0;
   }
 
-  .window-bar button {
-    width: 34px;
-    height: 28px;
+  .app-window,
+  .app-window.explorer-mode {
+    max-width: calc(100vw - 32px);
+    max-height: calc(100dvh - 32px);
   }
 
-  .desktop {
-    height: calc(100% - 28px);
+  .win-explorer,
+  .win-explorer-body,
+  .win-file-pane {
+    min-width: 0;
+    min-height: 0;
   }
 
-  .faris-desktop-icons {
-    left: 10px;
-    top: 8px;
-    right: 10px;
-    bottom: 37px;
-    grid-template-columns: repeat(4, minmax(58px, 82px));
-    grid-auto-rows: 61px;
-    gap: 2px 8px;
-  }
-
-  .faris-desktop-icons .desktop-icon {
-    width: 100%;
-    height: 59px;
-    padding: 2px;
-  }
-
-  .faris-desktop-icons .desktop-symbol {
-    width: 32px;
-    height: 32px;
-  }
-
-  .faris-desktop-icons .desktop-symbol svg {
-    width: 31px;
-    height: 31px;
-  }
-
-  .faris-desktop-icons .desktop-icon p {
-    width: 100%;
-    margin-top: 2px;
-    font-size: 7px;
-  }
-
-  .faris-taskbar {
-    height: 34px;
-    padding: 0 6px;
-  }
-
-  .taskbar-icon {
-    width: 28px;
-    height: 28px;
-    padding: 4px;
-  }
-
-  .taskbar-search {
-    width: 95px;
-    height: 25px;
-  }
-
-  /* ---------------- BBN ---------------- */
-
-  #tvModal {
-    padding:
-      max(4px, var(--safe-top))
-      max(5px, var(--safe-right))
-      max(4px, var(--safe-bottom))
-      max(5px, var(--safe-left));
+  .win-file-pane {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .birthday-news {
-    width: calc(100vw - var(--safe-left) - var(--safe-right) - 10px);
-    height: calc(100dvh - var(--safe-top) - var(--safe-bottom) - 8px);
-    border-radius: 3px;
-  }
-
-  .news-topbar {
-    flex: 0 0 28px;
-    height: 28px;
-    min-height: 28px;
-    padding: 0 34px 0 8px;
-  }
-
-  .news-logo {
-    gap: 5px;
-  }
-
-  .news-logo strong {
-    padding: 2px 5px;
-    font-size: 10px;
-  }
-
-  .news-logo > span:last-child {
-    display: none;
-  }
-
-  .news-date {
-    font-size: 6px;
-  }
-
-  .birthday-news .tv-close {
-    top: 2px;
-    right: 3px;
-    width: 24px !important;
-    height: 24px !important;
-    min-width: 24px !important;
-    font-size: 14px !important;
-  }
-
-  .news-controls {
-    flex: 0 0 30px;
-    min-height: 30px;
-    padding: 0 7px;
-  }
-
-  #newsNextButton {
-    min-width: 90px;
-    min-height: 22px;
-    padding: 0 9px;
-    font-size: 7px;
-  }
-
-  .news-ticker {
-    flex: 0 0 24px;
-    min-height: 24px;
-  }
-
-  .ticker-label {
-    padding: 0 8px;
-    font-size: 7px;
-  }
-
-  .ticker-copy {
-    font-size: 7px;
-  }
-
-  /* NEWSROOM */
-
-  .broadcast-scene {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-
-  .studio-camera {
-    width: 100%;
-    height: 100%;
-  }
-
-  .studio-side-panel {
-    top: 7%;
-    left: 53%;
-    width: 43%;
-    height: 55%;
+    width: min(1180px, calc(100vw - 24px));
+    height: min(720px, calc(100dvh - 24px));
+    max-width: calc(100vw - 24px);
+    max-height: calc(100dvh - 24px);
+    min-width: 0;
     min-height: 0;
-    padding: 13px 14px;
-    overflow: hidden;
   }
 
-  .studio-side-panel .small-label {
-    margin-bottom: 7px;
-    font-size: 6px;
-  }
-
-  .studio-side-panel h2 {
-    margin: 0;
-    max-width: 100%;
-    font-size: clamp(17px, 3vw, 27px);
-    line-height: .98;
-    overflow-wrap: normal;
-    word-break: normal;
-  }
-
-  .studio-side-panel p {
-    margin-top: 7px;
-    max-width: 100%;
-    font-size: clamp(7px, 1.15vw, 10px);
-    line-height: 1.25;
-  }
-
-  .anchor-label {
-    display: none;
-  }
-
-  .lower-breaking {
-    min-height: 15px;
-    padding: 0 10px;
-    font-size: 6px;
-  }
-
-  .lower-main {
-    min-height: 27px;
-    padding: 3px 10px;
-  }
-
-  .lower-main h1 {
-    font-size: clamp(13px, 2vw, 19px);
-    line-height: 1;
-  }
-
-  .lower-sub {
-    min-height: 15px;
-    padding: 2px 10px;
-    font-size: 6px;
-  }
-
-  /* SUBJECT PROFILE */
-
-  .profile-package {
-    display: grid;
-    grid-template-columns: 34% 66%;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-
-  .subject-visual {
-    position: relative;
+  .tv-broadcast {
     width: 100%;
     height: 100%;
     min-width: 0;
     min-height: 0;
-    padding: 12px;
-    overflow: hidden;
   }
 
-  .subject-status {
-    left: 12px;
-    top: 11px;
-    padding: 5px 8px;
-    font-size: 6px;
-  }
-
-  .subject-name {
-    left: 14px;
-    bottom: 14px;
-  }
-
-  .subject-name strong {
-    font-size: clamp(27px, 4vw, 41px);
-  }
-
-  .subject-name span {
-    margin-top: 3px;
-    font-size: 8px;
-  }
-
-  .profile-data {
-    width: 100%;
-    height: 100%;
+  .news-screen {
     min-width: 0;
     min-height: 0;
-    padding: 11px 16px;
     overflow: hidden;
   }
-
-  .profile-data h2 {
-    margin: 0 0 7px;
-    font-size: 11px;
-  }
-
-  .profile-row {
-    display: grid;
-    grid-template-columns: minmax(0, 42%) minmax(0, 58%);
-    gap: 8px;
-    padding: 4px 0;
-    font-size: clamp(8px, 1.15vw, 11px);
-  }
-
-  .profile-row strong,
-  .profile-row span {
-    min-width: 0;
-  }
-
-  .profile-row strong {
-    font-size: .72em;
-    line-height: 1.15;
-  }
-
-  .profile-row span {
-    line-height: 1.18;
-    overflow-wrap: anywhere;
-  }
-
-  /* FARIS FILES / INTRO BOARDS */
-
-  .news-package {
-    width: 100%;
-    height: 100%;
-    padding: 16px 24px 46px !important;
-    overflow: hidden;
-  }
-
-  .package-kicker,
-  .board-kicker {
-    padding: 4px 7px;
-    font-size: 6px !important;
-  }
-
-  .package-title {
-    max-width: 100% !important;
-    margin: 12px 0 11px !important;
-    font-size: clamp(25px, 3.8vw, 39px) !important;
-    line-height: .96 !important;
-  }
-
-  .package-copy {
-    max-width: 82% !important;
-    font-size: clamp(9px, 1.25vw, 13px) !important;
-    line-height: 1.3 !important;
-  }
-
-  /* SAYANG FINDINGS */
-
-  .info-board {
-    width: 100%;
-    height: 100%;
-    padding: 9px 16px 10px !important;
-    overflow: hidden !important;
-  }
-
-  .info-board h2 {
-    margin: 0 0 6px !important;
-    padding-bottom: 5px !important;
-    font-size: clamp(17px, 2.5vw, 26px) !important;
-  }
-
-  .info-board > div[style*="grid-template-columns"] {
-    gap: 5px !important;
-  }
-
-  .info-board > div[style*="grid-template-columns"] > div {
-    padding: 6px 8px !important;
-  }
-
-  .info-board > div[style*="grid-template-columns"] > div span {
-    margin-bottom: 3px !important;
-    font-size: 5.5px !important;
-  }
-
-  .info-board > div[style*="grid-template-columns"] > div p {
-    font-size: clamp(6.5px, .9vw, 8.5px) !important;
-    line-height: 1.18 !important;
-  }
-
-  /* NUMBERS */
-
-  .numbers-board {
-    padding: 5px 16px !important;
-  }
-
-  .numbers-board h2 {
-    margin-bottom: 2px !important;
-    padding-bottom: 3px !important;
-    font-size: 17px !important;
-  }
-
-  .numbers-board .info-row {
-    min-height: 17px;
-    padding: 1px 0;
-  }
-
-  .numbers-board .info-row span,
-  .numbers-board .info-row strong {
-    font-size: 6.5px;
-    line-height: 1.1;
-  }
-
-  /* MUSIC */
-
-  .music-card {
-    width: 100%;
-    height: 100%;
-    padding: 14px 20px 46px;
-    overflow: hidden;
-  }
-
-  .music-card h2 {
-    margin-bottom: 7px;
-    font-size: clamp(20px, 3vw, 30px);
-  }
-
-  .music-card p {
-    margin-top: 5px;
-    font-size: clamp(7px, 1.05vw, 10px);
-  }
-
-  .music-transcript {
-    margin: 5px 0 7px;
-    padding: 7px 10px;
-    font-size: clamp(12px, 1.7vw, 17px);
-  }
-
-  /* SAYANG QUOTE */
-
-  .statement-layout {
-    width: 100%;
-    height: 100%;
-    padding: 10px 18px 46px !important;
-    overflow: hidden;
-  }
-
-  .statement-tag {
-    padding: 4px 6px;
-    font-size: 5.5px;
-  }
-
-  .statement-layout blockquote {
-    margin: 5px 0 3px !important;
-    font-size: clamp(6.5px, .86vw, 8.5px) !important;
-    line-height: 1.13 !important;
-  }
-
-  .statement-layout cite {
-    font-size: 7px !important;
-  }
-
-  /* ---------------- CHATGPT ---------------- */
 
   .ai-window {
-    width: min(760px, calc(100vw - var(--safe-left) - var(--safe-right) - 12px));
-    height: calc(100dvh - var(--safe-top) - var(--safe-bottom) - 10px);
-  }
-
-  .ai-topbar {
-    height: 32px;
-    min-height: 32px;
+    width: min(760px, calc(100vw - 32px));
+    height: min(700px, calc(100dvh - 32px));
+    max-width: calc(100vw - 32px);
+    max-height: calc(100dvh - 32px);
   }
 
   .ai-conversation {
-    padding: 10px 15px;
-  }
-
-  .ai-message {
-    max-width: 82%;
-    margin-bottom: 6px;
-    padding: 6px 9px;
-    font-size: 8px;
-  }
-
-  .ai-input {
-    margin: 0 10px 7px;
-    min-height: 32px;
-  }
-
-  /* ---------------- NOTE ---------------- */
-
-  #noteModal {
-    padding:
-      max(5px, var(--safe-top))
-      max(8px, var(--safe-right))
-      max(5px, var(--safe-bottom))
-      max(8px, var(--safe-left));
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .paper-note {
-    width: min(520px, 72vw);
-    max-height: calc(100dvh - var(--safe-top) - var(--safe-bottom) - 10px);
-    padding: 25px 25px 20px;
-    font-size: 9px;
-    line-height: 1.42;
-    scrollbar-width: none;
+    max-width: calc(100vw - 32px);
+    max-height: calc(100dvh - 32px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
-
-  .paper-note::-webkit-scrollbar {
-    display: none;
-  }
-
-  .paper-note p {
-    margin: 0 0 9px;
-  }
-
-  /* ---------------- OREO ---------------- */
 
   .panda-delivery {
-    width: min(520px, 74vw);
-    max-height: calc(100dvh - var(--safe-top) - var(--safe-bottom) - 10px);
-    padding: 18px 22px;
-    scrollbar-width: none;
-  }
-
-  .panda-delivery::-webkit-scrollbar {
-    display: none;
-  }
-
-  .panda-character {
-    transform: scale(.68);
-    transform-origin: top center;
-    margin-top: -8px;
-    margin-bottom: -50px;
-  }
-
-  .oreo-label {
-    margin: 7px 0 12px;
+    max-width: calc(100vw - 32px);
+    max-height: calc(100dvh - 32px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }
 
 /* =========================================================
-   VERY SHORT LANDSCAPE PHONES
+   PHONE BLOCKER
+
+   Phones no longer receive a squeezed-down version of the
+   birthday site. Instead, show a deliberate laptop message.
    ========================================================= */
 
-@media (orientation: landscape) and (max-height: 430px) {
-  .intro-content h1 {
-    font-size: clamp(39px, 8vw, 61px);
+@media (max-width: 767px),
+       (orientation: landscape) and (max-height: 500px) and (max-width: 1000px) {
+
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+    min-height: 100dvh;
+    margin: 0;
+    overflow: hidden !important;
+    background: #050505;
   }
 
-  .intro-text {
-    margin-top: 10px;
+  body::before {
+    content: "this one needs a bigger screen ♡\A\Aopen this on your laptop for the full birthday surprise.";
+    white-space: pre-wrap;
+    position: fixed;
+    z-index: 2147483647;
+    inset: 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding:
+      max(30px, var(--safe-top))
+      max(32px, var(--safe-right))
+      max(30px, var(--safe-bottom))
+      max(32px, var(--safe-left));
+    background:
+      radial-gradient(
+        circle at center,
+        rgba(255,255,255,.035),
+        transparent 48%
+      ),
+      #050505;
+    color: rgba(255,255,255,.9);
+    font-family: "Courier New", monospace;
+    font-size: clamp(14px, 4vw, 20px);
+    font-weight: 400;
+    line-height: 1.65;
+    letter-spacing: .03em;
+    text-align: center;
   }
 
-  .landscape-note {
-    margin: 7px 0;
+  body::after {
+    content: "18 SEP 2026";
+    position: fixed;
+    z-index: 2147483647;
+    left: 50%;
+    bottom: max(24px, calc(var(--safe-bottom) + 18px));
+    transform: translateX(-50%);
+    color: rgba(255,255,255,.28);
+    font-family: "Courier New", monospace;
+    font-size: 9px;
+    letter-spacing: .16em;
+    white-space: nowrap;
   }
 
-  .studio-side-panel h2 {
-    font-size: clamp(15px, 2.7vw, 23px);
-  }
-
-  .studio-side-panel p {
-    font-size: 7px;
-  }
-
-  .profile-row {
-    padding: 3px 0;
-  }
-
-  .info-board > div[style*="grid-template-columns"] > div {
-    padding: 5px 7px !important;
+  body > * {
+    visibility: hidden !important;
+    pointer-events: none !important;
   }
 }
 
 /* =========================================================
-   PORTRAIT
-   Intro only needs to tell him to rotate.
-   ========================================================= */
-
-@media (orientation: portrait) and (max-width: 900px) {
-  .intro-content {
-    width: min(86vw, 430px);
-  }
-
-  .landscape-note {
-    color: rgba(255,255,255,.72);
-  }
-}
-
-/* =========================================================
-   TOUCH
+   TOUCH DEVICES
    ========================================================= */
 
 @media (hover: none), (pointer: coarse) {
+  button,
+  .hotspot,
+  .desktop-icon,
+  .taskbar-icon {
+    touch-action: manipulation;
+  }
+
   .tv-close,
   .card-close,
   .paper-close,
