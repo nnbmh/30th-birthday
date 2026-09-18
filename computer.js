@@ -638,9 +638,12 @@ function getPhotoCollection(collection) {
   }));
 }
 
+/* =========================================================
+   IMMEDIATE THUMBNAIL PRELOAD
+   ========================================================= */
+
 function preloadImage(path) {
   const image = new Image();
-  image.decoding = "async";
   image.src = path;
 }
 
@@ -664,19 +667,8 @@ function preloadPictureThumbnails() {
   });
 }
 
-function startPicturePreload() {
-  if ("requestIdleCallback" in window) {
-    requestIdleCallback(
-      preloadPictureThumbnails,
-      { timeout: 800 }
-    );
-  } else {
-    setTimeout(preloadPictureThumbnails, 250);
-  }
-}
-
-startPicturePreload();
-
+/* Start caching all tiny Explorer thumbnails immediately. */
+preloadPictureThumbnails();
 function renderPhotoViewer() {
   const photo = currentPhotoCollection[currentPhotoIndex];
 
