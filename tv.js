@@ -15,6 +15,54 @@
   let slideStartedAt = 0;
   let slideRemaining = 0;
   let isPaused = false;
+  let tvSequenceToken = 0;
+
+  /* =========================================================
+     PRELOAD BBN NEWSROOM
+     Prevents the anchor background flashing/glitching the
+     first time an anchor slide appears.
+     ========================================================= */
+
+  const anchorImage = new Image();
+  let anchorImageReady = false;
+
+  const anchorImagePromise = new Promise((resolve) => {
+    const finish = () => {
+      anchorImageReady = true;
+      resolve();
+    };
+
+    anchorImage.onload = async () => {
+      if (typeof anchorImage.decode === "function") {
+        try {
+          await anchorImage.decode();
+        } catch (error) {}
+      }
+
+      finish();
+    };
+
+    anchorImage.onerror = finish;
+    anchorImage.src = "assets/bbn-anchor.png";
+
+    if (anchorImage.complete && anchorImage.naturalWidth > 0) {
+      if (typeof anchorImage.decode === "function") {
+        anchorImage.decode().catch(() => {}).finally(finish);
+      } else {
+        finish();
+      }
+    }
+  });
+
+  /* Also ask the browser to begin fetching it immediately. */
+  if (!document.querySelector('link[data-bbn-anchor-preload]')) {
+    const preload = document.createElement("link");
+    preload.rel = "preload";
+    preload.as = "image";
+    preload.href = "assets/bbn-anchor.png";
+    preload.dataset.bbnAnchorPreload = "true";
+    document.head.appendChild(preload);
+  }
 
   const tickerHeadlines = [
     "FARIS TURNS 30",
@@ -647,9 +695,7 @@
 
     if (!slide || slide.final) return;
 
-    newsNextButton.textContent = paused
-      ? "▶ RESUME"
-      : "❚❚ PAUSE";
+    newsNextButton.textContent = paused ? "▶ RESUME" : "❚❚ PAUSE";
   }
 
   function scheduleSlideAdvance(duration) {
@@ -666,10 +712,7 @@
 
       if (isPaused) return;
 
-      currentNewsSlide = getNextVisibleSlideIndex(
-        currentNewsSlide + 1
-      );
-
+      currentNewsSlide = getNextVisibleSlideIndex(currentNewsSlide + 1);
       renderNewsSlide();
     }, duration);
   }
@@ -679,11 +722,7 @@
 
     if (slideTimer) {
       const elapsed = performance.now() - slideStartedAt;
-
-      slideRemaining = Math.max(
-        0,
-        slideRemaining - elapsed
-      );
+      slideRemaining = Math.max(0, slideRemaining - elapsed);
 
       clearTimeout(slideTimer);
       slideTimer = null;
@@ -701,20 +740,14 @@
 
     if (!slide || slide.final) return;
 
-    const remaining = Math.max(
-      250,
-      slideRemaining
-    );
+    const remaining = Math.max(250, slideRemaining);
 
     slideStartedAt = performance.now();
 
     slideTimer = setTimeout(() => {
       slideTimer = null;
 
-      currentNewsSlide = getNextVisibleSlideIndex(
-        currentNewsSlide + 1
-      );
-
+      currentNewsSlide = getNextVisibleSlideIndex(currentNewsSlide + 1);
       renderNewsSlide();
     }, remaining);
   }
@@ -725,8 +758,7 @@
       slideTimer = null;
     }
 
-    currentNewsSlide =
-      getNextVisibleSlideIndex(currentNewsSlide);
+    currentNewsSlide = getNextVisibleSlideIndex(currentNewsSlide);
 
     if (currentNewsSlide >= slides.length) {
       closeBirthdayNews();
@@ -737,14 +769,9 @@
 
     isPaused = false;
 
-    tvBroadcast.classList.remove(
-      "broadcast-paused"
-    );
+    tvBroadcast.classList.remove("broadcast-paused");
 
-    tvBroadcast.classList.toggle(
-      "intro-active",
-      Boolean(slide.intro)
-    );
+    tvBroadcast.classList.toggle("intro-active", Boolean(slide.intro));
 
     newsScreen.innerHTML = slide.html;
 
@@ -756,8 +783,7 @@
     }
 
     if (slide.video) {
-      const stage =
-        document.getElementById("newsVideoStage");
+      const stage = document.getElementById("newsVideoStage");
 
       if (stage) {
         stage.appendChild(birthdayVideo);
@@ -769,13 +795,9 @@
       if (birthdayVideo) {
         birthdayVideo.currentTime = 0;
 
-        const playPromise =
-          birthdayVideo.play();
+        const playPromise = birthdayVideo.play();
 
-        if (
-          playPromise &&
-          typeof playPromise.catch === "function"
-        ) {
+        if (playPromise && typeof playPromise.catch === "function") {
           playPromise.catch(() => {});
         }
       }
@@ -784,8 +806,7 @@
     }
 
     if (slide.final) {
-      newsNextButton.textContent =
-        "RETURN TO ROOM";
+      newsNextButton.textContent = "RETURN TO ROOM";
       return;
     }
 
@@ -795,8 +816,7 @@
       const introExitTimer = setTimeout(() => {
         if (isPaused) return;
 
-        const opening =
-          newsScreen.querySelector(".bbn-opening");
+        const opening = newsScreen.querySelector(".bbn-opening");
 
         if (opening) {
           opening.classList.add("leaving");
@@ -806,16 +826,40 @@
       tvTimers.push(introExitTimer);
     }
 
-    scheduleSlideAdvance(
-      slide.duration || 8000
-    );
+    scheduleSlideAdvance(slide.duration || 8000);
   }
 
-  function startBirthdayNews() {
+  function beginTVAnimation(sequenceToken) {
+    if (sequenceToken !== tvSequenceToken) return;
+
+    const staticTimer = setTimeout(() => {
+      if (sequenceToken !== tvSequenceToken) return;
+
+      tvPower.classList.add("hidden-phase");
+      tvStatic.classList.add("active");
+    }, 650);
+
+    const broadcastTimer = setTimeout(() => {
+      if (sequenceToken !== tvSequenceToken) return;
+
+      tvStatic.classList.add("hidden-phase");
+      tvBroadcast.classList.add("active");
+
+      const revealTimer = setTimeout(() => {
+        if (sequenceToken !== tvSequenceToken) return;
+        renderNewsSlide();
+      }, 180);
+
+      tvTimers.push(revealTimer);
+    }, 1400);
+
+    tvTimers.push(staticTimer, broadcastTimer);
+  }
+
+  async function startBirthdayNews() {
     clearTVTimers();
 
-    currentNewsSlide =
-      getNextVisibleSlideIndex(0);
+    const sequenceToken = ++tvSequenceToken;
 
     currentNewsSlide = 0;
     isPaused = false;
@@ -828,125 +872,92 @@
     newsScreen.innerHTML = "";
     newsTickerText.innerHTML = "";
 
-    const staticTimer = setTimeout(() => {
-      tvPower.classList.add("hidden-phase");
-      tvStatic.classList.add("active");
-    }, 650);
+    /*
+      Wait for the newsroom image BEFORE the TV sequence begins.
+      Normally this resolves instantly because we started loading
+      the image as soon as tv.js itself loaded.
+    */
+    if (!anchorImageReady) {
+      await anchorImagePromise;
+    }
 
-    const broadcastTimer = setTimeout(() => {
-      tvStatic.classList.add("hidden-phase");
-      tvBroadcast.classList.add("active");
+    if (sequenceToken !== tvSequenceToken) return;
 
-      const revealTimer = setTimeout(() => {
-        renderNewsSlide();
-      }, 180);
-
-      tvTimers.push(revealTimer);
-    }, 1400);
-
-    tvTimers.push(
-      staticTimer,
-      broadcastTimer
-    );
+    /*
+      Give the browser one paint after decoding so the decoded
+      image is available to the CSS background compositor before
+      the first anchor slide can appear.
+    */
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (sequenceToken !== tvSequenceToken) return;
+        beginTVAnimation(sequenceToken);
+      });
+    });
   }
 
   function closeBirthdayNews() {
+    ++tvSequenceToken;
     clearTVTimers();
 
     isPaused = false;
     slideRemaining = 0;
 
-    if (
-      birthdayVideo &&
-      !birthdayVideo.paused
-    ) {
+    if (birthdayVideo && !birthdayVideo.paused) {
       birthdayVideo.pause();
     }
 
-    tvBroadcast.classList.remove(
-      "intro-active",
-      "broadcast-paused"
-    );
+    tvBroadcast.classList.remove("intro-active", "broadcast-paused");
 
     tvModal.classList.remove("open");
+    tvModal.setAttribute("aria-hidden", "true");
 
-    tvModal.setAttribute(
-      "aria-hidden",
-      "true"
-    );
-
-    if (
-      typeof clearRoomFocus === "function"
-    ) {
+    if (typeof clearRoomFocus === "function") {
       clearRoomFocus();
     }
   }
 
-  newsNextButton.addEventListener(
-    "click",
-    () => {
-      const slide =
-        slides[currentNewsSlide];
+  newsNextButton.addEventListener("click", () => {
+    const slide = slides[currentNewsSlide];
 
-      if (!slide) return;
+    if (!slide) return;
 
-      if (slide.final) {
-        closeBirthdayNews();
-        return;
-      }
-
-      if (isPaused) {
-        resumeBroadcast();
-      } else {
-        pauseBroadcast();
-      }
+    if (slide.final) {
+      closeBirthdayNews();
+      return;
     }
-  );
 
-  window.runTVSequence =
-    startBirthdayNews;
+    if (isPaused) {
+      resumeBroadcast();
+    } else {
+      pauseBroadcast();
+    }
+  });
 
-  document
-    .querySelectorAll("#tvModal [data-close]")
-    .forEach((button) => {
-      button.addEventListener(
-        "click",
-        () => {
-          clearTVTimers();
+  window.runTVSequence = startBirthdayNews;
 
-          isPaused = false;
-          slideRemaining = 0;
+  document.querySelectorAll("#tvModal [data-close]").forEach((button) => {
+    button.addEventListener("click", () => {
+      ++tvSequenceToken;
+      clearTVTimers();
 
-          tvBroadcast.classList.remove(
-            "intro-active",
-            "broadcast-paused"
-          );
+      isPaused = false;
+      slideRemaining = 0;
 
-          if (
-            birthdayVideo &&
-            !birthdayVideo.paused
-          ) {
-            birthdayVideo.pause();
-          }
-        }
-      );
+      tvBroadcast.classList.remove("intro-active", "broadcast-paused");
+
+      if (birthdayVideo && !birthdayVideo.paused) {
+        birthdayVideo.pause();
+      }
     });
+  });
 
   if (birthdayVideo) {
-    birthdayVideo.addEventListener(
-      "ended",
-      () => {
-        if (
-          slides[currentNewsSlide]?.video
-        ) {
-          currentNewsSlide =
-            getNextVisibleSlideIndex(
-              currentNewsSlide + 1
-            );
-
-          renderNewsSlide();
-        }
+    birthdayVideo.addEventListener("ended", () => {
+      if (slides[currentNewsSlide]?.video) {
+        currentNewsSlide = getNextVisibleSlideIndex(currentNewsSlide + 1);
+        renderNewsSlide();
       }
-    );
+    });
   }
 })();
