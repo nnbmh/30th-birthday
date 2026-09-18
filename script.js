@@ -53,7 +53,7 @@ Object.assign(cokeComment.style, {
   border: "1px solid rgba(80, 62, 37, 0.18)",
   borderRadius: "3px",
   boxShadow: "0 3px 8px rgba(0,0,0,.28)",
-  fontFamily: "'Comic Sans MS', 'Bradley Hand', cursive",
+  fontFamily: "'Courier New', monospace",
   fontSize: "clamp(10px, 1vw, 14px)",
   fontWeight: "600",
   lineHeight: "1",
