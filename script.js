@@ -402,6 +402,14 @@ const computerBoot = document.getElementById("computerBoot");
 function runComputerBoot() {
   computerBoot.classList.remove("finished");
 
+  /*
+    While the Windows boot screen is visible, prepare Pictures.
+    Faris never sees this work happening.
+  */
+  if (typeof prepareAllPictures === "function") {
+    prepareAllPictures();
+  }
+
   setTimeout(() => {
     computerBoot.classList.add("finished");
   }, 1400);
