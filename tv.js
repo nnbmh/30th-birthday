@@ -369,7 +369,8 @@
 
               ${observationCard(
                 "THE MISSING VAPE",
-                "somehow his vape is always missing. where did he leave it this time? nobody knows."
+                "somehow his vape is always missing...
+                where did he leave it this time? nobody knows."
               )}
 
               ${observationCard(
@@ -379,7 +380,8 @@
 
               ${observationCard(
                 "SLEEPING NEXT TO FARIS",
-                "he snores loudly and somehow manages to occupy about 3/4 of the bed. Sayang survives on the remaining 1/4."
+                "he snores loudly and somehow manages to occupy about 3/4 of the bed. 
+                Sayang survives on the remaining 1/4."
               )}
             </div>
           </div>
