@@ -56,7 +56,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center center;
+    object-position: center top;
   }
 
   #monitorHotspot {
@@ -68,7 +68,7 @@ body {
 
   #tvHotspot {
     left: 50.5%;
-    top: 0.5%;
+    top: 2%;
     width: 18%;
     height: 16%;
   }
