@@ -505,7 +505,7 @@
 
             <div class="info-row">
               <span>how often Sayang misses him</span>
-              <strong>more than shed like to admit</strong>
+              <strong>more than she'd like to admit</strong>
             </div>
 
             <div class="info-row">
