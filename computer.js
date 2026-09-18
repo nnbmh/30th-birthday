@@ -306,7 +306,26 @@ function photoFolderItem(name, folder) {
   </button>`;
 }
 
+function getThumbnailPath(path) {
+  const fileName = path
+    .split("/")
+    .pop()
+    .replace(/\.(jpeg|jpg|png)$/i, ".webp");
+
+  if (path.includes("/candid/")) {
+    return `assets/photos/thumbnails/candid/${fileName}`;
+  }
+
+  if (path.includes("/us/")) {
+    return `assets/photos/thumbnails/us/${fileName}`;
+  }
+
+  return `assets/photos/thumbnails/${fileName}`;
+}
+
 function photoFileItem(path, name, collection, index) {
+  const thumbnailPath = getThumbnailPath(path);
+
   return `<button
     class="win-large-item win-photo-item"
     data-photo-path="${path}"
@@ -316,37 +335,13 @@ function photoFileItem(path, name, collection, index) {
   >
     <span class="win-photo-thumb">
       <img
-        data-thumb-src="${path}"
+        src="${thumbnailPath}"
         alt="${name}"
         decoding="async"
       >
     </span>
     <span>${name}</span>
   </button>`;
-}
-
-function loadVisiblePhotoThumbnails() {
-  const thumbnails = [
-    ...appContent.querySelectorAll("img[data-thumb-src]")
-  ];
-
-  thumbnails.forEach((image, index) => {
-    setTimeout(() => {
-      const path = image.dataset.thumbSrc;
-
-      if (!path || !image.isConnected) return;
-
-      image.onload = () => {
-        image.classList.add("loaded");
-      };
-
-      image.src = path;
-
-      if (image.complete) {
-        image.classList.add("loaded");
-      }
-    }, index * 35);
-  });
 }
 
 const standalonePhotos = [
@@ -563,13 +558,6 @@ function navigateExplorer(location, addHistory = true) {
   appContent.innerHTML = renderExplorerLocation(location);
 
   appWindow.classList.add("open");
-
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      loadVisiblePhotoThumbnails();
-    });
-  });
-
   computerClick();
 }
 
@@ -594,12 +582,6 @@ function explorerBack() {
   appTitle.textContent = getExplorerTitle(destination);
   appContent.innerHTML = renderExplorerLocation(destination);
 
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      loadVisiblePhotoThumbnails();
-    });
-  });
-
   computerClick();
 }
 
@@ -623,12 +605,6 @@ function explorerForward() {
 
   appTitle.textContent = getExplorerTitle(destination);
   appContent.innerHTML = renderExplorerLocation(destination);
-
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      loadVisiblePhotoThumbnails();
-    });
-  });
 
   computerClick();
 }
@@ -670,15 +646,21 @@ function preloadImage(path) {
 
 function preloadPictureThumbnails() {
   standalonePhotos.forEach((name) => {
-    preloadImage(`assets/photos/${name}`);
+    preloadImage(
+      `assets/photos/thumbnails/${name.replace(/\.(jpeg|jpg|png)$/i, ".webp")}`
+    );
   });
 
-  candidPhotos.slice(0, 6).forEach((name) => {
-    preloadImage(`assets/photos/candid/${name}`);
+  candidPhotos.forEach((name) => {
+    preloadImage(
+      `assets/photos/thumbnails/candid/${name.replace(/\.(jpeg|jpg|png)$/i, ".webp")}`
+    );
   });
 
-  usPhotos.slice(0, 6).forEach((name) => {
-    preloadImage(`assets/photos/us/${name}`);
+  usPhotos.forEach((name) => {
+    preloadImage(
+      `assets/photos/thumbnails/us/${name.replace(/\.(jpeg|jpg|png)$/i, ".webp")}`
+    );
   });
 }
 
@@ -1028,12 +1010,6 @@ appContent.addEventListener("click", (event) => {
 
     appContent.innerHTML =
       renderExplorerLocation(destination);
-
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        loadVisiblePhotoThumbnails();
-      });
-    });
 
     computerClick();
     return;
