@@ -305,7 +305,7 @@
             ">
               ${observationCard(
                 "FOOD RULES",
-                "he'll eat pretty much anything... except tomatoes. sardines and tuna are also a definite no, although other fish might be acceptable depending on how its cooked. and do not offer him Coke Zero as a replacement for Coke."
+                "he'll eat pretty much anything... except tomatoes. sardines and tuna are also a definite no, although other fish might be acceptable depending on how it's cooked. and do not offer him Coke Zero as a replacement for Coke."
               )}
 
               ${observationCard(
@@ -315,7 +315,7 @@
 
               ${observationCard(
                 "TOMORROW'S PROBLEM",
-                "the dishes can apparently wait until tomorrow. according to Faris, anyway."
+                "the dishes can apparently wait until tomorrow. according to Faris anyway."
               )}
 
               ${observationCard(
@@ -355,17 +355,17 @@
             ">
               ${observationCard(
                 "WHEN HES COOKING",
-                "every now and then he'll randomly start singing while hes cooking... which ive gotten very used to by now."
+                "every now and then he'll randomly start singing while he's cooking... which i've gotten very used to by now."
               )}
 
               ${observationCard(
                 "THAT LITTLE HEART",
-                "sometimes he'll just smile at me and make that little heart with his thumb and finger. i already know exactly what he means when he does it."
+                "sometimes he'll just smile at me and make that little heart with his thumb and index finger. i already know exactly what he means when he does it."
               )}
 
               ${observationCard(
                 "WHEN WE'RE WATCHING SHOWS",
-                "he'll get completely focused on whats happening and start making all these little expressions without realising it. whenever i catch one i find cute, i take a screenshot.<br><br><span style='color:rgba(255,255,255,.65);'>he says they look ugly... i keep taking them anyway.</span>"
+                "he'll get completely focused on what's happening and start making all these little expressions without realising it. whenever i catch one i find cute, i take a screenshot.<br><br><span style='color:rgba(255,255,255,.65);'>he says they look ugly... i keep taking them anyway.</span>"
               )}
             </div>
           </div>
