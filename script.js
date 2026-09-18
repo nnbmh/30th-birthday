@@ -40,7 +40,7 @@ Object.assign(cokeHotspot.style, {
 
 Object.assign(cokeComment.style, {
   position: "absolute",
-  left: "17.2%",
+  left: "16.2%",
   top: "44.5%",
   zIndex: "76",
   display: "block",
