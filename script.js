@@ -40,25 +40,28 @@ Object.assign(cokeHotspot.style, {
 
 Object.assign(cokeComment.style, {
   position: "absolute",
-  left: "23.2%",
-  top: "46.5%",
+  left: "17.2%",
+  top: "44.5%",
   zIndex: "76",
   display: "block",
   width: "max-content",
-  maxWidth: "180px",
+  maxWidth: "none",
   margin: "0",
-  padding: "0",
-  color: "#fff7e7",
+  padding: "6px 10px",
+  color: "#30271d",
+  background: "#f5e7b7",
+  border: "1px solid rgba(80, 62, 37, 0.18)",
+  borderRadius: "3px",
+  boxShadow: "0 3px 8px rgba(0,0,0,.28)",
   fontFamily: "'Comic Sans MS', 'Bradley Hand', cursive",
-  fontSize: "clamp(12px, 1.35vw, 19px)",
+  fontSize: "clamp(10px, 1vw, 14px)",
   fontWeight: "600",
-  lineHeight: "1.1",
+  lineHeight: "1",
   letterSpacing: "0.01em",
   whiteSpace: "nowrap",
-  textShadow: "0 2px 4px rgba(0,0,0,.95), 0 0 8px rgba(0,0,0,.7)",
   opacity: "0",
   visibility: "hidden",
-  transform: "translateY(5px) rotate(-3deg)",
+  transform: "translateY(5px) rotate(-2deg)",
   transition: "opacity .18s ease, transform .18s ease, visibility .18s ease",
   pointerEvents: "none"
 });
@@ -73,7 +76,7 @@ function showCokeComment(autoHide = false) {
 
   cokeComment.style.visibility = "visible";
   cokeComment.style.opacity = "1";
-  cokeComment.style.transform = "translateY(0) rotate(-3deg)";
+  cokeComment.style.transform = "translateY(0) rotate(-2deg)";
   cokeComment.setAttribute("aria-hidden", "false");
 
   if (autoHide) {
@@ -87,7 +90,7 @@ function hideCokeComment() {
   clearTimeout(cokeCommentTimer);
 
   cokeComment.style.opacity = "0";
-  cokeComment.style.transform = "translateY(5px) rotate(-3deg)";
+  cokeComment.style.transform = "translateY(5px) rotate(-2deg)";
   cokeComment.setAttribute("aria-hidden", "true");
 
   cokeCommentTimer = setTimeout(() => {
@@ -121,7 +124,6 @@ if (cokeCanHover) {
   cokeHotspot.addEventListener("pointerup", (event) => {
     event.preventDefault();
     event.stopPropagation();
-
     showCokeComment(true);
   });
 
@@ -257,11 +259,6 @@ enterButton.addEventListener("click", () => {
 if (window.matchMedia("(pointer: fine)").matches) {
   document.addEventListener("mousemove", () => {
     if (room.classList.contains("final-reveal-active")) return;
-
-    /*
-      Intentionally no image-only transform here.
-      This keeps every invisible hotspot aligned with the room.
-    */
   });
 }
 
@@ -737,15 +734,6 @@ const appWindow = document.getElementById("appWindow");
 const appTitle = document.getElementById("appTitle");
 const appContent = document.getElementById("appContent");
 const closeApp = document.getElementById("closeApp");
-
-/*
-  All desktop apps are controlled by computer.js.
-
-  The old appData and .desktop-icon click handler used to live here.
-  They have intentionally been removed because they were opening the
-  obsolete birthday/photos/message windows on top of the newer
-  Windows-style computer experience.
-*/
 
 closeApp.addEventListener("click", () => {
   playClick();
