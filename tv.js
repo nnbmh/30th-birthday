@@ -831,60 +831,163 @@
     scheduleSlideAdvance(slide.duration || 8000);
   }
 
-  function beginTVAnimation(sequenceToken) {
-    if (sequenceToken !== tvSequenceToken) return;
+function beginTVAnimation(sequenceToken) {
+  if (sequenceToken !== tvSequenceToken) return;
 
-    const staticTimer = setTimeout(() => {
-      if (sequenceToken !== tvSequenceToken) return;
+  let staticAudioContext = null;
+  let staticNoiseSource = null;
+  let staticNoiseGain = null;
 
-      tvPower.classList.add("hidden-phase");
-      tvStatic.classList.add("active");
-    }, 650);
+  function startStaticNoise() {
+    try {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return;
 
-    const broadcastTimer = setTimeout(() => {
-      if (sequenceToken !== tvSequenceToken) return;
+      staticAudioContext = new AudioContext();
 
-      tvStatic.classList.add("hidden-phase");
-      tvBroadcast.classList.add("active");
+      const bufferLength = Math.floor(staticAudioContext.sampleRate * 1);
+      const noiseBuffer = staticAudioContext.createBuffer(
+        1,
+        bufferLength,
+        staticAudioContext.sampleRate
+      );
 
-      const revealTimer = setTimeout(() => {
-        if (sequenceToken !== tvSequenceToken) return;
-        renderNewsSlide();
-      }, 180);
+      const output = noiseBuffer.getChannelData(0);
 
-      tvTimers.push(revealTimer);
-    }, 1400);
+      for (let i = 0; i < bufferLength; i++) {
+        output[i] = Math.random() * 2 - 1;
+      }
 
-    tvTimers.push(staticTimer, broadcastTimer);
+      staticNoiseSource = staticAudioContext.createBufferSource();
+      staticNoiseGain = staticAudioContext.createGain();
+
+      staticNoiseSource.buffer = noiseBuffer;
+
+      staticNoiseGain.gain.setValueAtTime(
+        0.055,
+        staticAudioContext.currentTime
+      );
+
+      staticNoiseGain.gain.exponentialRampToValueAtTime(
+        0.001,
+        staticAudioContext.currentTime + 0.8
+      );
+
+      staticNoiseSource.connect(staticNoiseGain);
+      staticNoiseGain.connect(staticAudioContext.destination);
+
+      staticNoiseSource.start();
+      staticNoiseSource.stop(staticAudioContext.currentTime + 0.8);
+    } catch (error) {}
   }
 
-  async function startBirthdayNews() {
-    clearTVTimers();
+  function stopStaticNoise() {
+    try {
+      if (staticNoiseSource) staticNoiseSource.stop();
+    } catch (error) {}
 
-    const sequenceToken = ++tvSequenceToken;
+    try {
+      if (staticAudioContext && staticAudioContext.state !== "closed") {
+        staticAudioContext.close();
+      }
+    } catch (error) {}
 
-    currentNewsSlide = 0;
-    isPaused = false;
-    slideRemaining = 0;
+    staticNoiseSource = null;
+    staticNoiseGain = null;
+    staticAudioContext = null;
+  }
 
-    tvPower.className = "tv-power";
-    tvStatic.className = "tv-static";
-    tvBroadcast.className = "tv-broadcast";
-
-    newsScreen.innerHTML = "";
-    newsTickerText.innerHTML = "";
-
-    /*
-      Wait for the newsroom image BEFORE the TV sequence begins.
-      Normally this resolves instantly because we started loading
-      the image as soon as tv.js itself loaded.
-    */
-    if (!anchorImageReady) {
-      await anchorImagePromise;
-    }
-
+  const staticTimer = setTimeout(() => {
     if (sequenceToken !== tvSequenceToken) return;
 
+    tvPower.classList.add("hidden-phase");
+    tvStatic.classList.remove("hidden-phase");
+    tvStatic.classList.add("active");
+
+    startStaticNoise();
+  }, 250);
+
+  const prepareBroadcastTimer = setTimeout(() => {
+    if (sequenceToken !== tvSequenceToken) {
+      stopStaticNoise();
+      return;
+    }
+
+    /*
+      IMPORTANT:
+      Render the BBN opening BEFORE revealing the broadcast.
+
+      This fixes the blank navy screen seen on iPad/Safari because
+      Safari now has time to construct and paint the first slide
+      while it is still hidden behind the static.
+    */
+    renderNewsSlide();
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (sequenceToken !== tvSequenceToken) {
+          stopStaticNoise();
+          return;
+        }
+
+        stopStaticNoise();
+
+        tvStatic.classList.remove("active");
+        tvStatic.classList.add("hidden-phase");
+
+        tvBroadcast.classList.add("active");
+      });
+    });
+  }, 1050);
+
+  tvTimers.push(staticTimer, prepareBroadcastTimer);
+}
+
+async function startBirthdayNews() {
+  clearTVTimers();
+
+  const sequenceToken = ++tvSequenceToken;
+
+  currentNewsSlide = 0;
+  isPaused = false;
+  slideRemaining = 0;
+
+  tvPower.className = "tv-power";
+  tvStatic.className = "tv-static";
+  tvBroadcast.className = "tv-broadcast";
+
+  newsScreen.innerHTML = "";
+  newsTickerText.innerHTML = "";
+
+  /*
+    Make sure the BBN newsroom image has completely downloaded
+    and decoded before starting the television sequence.
+
+    This prevents the first anchor image from flashing/glitching
+    on Safari, Chrome and slower connections.
+  */
+  if (!anchorImageReady) {
+    await anchorImagePromise;
+  }
+
+  if (sequenceToken !== tvSequenceToken) return;
+
+  /*
+    Safari/iPad can report an image as decoded before its compositor
+    has actually prepared it for painting.
+
+    Two animation frames give the browser time to place the decoded
+    newsroom image into the rendering pipeline.
+  */
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      if (sequenceToken !== tvSequenceToken) return;
+
+      beginTVAnimation(sequenceToken);
+    });
+  });
+}
+  
     /*
       Give the browser one paint after decoding so the decoded
       image is available to the CSS background compositor before
