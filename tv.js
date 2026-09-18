@@ -11,6 +11,10 @@
 
   let currentNewsSlide = 0;
   let tvTimers = [];
+  let slideTimer = null;
+  let slideStartedAt = 0;
+  let slideRemaining = 0;
+  let isPaused = false;
 
   const tickerHeadlines = [
     "FARIS TURNS 30",
@@ -85,6 +89,7 @@
   const slides = [
     {
       intro: true,
+      duration: 3000,
       html: `
         <div class="news-slide bbn-opening-slide">
           <div class="bbn-opening">
@@ -121,6 +126,7 @@
     },
 
     {
+      duration: 6500,
       html: anchorScene({
         label: "LIVE • UNITED KINGDOM",
         headline: "FARIS TURNS 30",
@@ -133,6 +139,7 @@
     },
 
     {
+      duration: 8000,
       html: `
         <div class="news-slide">
           <div class="news-package" style="padding-top:48px;">
@@ -172,6 +179,7 @@
     },
 
     {
+      duration: 12000,
       html: `
         <div class="news-slide">
           <div class="profile-package">
@@ -228,6 +236,7 @@
     },
 
     {
+      duration: 6500,
       html: anchorScene({
         label: "DEVELOPING",
         headline: "Random objects remain at risk",
@@ -239,6 +248,7 @@
     },
 
     {
+      duration: 8000,
       html: `
         <div class="news-slide">
           <div class="news-package" style="padding-top:48px;">
@@ -279,6 +289,7 @@
     },
 
     {
+      duration: 16000,
       html: `
         <div class="news-slide">
           <div class="info-board" style="
@@ -329,6 +340,7 @@
     },
 
     {
+      duration: 16000,
       html: `
         <div class="news-slide">
           <div class="info-board" style="
@@ -374,6 +386,7 @@
     },
 
     {
+      duration: 6500,
       html: anchorScene({
         label: "CULTURE DESK",
         headline: "Unusual musical ability identified",
@@ -386,6 +399,7 @@
     },
 
     {
+      duration: 11000,
       html: `
         <div class="news-slide">
           <div class="music-card">
@@ -409,6 +423,7 @@
     },
 
     {
+      duration: 17000,
       html: `
         <div class="news-slide">
           <div class="info-board numbers-board">
@@ -465,6 +480,7 @@
     },
 
     {
+      duration: 6500,
       html: anchorScene({
         label: "DISTANCE REPORT",
         headline: "Miles apart",
@@ -476,6 +492,7 @@
     },
 
     {
+      duration: 30000,
       html: `
         <div class="news-slide">
           <div class="statement-layout" style="padding-top:30px;">
@@ -515,6 +532,7 @@
 
     {
       hidden: true,
+      duration: 7000,
       html: `
         <div class="news-slide">
           <div class="news-package footage-package">
@@ -579,6 +597,11 @@
   function clearTVTimers() {
     tvTimers.forEach((timer) => clearTimeout(timer));
     tvTimers = [];
+
+    if (slideTimer) {
+      clearTimeout(slideTimer);
+      slideTimer = null;
+    }
   }
 
   function getNextVisibleSlideIndex(fromIndex) {
@@ -606,7 +629,94 @@
     newsTickerText.style.animation = "";
   }
 
+  function setBroadcastPaused(paused) {
+    isPaused = paused;
+    tvBroadcast.classList.toggle("broadcast-paused", paused);
+
+    const animatedElements = tvBroadcast.querySelectorAll("*");
+    animatedElements.forEach((element) => {
+      element.style.animationPlayState = paused ? "paused" : "";
+    });
+
+    if (birthdayVideo) {
+      if (paused && !birthdayVideo.paused) {
+        birthdayVideo.pause();
+      }
+    }
+
+    const slide = slides[currentNewsSlide];
+
+    if (!slide || slide.final) return;
+
+    newsNextButton.textContent = paused ? "▶ RESUME" : "❚❚ PAUSE";
+  }
+
+  function scheduleSlideAdvance(duration) {
+    if (slideTimer) {
+      clearTimeout(slideTimer);
+      slideTimer = null;
+    }
+
+    slideRemaining = duration;
+    slideStartedAt = performance.now();
+
+    slideTimer = setTimeout(() => {
+      slideTimer = null;
+
+      if (isPaused) return;
+
+      currentNewsSlide = getNextVisibleSlideIndex(
+        currentNewsSlide + 1
+      );
+
+      renderNewsSlide();
+    }, duration);
+  }
+
+  function pauseBroadcast() {
+    if (isPaused) return;
+
+    if (slideTimer) {
+      const elapsed = performance.now() - slideStartedAt;
+      slideRemaining = Math.max(0, slideRemaining - elapsed);
+
+      clearTimeout(slideTimer);
+      slideTimer = null;
+    }
+
+    setBroadcastPaused(true);
+  }
+
+  function resumeBroadcast() {
+    if (!isPaused) return;
+
+    setBroadcastPaused(false);
+
+    const slide = slides[currentNewsSlide];
+
+    if (!slide || slide.final) return;
+
+    const remaining = Math.max(250, slideRemaining);
+
+    slideStartedAt = performance.now();
+
+    slideTimer = setTimeout(() => {
+      slideTimer = null;
+
+      currentNewsSlide = getNextVisibleSlideIndex(
+        currentNewsSlide + 1
+      );
+
+      renderNewsSlide();
+    }, remaining);
+  }
+
   function renderNewsSlide() {
+    if (slideTimer) {
+      clearTimeout(slideTimer);
+      slideTimer = null;
+    }
+
     currentNewsSlide = getNextVisibleSlideIndex(currentNewsSlide);
 
     if (currentNewsSlide >= slides.length) {
@@ -616,7 +726,10 @@
 
     const slide = slides[currentNewsSlide];
 
+    isPaused = false;
+    tvBroadcast.classList.remove("broadcast-paused");
     tvBroadcast.classList.toggle("intro-active", Boolean(slide.intro));
+
     newsScreen.innerHTML = slide.html;
 
     if (!slide.intro) {
@@ -624,21 +737,6 @@
       restartTicker();
     } else {
       newsTickerText.innerHTML = "";
-    }
-
-    if (slide.intro) {
-      const introExitTimer = setTimeout(() => {
-        const opening = newsScreen.querySelector(".bbn-opening");
-        if (opening) opening.classList.add("leaving");
-      }, 2450);
-
-      const introAdvanceTimer = setTimeout(() => {
-        currentNewsSlide = getNextVisibleSlideIndex(currentNewsSlide + 1);
-        renderNewsSlide();
-      }, 3000);
-
-      tvTimers.push(introExitTimer, introAdvanceTimer);
-      return;
     }
 
     if (slide.video) {
@@ -649,7 +747,18 @@
         stage.appendChild(videoFallback);
       }
 
-      newsNextButton.textContent = "CONTINUE ›";
+      newsNextButton.textContent = "❚❚ PAUSE";
+
+      if (birthdayVideo) {
+        birthdayVideo.currentTime = 0;
+
+        const playPromise = birthdayVideo.play();
+
+        if (playPromise && typeof playPromise.catch === "function") {
+          playPromise.catch(() => {});
+        }
+      }
+
       return;
     }
 
@@ -658,12 +767,32 @@
       return;
     }
 
-    newsNextButton.textContent = "CONTINUE ›";
+    newsNextButton.textContent = "❚❚ PAUSE";
+
+    if (slide.intro) {
+      const introExitTimer = setTimeout(() => {
+        if (isPaused) return;
+
+        const opening = newsScreen.querySelector(".bbn-opening");
+
+        if (opening) {
+          opening.classList.add("leaving");
+        }
+      }, 2450);
+
+      tvTimers.push(introExitTimer);
+    }
+
+    scheduleSlideAdvance(slide.duration || 8000);
   }
 
   function startBirthdayNews() {
     clearTVTimers();
+
     currentNewsSlide = getNextVisibleSlideIndex(0);
+    currentNewsSlide = 0;
+    isPaused = false;
+    slideRemaining = 0;
 
     tvPower.className = "tv-power";
     tvStatic.className = "tv-static";
@@ -694,11 +823,18 @@
   function closeBirthdayNews() {
     clearTVTimers();
 
+    isPaused = false;
+    slideRemaining = 0;
+
     if (birthdayVideo && !birthdayVideo.paused) {
       birthdayVideo.pause();
     }
 
-    tvBroadcast.classList.remove("intro-active");
+    tvBroadcast.classList.remove(
+      "intro-active",
+      "broadcast-paused"
+    );
+
     tvModal.classList.remove("open");
     tvModal.setAttribute("aria-hidden", "true");
 
@@ -710,33 +846,51 @@
   newsNextButton.addEventListener("click", () => {
     const slide = slides[currentNewsSlide];
 
-    if (slide.intro) return;
+    if (!slide) return;
 
     if (slide.final) {
       closeBirthdayNews();
       return;
     }
 
-    currentNewsSlide = getNextVisibleSlideIndex(currentNewsSlide + 1);
-    renderNewsSlide();
+    if (isPaused) {
+      resumeBroadcast();
+    } else {
+      pauseBroadcast();
+    }
   });
 
   window.runTVSequence = startBirthdayNews;
 
-  document.querySelectorAll("#tvModal [data-close]").forEach((button) => {
-    button.addEventListener("click", () => {
-      clearTVTimers();
-      tvBroadcast.classList.remove("intro-active");
+  document
+    .querySelectorAll("#tvModal [data-close]")
+    .forEach((button) => {
+      button.addEventListener("click", () => {
+        clearTVTimers();
 
-      if (birthdayVideo && !birthdayVideo.paused) {
-        birthdayVideo.pause();
-      }
+        isPaused = false;
+        slideRemaining = 0;
+
+        tvBroadcast.classList.remove(
+          "intro-active",
+          "broadcast-paused"
+        );
+
+        if (birthdayVideo && !birthdayVideo.paused) {
+          birthdayVideo.pause();
+        }
+      });
     });
-  });
 
   if (birthdayVideo) {
     birthdayVideo.addEventListener("ended", () => {
-      newsNextButton.textContent = "CONTINUE ›";
+      if (slides[currentNewsSlide]?.video) {
+        currentNewsSlide = getNextVisibleSlideIndex(
+          currentNewsSlide + 1
+        );
+
+        renderNewsSlide();
+      }
     });
   }
 })();
