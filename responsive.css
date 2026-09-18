@@ -1,11 +1,6 @@
 /* =========================================================
-   FARIS' SPACE
-   FINAL LANDSCAPE RESPONSIVE SYSTEM
-
-   Supported:
-   • Desktop / laptop
-   • iPad / tablet landscape
-   • Phone landscape
+   FARIS' SPACE — FINAL LANDSCAPE RESPONSIVE CSS
+   Desktop • Laptop • iPad • Phone landscape
    ========================================================= */
 
 :root {
@@ -19,6 +14,7 @@ html,
 body {
   width: 100%;
   height: 100%;
+  min-height: 100%;
   margin: 0;
   overflow: hidden;
   overscroll-behavior: none;
@@ -43,10 +39,10 @@ button,
 .landscape-note {
   margin: 18px 0 20px;
   color: rgba(255,255,255,.62);
-  font-size: 11px;
-  line-height: 1.6;
+  font-family: monospace;
+  font-size: 10px;
+  line-height: 1.55;
   letter-spacing: .08em;
-  text-transform: lowercase;
 }
 
 .landscape-note span {
@@ -55,7 +51,8 @@ button,
 }
 
 /* =========================================================
-   ROOM — DESKTOP DEFAULT
+   ROOM
+   Fill the landscape screen again.
    ========================================================= */
 
 #room {
@@ -64,7 +61,7 @@ button,
   width: 100vw;
   height: 100dvh;
   overflow: hidden;
-  background: #050505;
+  background: #000;
 }
 
 #roomCanvas {
@@ -72,6 +69,7 @@ button,
   inset: 0;
   width: 100%;
   height: 100%;
+  transform: none;
   overflow: hidden;
 }
 
@@ -82,41 +80,36 @@ button,
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
-  user-select: none;
-  -webkit-user-drag: none;
-  pointer-events: none;
+  object-position: center center;
 }
 
-/* =========================================================
-   SAFE ROOM UI
-   ========================================================= */
+/* Room UI */
 
 #roomHeader {
-  left: max(18px, calc(var(--safe-left) + 12px));
-  top: max(18px, calc(var(--safe-top) + 12px));
+  left: max(20px, calc(var(--safe-left) + 12px));
+  top: max(18px, calc(var(--safe-top) + 10px));
 }
 
 #progress {
-  right: max(18px, calc(var(--safe-right) + 12px));
-  top: max(18px, calc(var(--safe-top) + 12px));
+  right: max(20px, calc(var(--safe-right) + 12px));
+  top: max(18px, calc(var(--safe-top) + 10px));
 }
 
 #helpButton {
-  left: max(18px, calc(var(--safe-left) + 12px));
+  left: max(20px, calc(var(--safe-left) + 12px));
 }
 
 #soundButton {
-  right: max(18px, calc(var(--safe-right) + 12px));
+  right: max(20px, calc(var(--safe-right) + 12px));
 }
 
 #helpButton,
 #soundButton {
-  bottom: max(20px, calc(var(--safe-bottom) + 14px));
+  bottom: max(20px, calc(var(--safe-bottom) + 12px));
 }
 
 #roomInstructions {
-  bottom: max(30px, calc(var(--safe-bottom) + 22px));
+  bottom: max(30px, calc(var(--safe-bottom) + 20px));
 }
 
 /* =========================================================
@@ -124,37 +117,48 @@ button,
    ========================================================= */
 
 .modal {
-  box-sizing: border-box;
   width: 100vw;
   height: 100dvh;
-  max-width: 100vw;
-  max-height: 100dvh;
+  padding:
+    max(8px, var(--safe-top))
+    max(8px, var(--safe-right))
+    max(8px, var(--safe-bottom))
+    max(8px, var(--safe-left));
   overflow: hidden;
 }
 
 /* =========================================================
-   COMPUTER — DESKTOP / LAPTOP / IPAD
+   COMPUTER
    ========================================================= */
 
 .computer {
-  width: min(1180px, calc(100vw - 32px));
-  height: min(750px, calc(100dvh - 32px));
-  max-width: calc(100vw - 32px);
-  max-height: calc(100dvh - 32px);
+  width: min(1180px, calc(100vw - var(--safe-left) - var(--safe-right) - 20px));
+  height: min(750px, calc(100dvh - var(--safe-top) - var(--safe-bottom) - 20px));
+  max-width: none;
+  max-height: none;
   min-width: 0;
   min-height: 0;
 }
 
 .computer-interface,
-.computer-boot,
+.computer-boot {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
 .faris-desktop {
   min-width: 0;
   min-height: 0;
 }
 
-.app-window {
-  max-width: calc(100vw - 30px);
-  max-height: calc(100dvh - 30px);
+/* Computer app windows */
+
+.app-window,
+.app-window.explorer-mode {
+  max-width: calc(100vw - var(--safe-left) - var(--safe-right) - 20px);
+  max-height: calc(100dvh - var(--safe-top) - var(--safe-bottom) - 20px);
 }
 
 .win-explorer,
@@ -170,16 +174,52 @@ button,
 }
 
 /* =========================================================
-   TV — DESKTOP / LAPTOP / IPAD
+   BBN
    ========================================================= */
 
 .birthday-news {
-  width: min(1180px, calc(100vw - 32px));
-  height: min(720px, calc(100dvh - 32px));
-  max-width: calc(100vw - 32px);
-  max-height: calc(100dvh - 32px);
+  width: min(1180px, calc(100vw - var(--safe-left) - var(--safe-right) - 20px));
+  height: min(720px, calc(100dvh - var(--safe-top) - var(--safe-bottom) - 20px));
+  max-width: none;
+  max-height: none;
   min-width: 0;
   min-height: 0;
+  aspect-ratio: auto;
+}
+
+.tv-broadcast {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.news-topbar {
+  flex-shrink: 0;
+}
+
+.news-screen {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.news-slide {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.news-controls,
+.news-ticker {
+  flex-shrink: 0;
 }
 
 /* =========================================================
@@ -187,10 +227,10 @@ button,
    ========================================================= */
 
 .ai-window {
-  width: min(720px, calc(100vw - 32px));
-  height: min(700px, calc(100dvh - 32px));
-  max-width: calc(100vw - 32px);
-  max-height: calc(100dvh - 32px);
+  width: min(760px, calc(100vw - var(--safe-left) - var(--safe-right) - 20px));
+  height: min(700px, calc(100dvh - var(--safe-top) - var(--safe-bottom) - 20px));
+  max-width: none;
+  max-height: none;
 }
 
 .ai-conversation {
@@ -200,19 +240,23 @@ button,
 }
 
 /* =========================================================
-   NOTE / OREO
+   NOTE
    ========================================================= */
 
 .paper-note {
-  max-width: calc(100vw - 32px);
-  max-height: calc(100dvh - 32px);
+  max-width: calc(100vw - var(--safe-left) - var(--safe-right) - 24px);
+  max-height: calc(100dvh - var(--safe-top) - var(--safe-bottom) - 24px);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 
+/* =========================================================
+   OREO
+   ========================================================= */
+
 .panda-delivery {
-  max-width: calc(100vw - 32px);
-  max-height: calc(100dvh - 32px);
+  max-width: calc(100vw - var(--safe-left) - var(--safe-right) - 24px);
+  max-height: calc(100dvh - var(--safe-top) - var(--safe-bottom) - 24px);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -231,48 +275,13 @@ button,
 }
 
 /* =========================================================
-   IPAD / TABLET LANDSCAPE
+   TABLET LANDSCAPE
    ========================================================= */
 
-@media (orientation: landscape) and (min-height: 601px) and (max-width: 1366px) {
-  /*
-     Preserve the complete room and hotspot coordinate system.
-  */
-
-  #roomCanvas {
-    left: 50%;
-    top: 50%;
-    right: auto;
-    bottom: auto;
-    width: min(100vw, calc(100dvh * 1.5));
-    height: min(100dvh, calc(100vw / 1.5));
-    aspect-ratio: 3 / 2;
-    transform: translate(-50%, -50%);
-  }
-
-  #roomImage {
-    width: 100%;
-    height: 100%;
-    object-fit: fill;
-    object-position: center;
-  }
-
-  .computer {
-    width: min(
-      calc(100vw - 28px),
-      calc((100dvh - 28px) * 1.573333)
-    );
-    height: auto;
-    aspect-ratio: 1180 / 750;
-  }
-
+@media (orientation: landscape) and (max-width: 1366px) {
+  .computer,
   .birthday-news {
-    width: min(
-      calc(100vw - 28px),
-      calc((100dvh - 28px) * 1.638889)
-    );
-    height: auto;
-    aspect-ratio: 1180 / 720;
+    width: calc(100vw - var(--safe-left) - var(--safe-right) - 20px);
   }
 }
 
@@ -281,37 +290,56 @@ button,
    ========================================================= */
 
 @media (orientation: landscape) and (max-height: 600px) {
-  /*
-     Safari's visible landscape viewport is short.
-     Everything below is sized using BOTH width and height,
-     so nothing is allowed to extend underneath the browser UI.
-  */
+  /* ---------------- INTRO ---------------- */
 
-  #roomCanvas {
-    left: 50%;
-    top: 50%;
-    right: auto;
-    bottom: auto;
-    width: min(100vw, calc(100dvh * 1.5));
-    height: min(100dvh, calc(100vw / 1.5));
-    aspect-ratio: 3 / 2;
-    transform: translate(-50%, -50%);
+  .intro-content {
+    width: min(78vw, 620px);
   }
 
-  #roomImage {
-    width: 100%;
-    height: 100%;
-    object-fit: fill;
-    object-position: center;
+  .intro-content .eyebrow {
+    margin-bottom: 7px;
+    font-size: 8px;
   }
+
+  .intro-content h1 {
+    font-size: clamp(44px, 9.5vw, 74px);
+    line-height: .88;
+  }
+
+  .intro-text {
+    margin: 16px 0 4px;
+    font-size: 12px;
+  }
+
+  .intro-small {
+    margin-bottom: 0;
+    font-size: 8px;
+  }
+
+  .landscape-note {
+    margin: 11px 0 10px;
+    font-size: 8px;
+    line-height: 1.35;
+  }
+
+  .landscape-note span {
+    font-size: 7px;
+  }
+
+  #enterButton {
+    padding: 8px 18px;
+    font-size: 9px;
+  }
+
+  /* ---------------- ROOM ---------------- */
 
   #roomHeader {
     left: max(12px, calc(var(--safe-left) + 8px));
-    top: max(8px, calc(var(--safe-top) + 5px));
+    top: max(9px, calc(var(--safe-top) + 5px));
   }
 
   #roomHeader h2 {
-    font-size: 13px;
+    font-size: 12px;
   }
 
   #roomHeader p {
@@ -321,7 +349,7 @@ button,
 
   #progress {
     right: max(12px, calc(var(--safe-right) + 8px));
-    top: max(8px, calc(var(--safe-top) + 5px));
+    top: max(9px, calc(var(--safe-top) + 5px));
     font-size: 7px;
   }
 
@@ -345,13 +373,13 @@ button,
 
   #helpButton,
   #soundButton {
-    bottom: max(9px, calc(var(--safe-bottom) + 6px));
+    bottom: max(8px, calc(var(--safe-bottom) + 5px));
     font-size: 7px;
   }
 
   #roomInstructions {
-    bottom: max(17px, calc(var(--safe-bottom) + 13px));
-    padding: 6px 10px;
+    bottom: max(16px, calc(var(--safe-bottom) + 11px));
+    padding: 5px 9px;
     font-size: 7px;
   }
 
@@ -359,137 +387,103 @@ button,
 
   #computerModal {
     padding:
-      max(3px, var(--safe-top))
+      max(4px, var(--safe-top))
       max(5px, var(--safe-right))
-      max(3px, var(--safe-bottom))
+      max(4px, var(--safe-bottom))
       max(5px, var(--safe-left));
   }
 
   .computer {
-    width: min(
-      calc(100vw - var(--safe-left) - var(--safe-right) - 10px),
-      calc((100dvh - var(--safe-top) - var(--safe-bottom) - 8px) * 1.573333)
-    );
-    height: auto;
-    aspect-ratio: 1180 / 750;
-    max-width: none;
-    max-height: calc(100dvh - var(--safe-top) - var(--safe-bottom) - 8px);
-    border-radius: 4px;
+    width: calc(100vw - var(--safe-left) - var(--safe-right) - 10px);
+    height: calc(100dvh - var(--safe-top) - var(--safe-bottom) - 8px);
+    border-radius: 3px;
   }
 
   .window-bar {
-    height: 30px;
-    min-height: 30px;
+    height: 28px;
+    min-height: 28px;
     padding-left: 9px;
     font-size: 8px;
+  }
+
+  .window-bar button {
+    width: 34px;
+    height: 28px;
+  }
+
+  .desktop {
+    height: calc(100% - 28px);
   }
 
   .faris-desktop-icons {
     left: 10px;
     top: 8px;
     right: 10px;
-    bottom: 40px;
-    grid-template-columns: repeat(4, 72px);
-    grid-auto-rows: 64px;
-    gap: 3px 7px;
+    bottom: 37px;
+    grid-template-columns: repeat(4, minmax(58px, 82px));
+    grid-auto-rows: 61px;
+    gap: 2px 8px;
   }
 
   .faris-desktop-icons .desktop-icon {
-    width: 72px;
-    height: 62px;
-    padding: 3px 2px;
+    width: 100%;
+    height: 59px;
+    padding: 2px;
   }
 
   .faris-desktop-icons .desktop-symbol {
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
   }
 
   .faris-desktop-icons .desktop-symbol svg {
-    width: 33px;
-    height: 33px;
+    width: 31px;
+    height: 31px;
   }
 
   .faris-desktop-icons .desktop-icon p {
-    width: 70px;
+    width: 100%;
     margin-top: 2px;
     font-size: 7px;
   }
 
   .faris-taskbar {
-    height: 36px;
+    height: 34px;
+    padding: 0 6px;
   }
 
   .taskbar-icon {
-    width: 30px;
-    height: 30px;
-    padding: 5px;
-  }
-
-  .taskbar-icon svg {
-    width: 20px;
-    height: 20px;
+    width: 28px;
+    height: 28px;
+    padding: 4px;
   }
 
   .taskbar-search {
     width: 95px;
-    height: 26px;
-  }
-
-  .taskbar-search small {
-    font-size: 7px;
-  }
-
-  /* ---------------- WINDOWS EXPLORER ---------------- */
-
-  .app-window,
-  .app-window.explorer-mode {
-    max-width: calc(
-      100vw -
-      var(--safe-left) -
-      var(--safe-right) -
-      16px
-    );
-    max-height: calc(
-      100dvh -
-      var(--safe-top) -
-      var(--safe-bottom) -
-      16px
-    );
+    height: 25px;
   }
 
   /* ---------------- BBN ---------------- */
 
   #tvModal {
     padding:
-      max(3px, var(--safe-top))
+      max(4px, var(--safe-top))
       max(5px, var(--safe-right))
-      max(3px, var(--safe-bottom))
+      max(4px, var(--safe-bottom))
       max(5px, var(--safe-left));
   }
 
   .birthday-news {
-    width: min(
-      calc(100vw - var(--safe-left) - var(--safe-right) - 10px),
-      calc((100dvh - var(--safe-top) - var(--safe-bottom) - 8px) * 1.638889)
-    );
-    height: auto;
-    aspect-ratio: 1180 / 720;
-    max-width: none;
-    max-height: calc(
-      100dvh -
-      var(--safe-top) -
-      var(--safe-bottom) -
-      8px
-    );
+    width: calc(100vw - var(--safe-left) - var(--safe-right) - 10px);
+    height: calc(100dvh - var(--safe-top) - var(--safe-bottom) - 8px);
     border-radius: 3px;
   }
 
   .news-topbar {
-    flex: 0 0 30px;
-    height: 30px;
-    min-height: 30px;
-    padding: 0 35px 0 8px;
+    flex: 0 0 28px;
+    height: 28px;
+    min-height: 28px;
+    padding: 0 34px 0 8px;
   }
 
   .news-logo {
@@ -497,8 +491,8 @@ button,
   }
 
   .news-logo strong {
-    padding: 3px 6px;
-    font-size: 11px;
+    padding: 2px 5px;
+    font-size: 10px;
   }
 
   .news-logo > span:last-child {
@@ -506,12 +500,12 @@ button,
   }
 
   .news-date {
-    font-size: 7px;
+    font-size: 6px;
   }
 
   .birthday-news .tv-close {
-    top: 3px;
-    right: 4px;
+    top: 2px;
+    right: 3px;
     width: 24px !important;
     height: 24px !important;
     min-width: 24px !important;
@@ -521,18 +515,19 @@ button,
   .news-controls {
     flex: 0 0 30px;
     min-height: 30px;
+    padding: 0 7px;
   }
 
   #newsNextButton {
-    min-width: 92px;
+    min-width: 90px;
     min-height: 22px;
     padding: 0 9px;
     font-size: 7px;
   }
 
   .news-ticker {
-    flex: 0 0 25px;
-    min-height: 25px;
+    flex: 0 0 24px;
+    min-height: 24px;
   }
 
   .ticker-label {
@@ -541,232 +536,334 @@ button,
   }
 
   .ticker-copy {
-    font-size: 8px;
+    font-size: 7px;
+  }
+
+  /* NEWSROOM */
+
+  .broadcast-scene {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .studio-camera {
+    width: 100%;
+    height: 100%;
+  }
+
+  .studio-side-panel {
+    top: 7%;
+    left: 53%;
+    width: 43%;
+    height: 55%;
+    min-height: 0;
+    padding: 13px 14px;
+    overflow: hidden;
+  }
+
+  .studio-side-panel .small-label {
+    margin-bottom: 7px;
+    font-size: 6px;
   }
 
   .studio-side-panel h2 {
-    font-size: clamp(18px, 3.3vw, 30px);
+    margin: 0;
+    max-width: 100%;
+    font-size: clamp(17px, 3vw, 27px);
+    line-height: .98;
+    overflow-wrap: normal;
+    word-break: normal;
   }
 
   .studio-side-panel p {
-    margin-top: 5px;
-    font-size: clamp(8px, 1.4vw, 11px);
+    margin-top: 7px;
+    max-width: 100%;
+    font-size: clamp(7px, 1.15vw, 10px);
+    line-height: 1.25;
+  }
+
+  .anchor-label {
+    display: none;
   }
 
   .lower-breaking {
-    min-height: 17px;
+    min-height: 15px;
+    padding: 0 10px;
     font-size: 6px;
   }
 
   .lower-main {
-    min-height: 28px;
-    padding: 3px 11px;
+    min-height: 27px;
+    padding: 3px 10px;
   }
 
   .lower-main h1 {
-    font-size: clamp(14px, 2.2vw, 20px);
+    font-size: clamp(13px, 2vw, 19px);
+    line-height: 1;
   }
 
   .lower-sub {
-    min-height: 17px;
-    font-size: 7px;
-  }
-
-  .profile-data {
-    padding: 9px 13px;
-  }
-
-  .profile-data h2 {
-    margin-bottom: 5px;
-    font-size: 10px;
-  }
-
-  .profile-row {
-    gap: 6px;
-    padding: 3px 0;
-    font-size: clamp(8px, 1.15vw, 11px);
-  }
-
-  .subject-visual {
-    padding: 12px;
-  }
-
-  .subject-status {
-    left: 10px;
-    top: 10px;
+    min-height: 15px;
+    padding: 2px 10px;
     font-size: 6px;
   }
 
+  /* SUBJECT PROFILE */
+
+  .profile-package {
+    display: grid;
+    grid-template-columns: 34% 66%;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .subject-visual {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    padding: 12px;
+    overflow: hidden;
+  }
+
+  .subject-status {
+    left: 12px;
+    top: 11px;
+    padding: 5px 8px;
+    font-size: 6px;
+  }
+
+  .subject-name {
+    left: 14px;
+    bottom: 14px;
+  }
+
   .subject-name strong {
-    font-size: clamp(27px, 4vw, 42px);
+    font-size: clamp(27px, 4vw, 41px);
   }
 
   .subject-name span {
+    margin-top: 3px;
     font-size: 8px;
   }
 
-  .news-package {
-    padding: 17px 22px 52px !important;
+  .profile-data {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    padding: 11px 16px;
+    overflow: hidden;
   }
 
-  .package-kicker {
-    margin-bottom: 16px !important;
-    font-size: 7px !important;
+  .profile-data h2 {
+    margin: 0 0 7px;
+    font-size: 11px;
+  }
+
+  .profile-row {
+    display: grid;
+    grid-template-columns: minmax(0, 42%) minmax(0, 58%);
+    gap: 8px;
+    padding: 4px 0;
+    font-size: clamp(8px, 1.15vw, 11px);
+  }
+
+  .profile-row strong,
+  .profile-row span {
+    min-width: 0;
+  }
+
+  .profile-row strong {
+    font-size: .72em;
+    line-height: 1.15;
+  }
+
+  .profile-row span {
+    line-height: 1.18;
+    overflow-wrap: anywhere;
+  }
+
+  /* FARIS FILES / INTRO BOARDS */
+
+  .news-package {
+    width: 100%;
+    height: 100%;
+    padding: 16px 24px 46px !important;
+    overflow: hidden;
+  }
+
+  .package-kicker,
+  .board-kicker {
+    padding: 4px 7px;
+    font-size: 6px !important;
   }
 
   .package-title {
-    margin-bottom: 13px !important;
-    font-size: clamp(27px, 4vw, 43px) !important;
+    max-width: 100% !important;
+    margin: 12px 0 11px !important;
+    font-size: clamp(25px, 3.8vw, 39px) !important;
+    line-height: .96 !important;
   }
 
   .package-copy {
-    font-size: clamp(10px, 1.35vw, 14px) !important;
+    max-width: 82% !important;
+    font-size: clamp(9px, 1.25vw, 13px) !important;
     line-height: 1.3 !important;
   }
 
+  /* SAYANG FINDINGS */
+
   .info-board {
-    padding: 11px 17px 14px !important;
+    width: 100%;
+    height: 100%;
+    padding: 9px 16px 10px !important;
+    overflow: hidden !important;
   }
 
   .info-board h2 {
-    margin-bottom: 7px !important;
-    padding-bottom: 6px !important;
-    font-size: clamp(18px, 2.7vw, 28px) !important;
+    margin: 0 0 6px !important;
+    padding-bottom: 5px !important;
+    font-size: clamp(17px, 2.5vw, 26px) !important;
   }
 
   .info-board > div[style*="grid-template-columns"] {
-    gap: 6px !important;
+    gap: 5px !important;
   }
 
   .info-board > div[style*="grid-template-columns"] > div {
-    padding: 7px 9px !important;
+    padding: 6px 8px !important;
   }
 
   .info-board > div[style*="grid-template-columns"] > div span {
     margin-bottom: 3px !important;
-    font-size: 6px !important;
+    font-size: 5.5px !important;
   }
 
   .info-board > div[style*="grid-template-columns"] > div p {
-    font-size: clamp(7px, 1vw, 9px) !important;
-    line-height: 1.2 !important;
+    font-size: clamp(6.5px, .9vw, 8.5px) !important;
+    line-height: 1.18 !important;
   }
 
+  /* NUMBERS */
+
   .numbers-board {
-    padding: 6px 17px !important;
+    padding: 5px 16px !important;
   }
 
   .numbers-board h2 {
     margin-bottom: 2px !important;
     padding-bottom: 3px !important;
-    font-size: 18px !important;
+    font-size: 17px !important;
   }
 
   .numbers-board .info-row {
-    min-height: 19px;
+    min-height: 17px;
     padding: 1px 0;
   }
 
   .numbers-board .info-row span,
   .numbers-board .info-row strong {
-    font-size: 7px;
+    font-size: 6.5px;
+    line-height: 1.1;
   }
 
+  /* MUSIC */
+
   .music-card {
-    padding: 16px 20px 52px;
+    width: 100%;
+    height: 100%;
+    padding: 14px 20px 46px;
+    overflow: hidden;
   }
 
   .music-card h2 {
-    margin-bottom: 8px;
-    font-size: clamp(21px, 3.1vw, 32px);
+    margin-bottom: 7px;
+    font-size: clamp(20px, 3vw, 30px);
   }
 
   .music-card p {
-    margin-top: 6px;
-    font-size: clamp(8px, 1.15vw, 11px);
+    margin-top: 5px;
+    font-size: clamp(7px, 1.05vw, 10px);
   }
 
   .music-transcript {
-    margin: 6px 0 8px;
-    padding: 8px 11px;
-    font-size: clamp(13px, 1.9vw, 19px);
+    margin: 5px 0 7px;
+    padding: 7px 10px;
+    font-size: clamp(12px, 1.7vw, 17px);
   }
 
+  /* SAYANG QUOTE */
+
   .statement-layout {
-    padding: 12px 19px 52px !important;
+    width: 100%;
+    height: 100%;
+    padding: 10px 18px 46px !important;
+    overflow: hidden;
   }
 
   .statement-tag {
-    font-size: 6px;
+    padding: 4px 6px;
+    font-size: 5.5px;
   }
 
   .statement-layout blockquote {
-    margin: 6px 0 4px !important;
-    font-size: clamp(7px, .95vw, 9px) !important;
-    line-height: 1.15 !important;
+    margin: 5px 0 3px !important;
+    font-size: clamp(6.5px, .86vw, 8.5px) !important;
+    line-height: 1.13 !important;
   }
 
   .statement-layout cite {
-    font-size: 8px !important;
+    font-size: 7px !important;
   }
 
   /* ---------------- CHATGPT ---------------- */
 
   .ai-window {
-    width: min(
-      calc(100vw - var(--safe-left) - var(--safe-right) - 12px),
-      720px
-    );
-    height: min(
-      calc(100dvh - var(--safe-top) - var(--safe-bottom) - 8px),
-      700px
-    );
-    max-width: none;
-    max-height: none;
+    width: min(760px, calc(100vw - var(--safe-left) - var(--safe-right) - 12px));
+    height: calc(100dvh - var(--safe-top) - var(--safe-bottom) - 10px);
   }
 
   .ai-topbar {
-    height: 34px;
-    flex-basis: 34px;
+    height: 32px;
+    min-height: 32px;
   }
 
   .ai-conversation {
-    padding: 12px 16px;
+    padding: 10px 15px;
   }
 
   .ai-message {
-    margin-bottom: 8px;
-    padding: 8px 11px;
-    font-size: 9px;
+    max-width: 82%;
+    margin-bottom: 6px;
+    padding: 6px 9px;
+    font-size: 8px;
   }
 
   .ai-input {
-    flex-basis: 38px;
-    margin: 0 12px 8px;
+    margin: 0 10px 7px;
+    min-height: 32px;
   }
 
   /* ---------------- NOTE ---------------- */
 
   #noteModal {
     padding:
-      max(6px, var(--safe-top))
-      max(12px, var(--safe-right))
-      max(6px, var(--safe-bottom))
-      max(12px, var(--safe-left));
+      max(5px, var(--safe-top))
+      max(8px, var(--safe-right))
+      max(5px, var(--safe-bottom))
+      max(8px, var(--safe-left));
   }
 
   .paper-note {
-    width: min(500px, 72vw);
-    max-height: calc(
-      100dvh -
-      var(--safe-top) -
-      var(--safe-bottom) -
-      12px
-    );
-    padding: 27px 27px 22px;
-    box-sizing: border-box;
-    font-size: 10px;
-    line-height: 1.45;
+    width: min(520px, 72vw);
+    max-height: calc(100dvh - var(--safe-top) - var(--safe-bottom) - 10px);
+    padding: 25px 25px 20px;
+    font-size: 9px;
+    line-height: 1.42;
     scrollbar-width: none;
   }
 
@@ -775,26 +872,15 @@ button,
   }
 
   .paper-note p {
-    margin: 0 0 10px;
-  }
-
-  .note-signature {
-    margin-top: 14px;
-    font-size: 17px;
+    margin: 0 0 9px;
   }
 
   /* ---------------- OREO ---------------- */
 
   .panda-delivery {
-    width: min(500px, 75vw);
-    max-height: calc(
-      100dvh -
-      var(--safe-top) -
-      var(--safe-bottom) -
-      12px
-    );
-    padding: 20px 25px;
-    box-sizing: border-box;
+    width: min(520px, 74vw);
+    max-height: calc(100dvh - var(--safe-top) - var(--safe-bottom) - 10px);
+    padding: 18px 22px;
     scrollbar-width: none;
   }
 
@@ -803,76 +889,71 @@ button,
   }
 
   .panda-character {
-    transform: scale(.7);
+    transform: scale(.68);
     transform-origin: top center;
     margin-top: -8px;
-    margin-bottom: -48px;
+    margin-bottom: -50px;
   }
 
   .oreo-label {
-    margin: 8px 0 14px;
+    margin: 7px 0 12px;
   }
 }
 
 /* =========================================================
-   SHORT PHONE LANDSCAPE
+   VERY SHORT LANDSCAPE PHONES
    ========================================================= */
 
 @media (orientation: landscape) and (max-height: 430px) {
+  .intro-content h1 {
+    font-size: clamp(39px, 8vw, 61px);
+  }
+
+  .intro-text {
+    margin-top: 10px;
+  }
+
   .landscape-note {
-    margin: 10px 0 12px;
-    font-size: 9px;
-    line-height: 1.35;
+    margin: 7px 0;
   }
 
-  .landscape-note span {
-    font-size: 8px;
+  .studio-side-panel h2 {
+    font-size: clamp(15px, 2.7vw, 23px);
   }
 
-  #roomHeader h2 {
-    font-size: 11px;
+  .studio-side-panel p {
+    font-size: 7px;
   }
 
-  #roomHeader p,
-  #progress,
-  #helpButton,
-  #soundButton,
-  #roomInstructions {
-    font-size: 6px;
+  .profile-row {
+    padding: 3px 0;
+  }
+
+  .info-board > div[style*="grid-template-columns"] > div {
+    padding: 5px 7px !important;
   }
 }
 
 /* =========================================================
    PORTRAIT
-   We are not building a second portrait version of the site.
-   The intro remains usable so he can see the rotate message.
+   Intro only needs to tell him to rotate.
    ========================================================= */
 
 @media (orientation: portrait) and (max-width: 900px) {
-  #introScreen {
-    display: flex;
-  }
-
   .intro-content {
     width: min(86vw, 430px);
   }
 
   .landscape-note {
-    margin: 18px auto 20px;
     color: rgba(255,255,255,.72);
   }
 }
 
 /* =========================================================
-   TOUCH TARGETS
+   TOUCH
    ========================================================= */
 
 @media (hover: none), (pointer: coarse) {
-  .win-nav-button {
-    min-width: 30px;
-    min-height: 30px;
-  }
-
   .tv-close,
   .card-close,
   .paper-close,
