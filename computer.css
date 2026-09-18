@@ -908,13 +908,14 @@ button.win-large-item {
 .win-photo-thumb {
   width: 92px;
   height: 69px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
   flex: 0 0 69px;
   overflow: hidden;
   border: 1px solid #444;
-  background: #111;
+  background-color: #111;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .win-photo-thumb img {
