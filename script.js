@@ -408,32 +408,6 @@ function runComputerBoot() {
 }
 
 /* ============================= */
-/* TV SEQUENCE */
-/* ============================= */
-
-const tvPower = document.getElementById("tvPower");
-const tvStatic = document.getElementById("tvStatic");
-const tvBroadcast = document.getElementById("tvBroadcast");
-
-function runTVSequence() {
-  tvPower.className = "tv-power";
-  tvStatic.className = "tv-static";
-  tvBroadcast.className = "tv-broadcast";
-
-  setTimeout(() => {
-    tvPower.classList.add("hidden-phase");
-    tvStatic.classList.add("active");
-    playTone(85, 0.06, 0.015, "square");
-  }, 180);
-
-  setTimeout(() => {
-    tvStatic.classList.add("hidden-phase");
-    tvBroadcast.classList.add("active");
-    playTone(410, 0.16, 0.016, "sine");
-  }, 650);
-}
-
-/* ============================= */
 /* VIDEO DETECTION */
 /* ============================= */
 
